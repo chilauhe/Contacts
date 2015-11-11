@@ -23,7 +23,6 @@
         </activity>
         <activity android:name="string.pub.contacts.MainActivity"
             >
-            
         </activity>
     </application>
 

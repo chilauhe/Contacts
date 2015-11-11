@@ -22,8 +22,10 @@ public class WelcomeActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.welcome);
+		setContentView(R.layout.layout_welcome);
 		initWindow();
+		initView();
+		initAnim();
 		setListener();
 		mShowPicture.startAnimation(mFadeInScale1);
 	}
