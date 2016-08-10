@@ -1,0 +1,41 @@
+1.Java SDK    http://sdlc-esd.oracle.com/ESD6/JSCDL/jdk/8u91-b14/jre-8u91-windows-i586-iftw.exe?GroupName=JSC&FilePath=/ESD6/JSCDL/jdk/8u91-b14/jre-8u91-windows-i586-iftw.exe&BHost=javadl.sun.com&File=jre-8u91-windows-i586-iftw.exe&AuthParam=1464001726_6d87659a739d4537b3a1209913f2404e&ext=.exe
+2.Android Studio   https://dl.google.com/dl/android/studio/install/2.1.1.0/android-studio-bundle-143.2821654-windows.exe
+3.Eclipse   http://mirrors.neusoft.edu.cn/eclipse/technology/epp/downloads/release/mars/2/eclipse-committers-mars-2-win32-x86_64.zip
+4.Foxmail
+5.dingding
+6.qq
+7.Google Chrome
+8.yinxiang
+9.youdao   http://download.ydstatic.cn/cidian/static/6.3/20160519/YoudaoDict.exe
+10.xshell
+11.sougou wallpaper  http://dl.bizhi.sogoucdn.com/dl/sogou_wallpaper_2.5j.exe
+12.KMS http://soft1.xitongzhijia.net:808/201407/KMSmicro_V5.0.1_XiTongZhiJia.rar
+13.ubuntu   http://releases.ubuntu.com/16.04/ubuntu-16.04-desktop-amd64.iso
+14.git   http://dl59.yunpan.360.cn/intf.php?method=Download.downloadFile&qid=78623867&fname=/??/Git-1.9.4-preview20140815.exe&fhash=7c32caea80e006be41126003eb1e0475cfbe50dc&dt=59_63.7097a9a1373b353db066e1256b13050c&v=1.0.1&rtick=14640555894838&open_app_id=0&devtype=web&sign=1301571a8ac3c59dfcf726afb298309f&
+15.office  http://dl57.yunpan.360.cn/intf.php?method=Download.downloadFile&qid=78623867&fname=%2F%E8%BD%AF%E4%BB%B6%2FOffice_2013%E4%B8%AD%E6%96%87%E4%B8%93%E4%B8%9A%E7%89%88%2864%E4%BD%8D%29.iso&fhash=44e3582b2d5158d7cdcffd02455c7dc284f9504e&dt=57_57.320805477d30643154c498a4db629b70&v=1.0.1&rtick=14640929346734&open_app_id=0&devtype=web&sign=fc7efbfd8484a9463c6244b83116b48e&
+16.paper:sci-hub.com
+17：dictionary:  http://cidian.youdao.com/index-linux.html
+18： udacity www.udacity.com/
+19：xml format :  http://codebeautify.org/xmlviewer
+20：html decode :jsoup.org
+
+
+BWG7X-J98B3-W34RT-33B3R-JVYW9   vs2013
+
+https://wizardforcel.gitbooks.io/w3school-java/content/47.html   servlet教程
+https://developer.android.com/ndk/guides/setup.html#configure    NDK教程
+http://www.mkyong.com/                 mkyong
+http://openslam.org/           openslam
+http://gsf-cf.softonic.com/8e2/a07/dc9a2efd34a1be3803fd64ce3ebb4230d2/uTorrent-3-4-6-build-42178.exe?SD_used=0&channel=WEB&fdh=yes&id_file=43961&instance=softonic_en&type=PROGRAM&Expires=1464106593&Signature=DB6Xi2Wam5ndtBwyVTMm-SIVfP2MXc7LYogtgtoaM5abnACtWvdagpORxRGUbLZW5M9OIZdH5im~gAqGhm8FSIdXutaVe0UM5JsAgRU6teQqkXA68FAeagXHJiibVYdFu9WjGFiMhSGoYTQdGdYycSfOYBSZg5xrwEiAvgDlfnE_&Key-Pair-Id=APKAJUA62FNWTI37JTGQ&filename=uTorrent-3-4-6-build-42178.exe
+
+
+
+
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&output=rss   焦点
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&topic=w&output=rss  国际、港台
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&topic=n&output=rss   内地
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&topic=b&output=rss   财经
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&topic=e&output=rss 娱乐
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&topic=t&output=rss 科技
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&topic=s&output=rss 体育
+https://news.google.com.hk/news?cf=all&hl=zh-CN&pz=1&ned=cn&geo=detect_metro_area&output=rss 本地
