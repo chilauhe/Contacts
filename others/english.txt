@@ -44,3 +44,9 @@ eligible 符合条件的 有资格的
 precede居于之前
 internally 本质的
 concatenate 联接 串联
+manifest 证明 显示 清单
+meta 元
+compliant 适用 顺应
+relevant 相关性
+boilerplate 模板文件
+trivial 不重要的 琐碎的
