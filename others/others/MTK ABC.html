@@ -1,0 +1,456 @@
+<html>
+<head>
+  <title>MTK ABC</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2334"/>
+<h1>MTK ABC</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div>MTK入门需要看的文档</div>
+<div>
+<ul>
+<li>Android_Build_System_for customer_4.4.pdf<br/></li>
+<li>MTK Build Command.mp4</li>
+<li>Look into MTK Build.mp4</li>
+<li><img src="MTK ABC_files\en_todo.png"/>ALPS_Build_System_Introduction_4.4.ppt</li>
+<li>ALPS_Make_Build_Enviroment_and_Procedures_Design_document_4.4.doc</li>
+<li>Android_Build_System_for_customer.pptx</li>
+<li>FAQ: /FAQ/SW/ALPS/Build&amp;Make and Framework</li>
+</ul>
+</div>
+<div><br/></div>
+<div>MTK compile commands</div>
+<div>[User and Engineer build]</div>
+<div>./makeMtk -opt=TARGET_BUILD_VARIANT=user <i>project-name</i> new</div>
+<div><br/></div>
+<div>[Build result]</div>
+<div>ls -al out/target/product/<i>project-name</i>/</div>
+<div>data</div>
+<div>kernel.bin</div>
+<div>logo.bin</div>
+<div>MT****_Android_scatter.txt</div>
+<div>obj</div>
+<div>.pack</div>
+<div>platform.tgz</div>
+<div>preloader_<i>project-name.</i>bin</div>
+<div>recovery</div>
+<div>root</div>
+<div>secro</div>
+<div>symbols</div>
+<div>system</div>
+<div>uboot_<i>project-name.</i>bin</div>
+<div><br/></div>
+<div><br/></div>
+<div><b style="font-size: 18px;"><span style="background-color: rgb(239, 239, 239); font-family: 'Ubuntu Mono', monospace;">sudo add-apt-repository: command not found</span><br/></b></div>
+<div><span style="background-color: rgb(239, 239, 239); font-family: 'Ubuntu Mono', monospace; font-size: 14px;"><br/></span></div>
+<span style="font-size: 13px; font-family: Ubuntubeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif; background-color: rgb(235, 236, 228);">I don't know about 64 bit, but on 32 bit, add-apt-repository is provded by the package python-software-properties.<br/></span>
+<div><span style="background-color: rgb(235, 236, 228); font-family: Ubuntubeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif; font-size: 13px;">You could always add the repository to /etc/apt/sources.list manually.</span><font face="Ubuntubeta, Ubuntu, Bitstream Vera Sans, DejaVu Sans, Tahoma, sans-serif"><span style="background-color: rgb(235, 236, 228);"><br/></span></font>
+<div><span style="background-color: rgb(235, 236, 228); font-family: Ubuntubeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif; font-size: 13px;">sudo apt-get install python-software-properties</span><br/></div>
+</div>
+<div><span style="background-color: rgb(235, 236, 228); font-family: Ubuntubeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif; font-size: 13px;"><br/></span></div>
+<p style="padding: 0px; font-family: Verdana, Arial, Helvetica, sans-serif; background-color: rgb(254, 254, 242);"><span style="font-size: 18px;"><strong style="padding: 0px;"><span style="padding: 0px;">/bin/bash: jar: command not found</span></strong></span></p>
+<div><span style="padding: 0px;">cd /usr/bin</span></div>
+<div><span style="padding: 0px;"><span style="padding: 0px;">sudo ln -s -f /usr/lib/jvm/jdk1.6.0_30/bin/jar</span></span> </div>
+<div>jdk的安装地址按自己情况来</div>
+<div>如果提示javah：commond not found，于是照葫芦画瓢，输入命令<br/></div>
+<div><br/></div>
+<div><span style="padding: 0px;">cd /usr/bin</span></div>
+<div>ln -s -f /usr/lib/jvm/jdk1.6.0_30/bin/javah<br/></div>
+<div>最好把这个目录下的几个文件都这样操作</div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>collect2: ld terminated with signal 9 [Killed]</b></span></div>
+target SharedLib: libwebcore (out/target/product/generic/obj/SHARED_LIBRARIES/libwebcore_intermediates/LINKED/libwebcore.so)
+<div>collect2: ld terminated with signal 9 [Killed]</div>
+<div>make: *** [out/target/product/generic/obj/SHARED_LIBRARIES/libwebcore_intermediates/LINKED/libwebcore.so] Error 1 <br/></div>
+<div>解决方案：把 swap区域加大，建议加到1G以上</div>
+<div><br/></div>
+<div><b><span style="font-size: 14px;">Install Software(for Ubuntu12.04) —need to be updated!!!</span></b></div>
+<div>
+<table border="1" cellpadding="2" cellspacing="0" style="width:1024px;" width="100%">
+<tr>
+<td style="text-align: center;width:36.1328125%;" valign="top"><br/></td>
+<td style="text-align: center;width:11.62109375%;" valign="top">Built-In</td>
+<td style="text-align: center;width:26.5625%;" valign="top">Apt-get</td>
+<td style="text-align: center;width:10.25390625%;" valign="top">DPKG</td>
+<td style="text-align: center;width:15.234375%;" valign="top">TARBALL</td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">gpg(GnuPG)(1.4.11)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [1].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">flex(2.5.35)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [2].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [3].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">bison(2.5)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [4].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [5].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">gperf(3.0.3)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [6].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [7].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">build-essential(11.5)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [8].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">zip(3.0)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [9].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">curl(7.22.0)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [10].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [11].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">zlib1g-dev(1.2.3.3)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [12].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [13].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">g++-multilib</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [14].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">tofrodos</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [15].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">libc6-dev(2.11.1)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [16].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">libncurses5</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">:</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">i386(5.7)</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [17].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">x11proto</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">core</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev(7.0.16)</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [18].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">libx11</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">:</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">i386(1.3.2)</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [19].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">libreadline6</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">:</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">i386</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [20].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">mingw32</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [21].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">gcc-arm-none-eabi(4.6) <br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [22].png"/><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">JDK(1.6)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [23].png"/><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">wine(1.4)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [24].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [25].png"/><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">perl(5.14.2)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [26].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">python(2.7.3)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [27].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">GNU make(3.81)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [28].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+</table>
+<span style="font-size: 14px;"><b><br/></b></span></div>
+<div><span style="font-size: 14px;"><b><br/></b></span></div>
+<div><span style="font-size: 14px;"><b>Install Software(for Ubuntu10.04)</b></span></div>
+<div>
+<table border="1" cellpadding="2" cellspacing="0" style="width:1024px;" width="100%">
+<tr>
+<td style="text-align: center;width:36.1328125%;" valign="top"><br/></td>
+<td style="text-align: center;width:11.62109375%;" valign="top">Built-In</td>
+<td style="text-align: center;width:26.5625%;" valign="top">Apt-get</td>
+<td style="text-align: center;width:10.25390625%;" valign="top">DPKG</td>
+<td style="text-align: center;width:15.234375%;" valign="top">TARBALL</td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">gpg(GnuPG)(1.4.11)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [29].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">flex(<font color="#FF2600">2.5.X</font>)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [30].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [31].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">bison(<font color="#FF2600">2.4.X</font>)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [32].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [33].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">gperf(<font color="#FF2600">3.0.X</font>)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [34].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [35].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">build-essential(11.5)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [36].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">zip(3.0)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [37].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">curl(7.22.0)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [38].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [39].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">zlib1g-dev(1.2.3.3)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [40].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [41].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">g++-multilib</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [42].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">tofrodos</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [43].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">libc6-dev(2.11.1)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [44].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">libncurses5</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">:</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">i386(5.7)</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [45].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">x11proto</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">core</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev(7.0.16)</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [46].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">libx11</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">:</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">i386(1.3.2)</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [47].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">libreadline6</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">-</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">dev</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start; color: rgb(102, 102, 0);">:</span><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">i386</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [48].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top"><span style="background-color: rgb(247, 247, 247); font-size: 13px; text-align: start;">mingw32</span><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [49].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">gcc-arm-none-eabi(<font color="#FF2600">4.6</font>) <br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [50].png"/><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">JDK(1.6)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [51].png"/><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">wine(&gt;1.1)</td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [52].png"/>(Recommend)<br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [53].png"/><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">perl(<font color="#FF2600">5.10.X</font>)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [54].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">python(<font color="#FF2600">2.6.X</font>)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [55].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">GNU make(<font color="#FF2600">3.81</font>)</td>
+<td style="text-align: center;" valign="top"><img src="MTK ABC_files\en_todo [56].png"/><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="top">GCC<font color="#FF2600">4.4.3</font></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+<td style="text-align: center;" valign="top"><br/></td>
+</tr>
+</table>
+</div>
+<div><span style="font-size: 14px;"><b><br/></b></span></div>
+<pre style="font-size: 13px; color: rgb(0, 102, 0); padding: 1em; overflow: auto; border: 1px solid rgb(221, 221, 221); background-color: rgb(247, 247, 247);">
+<code><span style="color: rgb(0, 0, 0);">$ sudo apt</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 136);">get</span><span style="color: rgb(0, 0, 0);"> install git</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">core gnupg flex bison gperf build</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">essential </span><span style="color: rgb(102, 102, 0);">\</span><span style="color: rgb(0, 0, 0);"><br/>  zip curl zlib1g</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev libc6</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev lib32ncurses5</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev ia32</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">libs </span><span style="color: rgb(102, 102, 0);">\</span><span style="color: rgb(0, 0, 0);"><br/>  x11proto</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">core</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev libx11</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev lib32readline5</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev lib32z</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev </span><span style="color: rgb(102, 102, 0);">\</span><span style="color: rgb(0, 0, 0);"><br/>  libgl1</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">mesa</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">dev g</span><span style="color: rgb(102, 102, 0);">++-</span><span style="color: rgb(0, 0, 0);">multilib mingw32 tofrodos python</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">markdown </span><span style="color: rgb(102, 102, 0);">\</span><span style="color: rgb(0, 0, 0);"><br/>  libxml2</span><span style="color: rgb(102, 102, 0);">-</span><span style="color: rgb(0, 0, 0);">utils xsltproc<br/></span></code>
+</pre>
+<div><br/></div>
+<div><span style="font-size: 14px;"><b><br/></b></span></div>
+<span style="font-size: 14px;"><b>Install JDK 1.6 (recommended installation way)</b></span>
+<div>     <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk-6u29-download-513648.html">http://www.oracle.com/technetwork/java/javase/downloads/</a></div>
+<div>     sudo chmod a+x jdk-6u45-linux-x64.bin</div>
+<div>     ./jdk-6u45-linux-x64.bin <span style="font-size: 14px;"><b><br/></b></span></div>
+<div><br/></div>
+<span style="font-size: 14px;"><b>Check Environment</b></span>
+<div>     If having finished installing your environment to build ALPS,</div>
+<div>     You can use this command </div>
+<div>     ./makeMtk check-env </div>
+<div>     to know if the environment  is prepared <br/></div>
+     Sometime our computers may not meet the lowest hardware requriement for APLS,  
+<div>     So we need to cheat in environment check.      </div>
+<div>     vim ./mediatek/build/tools/checkEnv.py <br/></div>
+<div><br/></div>
+myron@ubuntu1004-pc1:~/code/6572/7172.extract$ cat out/target/product/hct72_cwet_kk_codegen.log
+<div><b>Error(-1): Cgen -c</b></div>
+<div>Usage: <br/></div>
+<div>vim mediatek/config/hct72_cwet_kk/ProjectConfig.mk</div>
+<div>MTK_BUILD_VERNO = ALPS.KK1.MP7.V1  </div>
+<div><br/></div>
+<div><b>Start/Stop MTK Logger</b></div>
+<div>adb shell am broadcast -a com.mediatek.mtklogger.ADB_CMD -e cmd_name start --ei cmd_target 7</div>
+<div>adb shell am broadcast -a com.mediatek.mtklogger.ADB_CMD -e cmd_name stop --ei cmd_target 7</div>
+<div>(start表示开启，stop表示关闭；7可改为1/2/4，分别代表MobileLog/ModemLog/NetworkLog)</div>
+</span>
+</div></body></html> 

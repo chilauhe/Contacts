@@ -1,0 +1,69 @@
+<html>
+<head>
+  <title>[FAQ02499]Android USER 版本与ENG 版本差异</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2456"/>
+<h1>[FAQ02499]Android USER 版本与ENG 版本差异</h1>
+
+<div>
+<span><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">[Description]<br style="box-sizing: border-box;"/>
+Android USER 版本与ENG 版本的差异, 用户版本与工程版本的差异<br style="box-sizing: border-box;"/>
+ <br style="box-sizing: border-box;"/>
+[Keyword]<br style="box-sizing: border-box;"/>
+USER ENG user eng 用户版本 工程版本 差异<br style="box-sizing: border-box;"/>
+ <br style="box-sizing: border-box;"/>
+[Solution]<br style="box-sizing: border-box;"/>
+Google 官方描述: USER/USERDEBUG/ENG 版本的差异, 参考alps/build/core/build-system.html 的详细说明<br style="box-sizing: border-box;"/>
+eng This is the default flavor. A plain make is the same as make eng.<br style="box-sizing: border-box;"/>
+*       Installs modules tagged with: eng, debug, user, and/or development.<br style="box-sizing: border-box;"/>
+*       Installs non-APK modules that have no tags specified.<br style="box-sizing: border-box;"/>
+*       Installs APKs according to the product definition files, in addition to tagged APKs.<br style="box-sizing: border-box;"/>
+*       ro.secure=0<br style="box-sizing: border-box;"/>
+*       ro.debuggable=1<br style="box-sizing: border-box;"/>
+*       ro.kernel.android.checkjni=1<br style="box-sizing: border-box;"/>
+*       adb is enabled by default.<br style="box-sizing: border-box;"/>
+*       Setupwizard is optional<br style="box-sizing: border-box;"/>
+user make user<br style="box-sizing: border-box;"/>
+This is the flavor intended to be the final release bits.<br style="box-sizing: border-box;"/>
+*       Installs modules tagged with user.<br style="box-sizing: border-box;"/>
+*       Installs non-APK modules that have no tags specified.<br style="box-sizing: border-box;"/>
+*       Installs APKs according to the product definition files; tags are ignored for APK modules.<br style="box-sizing: border-box;"/>
+*       ro.secure=1<br style="box-sizing: border-box;"/>
+*       ro.debuggable=0<br style="box-sizing: border-box;"/>
+*       adb is disabled by default.<br style="box-sizing: border-box;"/>
+*       Enable dex pre-optimization for all TARGET projects in default to speed up device first boot-up<br style="box-sizing: border-box;"/>
+userdebug make userdebug<br style="box-sizing: border-box;"/>
+The same as user, except:<br style="box-sizing: border-box;"/>
+*       Also installs modules tagged with debug.<br style="box-sizing: border-box;"/>
+*       ro.debuggable=1<br style="box-sizing: border-box;"/>
+*       adb is enabled by default.</font></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">MTK 补充说明差异:<br style="box-sizing: border-box;"/>
+(1) Debug/LOG 方面，原则上user 版本只能抓到有限的资讯，eng 可以抓到更多的资讯，Debug 能力更强，推崇使用eng 版本开发测试<br style="box-sizing: border-box;"/>
+*       因ro.debuggable 的差异，eng 版本默认开启了app 的JDWP，以及uart console debug; 相对应的user 版本关闭, 导致在DDMS 上无法看到app process 的列表.<br style="box-sizing: border-box;"/>
+*       MTK System LOG 在ICS 以后，在user 版本默认关闭全部LOG， 在eng 版本中默认打开，以便抓到完整的资讯<br style="box-sizing: border-box;"/>
+*       在eng 版本上，LOG 量 &gt;= user 版本的log 量，一些地方会直接check eng/user 版本来确认是否打印LOG<br style="box-sizing: border-box;"/>
+*       user 版本默认关闭uart, eng 版本默认开启uart<br style="box-sizing: border-box;"/>
+*       在eng 版本上，开启ANR 的predump, 会抓取ftrace，可以得到更多ANR的资讯<br style="box-sizing: border-box;"/>
+*       在eng 版本上，可用rtt 抓取backtrace，可开启kdb 进行kernel debug, 可用ftrace 抓取cpu 执行场景<br style="box-sizing: border-box;"/>
+*       MTK aee 在ENG 版本抓取更多的异常资讯，比如native exception 会抓取core dump 信息<br style="box-sizing: border-box;"/>
+*       eng 版本linux kernel 开启了大量的debug 选项，可以抓取出更多的资讯，如可以使用sysrq-trigger, KDB, User 版本则关闭</font></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">(2) 性能方面(Performance)，原则上进行性能测试请使用user 版本测试<br style="box-sizing: border-box;"/>
+*       user 版本为提高第一次开机速度，使用了DVM 的预优化，将dex 文件分解成可直接load 运行的odex 文件，eng 版本不会开启这项优化<br style="box-sizing: border-box;"/>
+*       user 版本相关kernel debug 关闭，有利于提高linux kernel 的性能<br style="box-sizing: border-box;"/>
+*       user 版本更少的LOG 打印，更少的debug 代码，以及uart 的关闭，原则上user 版本的性能要优于eng 版本</font></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">(3) 安全方面(security)的影响<br style="box-sizing: border-box;"/>
+*       eng 版本默认关闭了adb 的PC RSA指纹验证，而user 版本默认开启, 如果没有验证 PC RSA 指纹, adb 连接时将提升devices offline<br style="box-sizing: border-box;"/>
+*       因user/eng 版本设置ro.secure不同，导致user 版本adb 只拥有shell 权限，而eng 版本具有root 权限</font></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">*       eng 版本内置了su, adb 具有root 权限, 导致系统的安全性严重受到影响</font></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">(4) 如何确认user/eng 版本<br style="box-sizing: border-box;"/>
+*       Java 层，check android.os.Build 类中的TYPE 值<br style="box-sizing: border-box;"/>
+*       native 层，property_get(&quot;ro.build.type&quot;, char* value, &quot;eng&quot;); 然后check value 值<br style="box-sizing: border-box;"/>
+*       Debug 时， adb shell getprop ro.build.type 返回值如果是user 即user 版本，eng 即eng 版本<br style="box-sizing: border-box;"/>
+*       Log 确认,  mobile log/Aplog_xxxxx/versions 中查看ro.build.type 属性</font></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><font size="2" style="box-sizing: border-box;">(5) 如何编译user/eng 版本<br style="box-sizing: border-box;"/>
+*       默认编译是eng 版本，如果需要编译user 版本，请加入参数 -o=TARGET_BUILD_VARIANT=user 如:</font><div>        ./mk -o=TARGET_BUILD_VARIANT=user mt6595_phone new</div></div></span>
+</div></body></html> 

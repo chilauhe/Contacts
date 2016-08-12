@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>MTK platform partition meaning</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="6C9BE3F5-51A5-484D-814D-A5D46461FAF0"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2368"/>
+<h1>MTK platform partition meaning</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<span style="-evernote-last-insertion-point:true;"></span>
+<table border="0" style="font-family: verdana, Helvetica, sans-serif !important;">
+<tbody>
+<tr>
+<td>
+<div style="border-bottom-color: rgb(196, 196, 196); border-bottom-width: 1px; border-bottom-style: solid; overflow: hidden; font-size: 12px;">
+<div style="border-left-color: rgb(196, 196, 196); border-left-width: 1px; border-left-style: solid; padding: 10px 15px 20px; background-color: rgb(247, 247, 247); border-right-color: rgb(196, 196, 196); border-right-width: 1px; border-right-style: solid; overflow: hidden; word-break: break-all;">
+<div style="visibility: visible;">
+<div style="visibility: visible;">
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Pre-loader</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Pre-loader image</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Handles all the download and secure boot procedures</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">DSP_BL</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">DSP Boot Loader</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><font size="3"><span lang="EN-US" xml:lang="EN-US">MBR</span>、<span lang="EN-US" xml:lang="EN-US">EBR1</span>、<span lang="EN-US" xml:lang="EN-US">EBR2</span></font></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Ext4 file system partition index table. </font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">PMT</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Partition management table</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">NvRam </font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><font size="3"><span lang="EN-US" xml:lang="EN-US">Stores the hardware related information, such as calibration data, MAC address, IMEI </span>…<span lang="EN-US" xml:lang="EN-US"> etc. </span></font></p>
+<p style="text-indent: -18pt;"><a name="OLE_LINK1"></a><a name="OLE_LINK2"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">SECCFG and SECSTATIC </font></span></a></p>
+<p style="text-indent: -18pt;"><a name="OLE_LINK4"></a><a name="OLE_LINK3"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Reserved for the security platform used</font></span></a></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">U-boot</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Second loader image</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Handles most hardware initializations and bring-up entire Linux kernel</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Boot image</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><font size="3"><span lang="EN-US" xml:lang="EN-US">Linux kernel image and it</span>’<span lang="EN-US" xml:lang="EN-US">s root file system </span></font></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Recovery</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><font size="3"><span lang="EN-US" xml:lang="EN-US">Recovery kernel image and it</span>’<span lang="EN-US" xml:lang="EN-US">s root file system</span></font></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Handles all the system recovery and firmware update functionalities </font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">SEC_RO</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Reserved for the security platform used</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Misc</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Used for the recovery procedure (power loss) </font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Logo</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Boot-up logo image</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">EXPDB</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Store Exception database</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">System</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Android system image</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Cache</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">For  Android internal used </font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Store Android internal cache data or web cache data</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">User data</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><font size="3"><span lang="EN-US" xml:lang="EN-US">Used for Android system to store user data such as user contacts, settings, installed applications </span>…<span lang="EN-US" xml:lang="EN-US"> etc. </span></font></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">FAT</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Internal sdcard on emmc</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">OTP</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">–</font><span style="font-size: 7pt;">  </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">Otp(one time program) area on emmc</font></span></p>
+<p style="text-indent: -18pt;"><span lang="EN-US" xml:lang="EN-US"><font size="3">▪</font><span style="font-size: 7pt;">       </span></span><span lang="EN-US" xml:lang="EN-US"><font size="3">BMTPOOL</font></span></p>
+<p style="text-indent: 71.5pt;"><font size="3"><span lang="EN-US" xml:lang="EN-US">Handles Bad Block Management</span>（<span lang="EN-US" xml:lang="EN-US">nandflash used and reserved on emmc</span>）</font></p>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div><br/></div>
+<br/>
+</span>
+</div></body></html> 

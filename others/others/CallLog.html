@@ -1,0 +1,687 @@
+<html>
+<head>
+  <title>CallLog</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="679A7F38-CC22-40A3-AB93-6143C0683D59"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2355"/>
+<h1>CallLog</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<a href="http://developer.android.com/reference/android/provider/CallLog.html">http://developer.android.com/reference/android/provider/CallLog.html</a>
+<div><br/></div>
+<div><a href="http://developer.android.com/reference/android/provider/CallLog.Calls.html">http://developer.android.com/reference/android/provider/CallLog.Calls.html</a><br/></div>
+<div><br/></div>
+<div><br/></div>
+<span style="font-family: Helvetica; font-size: 14px;">建议贵司先study一下contacts database表单结构</span>
+<div><a href="http://developer.android.com/guide/topics/providers/contacts-provider.html" style="font-family: Helvetica; font-size: 14px;">http://developer.android.com/guide/topics/providers/contacts-provider.html</a></div>
+<div><br style="font-family: Helvetica; font-size: 14px;"/>
+<br/></div>
+<div><span style="font-family: Helvetica; font-size: 14px;">然后可以将手机中database取出查看(./data/data/com.android.providers.contacts/databases/contacts2.db)</span></div>
+<div><br style="font-family: Helvetica; font-size: 14px;"/>
+<br/></div>
+<div><span style="font-family: Helvetica; font-size: 14px;">修改添加栏位的话，可以主要查看文件ContactsDatabaseHelper.java，注意OTA的情况（onUpgrade()）</span><br/></div>
+<div><br/></div>
+<span style="-evernote-last-insertion-point:true;"></span><br/>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       负责存放呼叫</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">记录</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">的内容提供者源码在 ContactsProvider 项目下： </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       源码路径： </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       com/android/providers/contacts/CallLogProvider.java </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       使用到的</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">数据库</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">在： </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       /data/data/com.android.providers.contacts/databases/contacts2.db </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);"><br/></span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       表名:calls </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       呼叫</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">记录</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">有三种类型： </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       来电：CallLog.Calls.INCOMING_TYPE （常量值：1） </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       已拨：CallLog.Calls.OUTGOING_TYPE（常量值：2） </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       未接：CallLog.Calls.MISSED_TYPE（常量值：3） </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       查看源码中的声明： </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">              &lt;provider android:name=&quot;CallLogProvider&quot; </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">                   android:authorities=&quot;call_log&quot; </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">                   android:syncable=&quot;false&quot; android:multiprocess=&quot;false&quot; </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">                   android:readPermission=&quot;android.permission.READ_CONTACTS&quot; </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">                   android:writePermission=&quot;android.permission.WRITE_CONTACTS&quot;&gt; </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">               &lt;/provider&gt; </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">3.需要声明的权限 </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       &lt;uses-permission android:name=&quot;android.permission.READ_CONTACTS&quot; /&gt; </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       &lt;uses-permission android:name=&quot;android.permission.WRITE_CONTACTS&quot; /&gt; </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">4. 系统的</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">通话</strong><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">记录</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">，是通过 ContentProvider 来对外共享的 </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">5. Uri </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       CallLog.Calls.CONTENT_URI : 等价于：Uri.parse(&quot;content://call_log/calls&quot;); </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">6. 查询出所有</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">记录</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);"> </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       ContentResolver resolver = getContentResolver(); </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       resolver.query(CallLog.Calls.CONTENT_URI, null, null, new String[]{&quot;15101689022&quot;}, null); </span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">7. 查询某一个</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">联系人</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">的所有</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">记录</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">（按电话号码） </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       resolver.query(CallLog.Calls.CONTENT_URI, null, &quot;number=?&quot;, new String[]{&quot;15101689022&quot;}, null);</span></div>
+<div><br/></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">8. 查询某一个</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">联系人</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">的所有未接电话</span><strong style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px;">记录</strong><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">（按电话号码） </span></div>
+<div><span style="font-family: 'Microsoft YaHei', 微软雅黑, Lucida, Verdana, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif; font-size: 14px; line-height: 24px; background-color: rgb(255, 255, 255);">       resolver.query(CallLog.Calls.CONTENT_URI, null, &quot;number=? and type=3&quot;, new String[]{&quot;15101689022&quot;}, null);</span><br/></div>
+<div><br/></div>
+<h1 style="padding: 0px; font-size: 18px; line-height: 24px;"><a href="http://m.blog.csdn.net/blog/wangqilin8888/7407975#" style="text-decoration: none; color: rgb(0, 0, 0);">[原]分析通话记录信息是通过什么写入的 android 源码 保存通话记录</a></h1>
+<p style="padding: 0px; font-size: 16px; line-height: 24px;"><span style="padding: 0px; color: rgb(102, 102, 102);">2012-3-29</span><span style="padding: 0px; color: rgb(102, 102, 102);">阅读2377</span> <a href="http://m.blog.csdn.net/blog/wangqilin8888/7407975#comment" style="text-decoration: none; color: rgb(102, 102, 102);">评论<span style="padding: 0px;">3</span></a></p>
+<div style="overflow: hidden; font-size: 16px; line-height: 24px;">
+<p style="padding: 0px;">     当来电或去电时，通过记录里的信息是怎么保存下来的呢？</p>
+<p style="padding: 0px;">      在CallNotifier.java代码里有这样一个方法：</p>
+<p style="padding: 0px;">      </p>
+<pre style="border: 1px solid rgb(255, 255, 204); background-color: rgb(255, 255, 252); font-family: 'Courier New'; overflow: auto;">
+    private void onDisconnect(AsyncResult r) {
+        if (VDBG) log(&quot;onDisconnect()...  CallManager state: &quot; + mCM.getState());
+
+        Connection c = (Connection) r.result;
+        mDisconnectNumber = c.getAddress();
+        if (DBG) log(&quot;mDisconnectNumber:&quot; + mDisconnectNumber);
+        if (DBG &amp;&amp; c != null) {
+            log(&quot;- onDisconnect: cause = &quot; + c.getDisconnectCause()
+                + &quot;, incoming = &quot; + c.isIncoming()
+                + &quot;, date = &quot; + c.getCreateTime());
+        }
+
+
+        mCdmaVoicePrivacyState = false;
+        int autoretrySetting = 0;
+        if ((c != null) &amp;&amp; (c.getCall().getPhone().getPhoneType() == Phone.PHONE_TYPE_CDMA)) {
+            autoretrySetting = android.provider.Settings.System.getInt(mApplication.
+                    getContentResolver(),android.provider.Settings.System.CALL_AUTO_RETRY, 0);
+        }
+
+        if ((c != null) &amp;&amp; (c.getCall().getPhone().getPhoneType() == Phone.PHONE_TYPE_CDMA)) {
+            // Stop any signalInfo tone being played when a call gets ended
+            stopSignalInfoTone();
+
+            // Resetting the CdmaPhoneCallState members
+            mApplication.cdmaPhoneCallState.resetCdmaPhoneCallState();
+
+            // Remove Call waiting timers
+            removeMessages(CALLWAITING_CALLERINFO_DISPLAY_DONE);
+            removeMessages(CALLWAITING_ADDCALL_DISABLE_TIMEOUT);
+        }
+
+        // Stop the ringer if it was ringing (for an incoming call that
+        // either disconnected by itself, or was rejected by the user.)
+        //
+        // TODO: We technically *shouldn't* stop the ringer if the
+        // foreground or background call disconnects while an incoming call
+        // is still ringing, but that's a really rare corner case.
+        // It's safest to just unconditionally stop the ringer here.
+
+        // CDMA: For Call collision cases i.e. when the user makes an out going call
+        // and at the same time receives an Incoming Call, the Incoming Call is given
+        // higher preference. At this time framework sends a disconnect for the Out going
+        // call connection hence we should *not* be stopping the ringer being played for
+        // the Incoming Call
+        Call ringingCall = mCM.getFirstActiveRingingCall();
+        if (ringingCall.getPhone().getPhoneType() == Phone.PHONE_TYPE_CDMA) {
+            if (PhoneUtils.isRealIncomingCall(ringingCall.getState())) {
+                // Also we need to take off the &quot;In Call&quot; icon from the Notification
+                // area as the Out going Call never got connected
+                if (DBG) log(&quot;cancelCallInProgressNotification()... (onDisconnect)&quot;);
+                NotificationMgr.getDefault().cancelCallInProgressNotification();
+            } else {
+                if (DBG) log(&quot;stopRing()... (onDisconnect)&quot;);
+                mRinger.stopRing();
+            }
+        } else { // GSM
+            if (DBG) log(&quot;stopRing()... (onDisconnect)&quot;);
+            mRinger.stopRing();
+        }
+
+        // stop call waiting tone if needed when disconnecting
+        if (mCallWaitingTonePlayer != null) {
+            mCallWaitingTonePlayer.stopTone();
+            mCallWaitingTonePlayer = null;
+        }
+        // Check for the various tones we might need to play (thru the
+        // earpiece) after a call disconnects.
+        int toneToPlay = InCallTonePlayer.TONE_NONE;
+
+        // The &quot;Busy&quot; or &quot;Congestion&quot; tone is the highest priority:
+        if (c != null) {
+            Connection.DisconnectCause cause = c.getDisconnectCause();
+            if (cause == Connection.DisconnectCause.BUSY) {
+                if (DBG) log(&quot;- need to play BUSY tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_BUSY;
+            } else if (cause == Connection.DisconnectCause.CONGESTION) {
+                if (DBG) log(&quot;- need to play CONGESTION tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_CONGESTION;
+            } else if (((cause == Connection.DisconnectCause.NORMAL)
+                    || (cause == <a href="http://Connection.DisconnectCause.LOCAL">Connection.DisconnectCause.LOCAL</a>))
+                    &amp;&amp; (mApplication.isOtaCallInActiveState())) {
+                if (DBG) log(&quot;- need to play OTA_CALL_END tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_OTA_CALL_END;
+            } else if (cause == Connection.DisconnectCause.CDMA_REORDER) {
+                if (DBG) log(&quot;- need to play CDMA_REORDER tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_REORDER;
+            } else if (cause == Connection.DisconnectCause.CDMA_INTERCEPT) {
+                if (DBG) log(&quot;- need to play CDMA_INTERCEPT tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_INTERCEPT;
+            } else if (cause == Connection.DisconnectCause.CDMA_DROP) {
+                if (DBG) log(&quot;- need to play CDMA_DROP tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_CDMA_DROP;
+            } else if (cause == Connection.DisconnectCause.OUT_OF_SERVICE) {
+                if (DBG) log(&quot;- need to play OUT OF SERVICE tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_OUT_OF_SERVICE;
+            } else if (cause == Connection.DisconnectCause.UNOBTAINABLE_NUMBER) {
+                if (DBG) log(&quot;- need to play TONE_UNOBTAINABLE_NUMBER tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_UNOBTAINABLE_NUMBER;
+            } else if (cause == Connection.DisconnectCause.ERROR_UNSPECIFIED) {
+                if (DBG) log(&quot;- DisconnectCause is ERROR_UNSPECIFIED: play TONE_CALL_ENDED!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_CALL_ENDED;
+            }
+        }
+
+        // If we don't need to play BUSY or CONGESTION, then play the
+        // &quot;call ended&quot; tone if this was a &quot;regular disconnect&quot; (i.e. a
+        // normal call where one end or the other hung up) *and* this
+        // disconnect event caused the phone to become idle.  (In other
+        // words, we *don't* play the sound if one call hangs up but
+        // there's still an active call on the other line.)
+        // TODO: We may eventually want to disable this via a preference.
+        if ((toneToPlay == InCallTonePlayer.TONE_NONE)
+            &amp;&amp; (mCM.getState() == Phone.State.IDLE)
+            &amp;&amp; (c != null)) {
+            Connection.DisconnectCause cause = c.getDisconnectCause();
+            if ((cause == Connection.DisconnectCause.NORMAL)  // remote hangup
+                || (cause == <a href="http://Connection.DisconnectCause.LOCAL">Connection.DisconnectCause.LOCAL</a>)) {  // local hangup
+                if (VDBG) log(&quot;- need to play CALL_ENDED tone!&quot;);
+                toneToPlay = InCallTonePlayer.TONE_CALL_ENDED;
+                mIsCdmaRedialCall = false;
+            }
+        }
+
+        if (mCM.getState() == Phone.State.IDLE) {
+            // Don't reset the audio mode or bluetooth/speakerphone state
+            // if we still need to let the user hear a tone through the earpiece.
+            if (toneToPlay == InCallTonePlayer.TONE_NONE) {
+                int currentMode = mAudioManager.getMode();
+                if(AudioManager.MODE_IN_VT_CALL == currentMode){
+                    if(!isVTConnected){
+                        resetAudioStateAfterDisconnect();
+                    }else{
+                        isNeedResetAudio = true;
+                        sendEmptyMessageDelayed(DELAY_RESET_AUDIO_MODE, 5000);
+                    }
+                }else{
+                    resetAudioStateAfterDisconnect();
+                }
+            }
+
+            NotificationMgr.getDefault().cancelCallInProgressNotification();
+
+            // If the InCallScreen is *not* in the foreground, forcibly
+            // dismiss it to make sure it won't still be in the activity
+            // history.  (But if it *is* in the foreground, don't mess
+            // with it; it needs to be visible, displaying the &quot;Call
+            // ended&quot; state.)
+            if (!mApplication.isShowingCallScreen()) {
+                if (VDBG) log(&quot;onDisconnect: force InCallScreen to finish()&quot;);
+                mApplication.dismissCallScreen();
+            } else {
+                if (VDBG) log(&quot;onDisconnect: In call screen. Set short timeout.&quot;);
+                mApplication.clearUserActivityTimeout();
+            }
+        }
+
+        if (c != null) {
+            final String number = c.getAddress();
+            final long date = c.getCreateTime();
+            final long duration = c.getDurationMillis();
+            final Connection.DisconnectCause cause = c.getDisconnectCause();
+            final Phone phone = c.getCall().getPhone();
+
+            final int dialType;
+            if (PhoneApp.getInstance().isVTCall())
+                    dialType = CallLog.Calls.VIDEO_DIAL;
+            else
+                    dialType = CallLog.Calls.VOICE_DIAL;
+            // Set the &quot;type&quot; to be displayed in the call log (see constants in CallLog.Calls)
+            final int callLogType;
+            if (c.isIncoming()) {
+                callLogType = (cause == Connection.DisconnectCause.INCOMING_MISSED ?
+                               Calls.MISSED_TYPE : Calls.INCOMING_TYPE);
+            } else {
+                callLogType = Calls.OUTGOING_TYPE;
+            }
+            if (VDBG) log(&quot;- callLogType: &quot; + callLogType + &quot;, UserData: &quot; + c.getUserData());
+
+
+            {
+                final CallerInfo ci = getCallerInfoFromConnection(c);  // May be null.
+                final String logNumber = getLogNumber(c, ci);
+
+                if (DBG) log(&quot;- onDisconnect(): logNumber set to: &quot; + /*logNumber*/ &quot;xxxxxxx&quot;);
+
+                // TODO: In getLogNumber we use the presentation from
+                // the connection for the CNAP. Should we use the one
+                // below instead? (comes from caller info)
+
+                // For international calls, 011 needs to be logged as +
+                final int presentation = getPresentation(c, ci);
+
+                if (phone.getPhoneType() == Phone.PHONE_TYPE_CDMA) {
+                    if ((PhoneNumberUtils.isEmergencyNumber(number))
+                            &amp;&amp; (mCurrentEmergencyToneState != EMERGENCY_TONE_OFF)) {
+                        if (mEmergencyTonePlayerVibrator != null) {
+                            mEmergencyTonePlayerVibrator.stop();
+                        }
+                    }
+                }
+
+                // To prevent accidental redial of emergency numbers
+                // (carrier requirement) the quickest solution is to
+                // not log the emergency number. We gate on CDMA
+                // (ugly) when we actually mean carrier X.
+                // TODO: Clean this up and come up with a unified strategy.
+                final boolean shouldNotlogEmergencyNumber =
+                        (phone.getPhoneType() == Phone.PHONE_TYPE_CDMA);
+
+                // Don't call isOtaSpNumber on GSM phones.
+                final boolean isOtaNumber = (phone.getPhoneType() == Phone.PHONE_TYPE_CDMA)
+                        &amp;&amp; phone.isOtaSpNumber(number);
+                final boolean isEmergencyNumber = PhoneNumberUtils.isEmergencyNumber(number);
+
+                <span style="padding: 0px; color: rgb(102, 204, 204);">// Don't put OTA or CDMA Emergency calls into call log
+                if (!(isOtaNumber || isEmergencyNumber &amp;&amp; shouldNotlogEmergencyNumber ||
+                                        mIsPhoneNumberInBlackList)) {
+                        <span style="padding: 0px; color: rgb(255, 0, 0);">CallLogAsync.AddCallArgs args =
+                            new CallLogAsync.AddCallArgs(
+                                mApplication, ci, logNumber, presentation,
+                                callLogType, date, duration, dialType);
+</span>
+                    mCallLog.addCall(args);
+                    mIsPhoneNumberInBlackList = false;
+                }
+            }
+
+</span>            if (callLogType == Calls.MISSED_TYPE) {
+                // Show the &quot;Missed call&quot; notification.
+                // (Note we *don't* do this if this was an incoming call that
+                // the user deliberately rejected.)
+                showMissedCallNotification(c, date);
+            }
+
+            // Possibly play a &quot;post-disconnect tone&quot; thru the earpiece.
+            // We do this here, rather than from the InCallScreen
+            // activity, since we need to do this even if you're not in
+            // the Phone UI at the moment the connection ends.
+            if (toneToPlay != InCallTonePlayer.TONE_NONE) {
+                if (VDBG) log(&quot;- starting post-disconnect tone (&quot; + toneToPlay + &quot;)...&quot;);
+                new InCallTonePlayer(toneToPlay).start();
+
+                // TODO: alternatively, we could start an InCallTonePlayer
+                // here with an &quot;unlimited&quot; tone length,
+                // and manually stop it later when this connection truly goes
+                // away.  (The real connection over the network was closed as soon
+                // as we got the BUSY message.  But our telephony layer keeps the
+                // connection open for a few extra seconds so we can show the
+                // &quot;busy&quot; indication to the user.  We could stop the busy tone
+                // when *that* connection's &quot;disconnect&quot; event comes in.)
+            }
+
+            if (mCM.getState() == Phone.State.IDLE) {
+                // Release screen wake locks if the in-call screen is not
+                // showing. Otherwise, let the in-call screen handle this because
+                // it needs to show the call ended screen for a couple of
+                // seconds.
+                if (!mApplication.isShowingCallScreen()) {
+                    if (VDBG) log(&quot;- NOT showing in-call screen; releasing wake locks!&quot;);
+                    mApplication.setScreenTimeout(PhoneApp.ScreenTimeoutDuration.DEFAULT);
+                    mApplication.requestWakeState(PhoneApp.WakeState.SLEEP);
+                } else {
+                    if (VDBG) log(&quot;- still showing in-call screen; not releasing wake locks.&quot;);
+                }
+            } else {
+                if (VDBG) log(&quot;- phone still in use; not releasing wake locks.&quot;);
+            }
+
+            if (((mPreviousCdmaCallState == Call.State.DIALING)
+                    || (mPreviousCdmaCallState == Call.State.ALERTING))
+                    &amp;&amp; (!PhoneNumberUtils.isEmergencyNumber(number))
+                    &amp;&amp; (cause != Connection.DisconnectCause.INCOMING_MISSED )
+                    &amp;&amp; (cause != Connection.DisconnectCause.NORMAL)
+                    &amp;&amp; (cause != <a href="http://Connection.DisconnectCause.LOCAL">Connection.DisconnectCause.LOCAL</a>)
+                    &amp;&amp; (cause != Connection.DisconnectCause.INCOMING_REJECTED)) {
+                if (!mIsCdmaRedialCall) {
+                    if (autoretrySetting == InCallScreen.AUTO_RETRY_ON) {
+                        // TODO: (Moto): The contact reference data may need to be stored and use
+                        // here when redialing a call. For now, pass in NULL as the URI parameter.
+                        PhoneUtils.placeCall(phone, number, null);
+                        mIsCdmaRedialCall = true;
+                    } else {
+                        mIsCdmaRedialCall = false;
+                    }
+                } else {
+                    mIsCdmaRedialCall = false;
+                }
+            }
+        }
+    }
+</pre>
+<p style="padding: 0px;"> </p>
+<p style="padding: 0px;">CDMA情况：</p>
+<pre style="border: 1px solid rgb(255, 255, 204); background-color: rgb(255, 255, 252); font-family: 'Courier New'; overflow: auto;">
+    /**
+     * Performs Call logging based on Timeout or Ignore Call Waiting Call for CDMA,
+     * and finally calls Hangup on the Call Waiting connection.
+     *
+     * This method should be called only from the UI thread.
+     * @see sendCdmaCallWaitingReject()
+     */
+    private void onCdmaCallWaitingReject() {
+        final Call ringingCall = mCM.getFirstActiveRingingCall();
+
+        // Call waiting timeout scenario
+        if (ringingCall.getState() == Call.State.WAITING) {
+            // Code for perform Call logging and missed call notification
+            Connection c = ringingCall.getLatestConnection();
+
+            if (c != null) {
+                String number = c.getAddress();
+                int presentation = c.getNumberPresentation();
+                final long date = c.getCreateTime();
+                final long duration = c.getDurationMillis();
+                final int callLogType = mCallWaitingTimeOut ?
+                        Calls.MISSED_TYPE : Calls.INCOMING_TYPE;
+
+                // get the callerinfo object and then log the call with it.
+                Object o = c.getUserData();
+                final CallerInfo ci;
+                if ((o == null) || (o instanceof CallerInfo)) {
+                    ci = (CallerInfo) o;
+                } else {
+                    ci = ((PhoneUtils.CallerInfoToken) o).currentInfo;
+                }
+
+                // add this to judge dial type
+                final int dialType;
+                if (PhoneApp.getInstance().isVTCall())
+                        dialType = CallLog.Calls.VIDEO_DIAL;
+                else
+                        dialType = CallLog.Calls.VOICE_DIAL;
+
+                // Do final CNAP modifications of logNumber prior to logging [mimicking
+                // onDisconnect()]
+                final String logNumber = PhoneUtils.modifyForSpecialCnapCases(
+                        mApplication, ci, number, presentation);
+                final int newPresentation = (ci != null) ? ci.numberPresentation : presentation;
+                if (DBG) log(&quot;- onCdmaCallWaitingReject(): logNumber set to: &quot; + logNumber
+                        + &quot;, newPresentation value is: &quot; + newPresentation);
+
+                <span style="padding: 0px; color: rgb(255, 0, 0);">CallLogAsync.AddCallArgs args =
+                        new CallLogAsync.AddCallArgs(
+                            mApplication, ci, logNumber, presentation,
+                            callLogType, date, duration, dialType);
+
+</span>                mCallLog.addCall(args);
+
+                if (callLogType == Calls.MISSED_TYPE) {
+                    // Add missed call notification
+                    showMissedCallNotification(c, date);
+                } else {
+                    // Remove Call waiting 20 second display timer in the queue
+                    removeMessages(CALLWAITING_CALLERINFO_DISPLAY_DONE);
+                }
+
+                // Hangup the RingingCall connection for CW
+                PhoneUtils.hangup(c);
+            }
+
+            //Reset the mCallWaitingTimeOut boolean
+            mCallWaitingTimeOut = false;
+        }
+    }
+</pre>
+<p style="padding: 0px;"> </p>
+<p style="padding: 0px;">通过上述的红色部分，调用了： <span style="padding: 0px; color: rgb(255, 0, 0);">CallLogAsync.AddCallArgs  </span><span style="padding: 0px;">的AddCallArgs方法，而CallLogAsync.java是管理通讯录的接口。</span></p>
+<pre style="border: 1px solid rgb(255, 255, 204); background-color: rgb(255, 255, 252); font-family: 'Courier New'; overflow: auto;">
+/*
+ * Copyright (C) 2010 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.phone;
+import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Looper;
+import android.provider.CallLog.Calls;
+import android.util.Log;
+import com.android.internal.telephony.CallerInfo;
+
+/**
+ * Class to access the call logs database asynchronously since
+ * database ops can take a long time depending on the system's load.
+ * It uses AsyncTask which has its own thread pool.
+ *
+ * &lt;pre class=&quot;prettyprint&quot;&gt;
+ * Typical usage:
+ * ==============
+ *
+ *  // From an activity...
+ *  String mLastNumber = &quot;&quot;;
+ *
+ *  CallLogAsync log = new CallLogAsync();
+ *
+ *  CallLogAsync.AddCallArgs addCallArgs = new CallLogAsync.AddCallArgs(
+ *      this, ci, number, presentation, type, timestamp, duration);
+ *
+ *  log.addCall(addCallArgs);
+ *
+ *  CallLogAsync.GetLastOutgoingCallArgs lastCallArgs = new CallLogAsync.GetLastOutgoingCallArgs(
+ *      this, new CallLogAsync.OnLastOutgoingCallComplete() {
+ *               public void lastOutgoingCall(String number) { mLastNumber = number; }
+ *            });
+ *  log.getLastOutgoingCall(lastCallArgs);
+ * &lt;/pre&gt;
+ *
+ */
+
+public class CallLogAsync {
+    private static final String TAG = &quot;CallLogAsync&quot;;
+
+    /**
+     * Parameter object to hold the args to add a call in the call log DB.
+     */
+    public static class <span style="padding: 0px; color: rgb(255, 0, 0);">AddCallArgs </span>{
+        /**
+         * @param ci               CallerInfo.
+         * @param number           To be logged.
+         * @param presentation     Of the number.
+         * @param callType         The type of call (e.g INCOMING_TYPE). @see
+         *                         android.provider.CallLog for the list of values.
+         * @param timestamp        Of the call (millisecond since epoch).
+         * @param durationInMillis Of the call (millisecond).
+         */
+        public AddCallArgs(Context context,
+                           CallerInfo ci,
+                           String number,
+                           int presentation,
+                           int callType,
+                           long timestamp,
+                           long durationInMillis,
+                           int dialType) {
+            // Note that the context is passed each time. We could
+            // have stored it in a member but we've run into a bunch
+            // of memory leaks in the past that resulted from storing
+            // references to contexts in places that were long lived
+            // when the contexts were expected to be short lived. For
+            // example, if you initialize this class with an Activity
+            // instead of an Application the Activity can't be GCed
+            // until this class can, and Activities tend to hold
+            // references to large amounts of RAM for things like the
+            // bitmaps in their views.
+            //
+            // Having hit more than a few of those bugs in the past
+            // we've grown cautious of storing references to Contexts
+            // when it's not very clear that the thing holding the
+            // references is tightly tied to the Context, for example
+            // Views the Activity is displaying.
+
+            this.context = context;
+            <a href="http://this.ci">this.ci</a> = ci;
+            this.number = number;
+            this.presentation = presentation;
+            this.callType = callType;
+            this.timestamp = timestamp;
+            this.durationInSec = (int)(durationInMillis / 1000);
+            this.dialType = dialType;
+        }
+        // Since the members are accessed directly, we don't use the
+        // mXxxx notation.
+        public final Context context;
+        public final CallerInfo ci;
+        public final String number;
+        public final int presentation;
+        public final int callType;
+        public final long timestamp;
+        public final int durationInSec;
+        public final int dialType;
+    }
+
+    /**
+     * Parameter object to hold the args to get the last outgoing call
+     * from the call log DB.
+     */
+    public static class GetLastOutgoingCallArgs {
+        public GetLastOutgoingCallArgs(Context context,
+                                       OnLastOutgoingCallComplete callback) {
+            this.context = context;
+            this.callback = callback;
+        }
+        public final Context context;
+        public final OnLastOutgoingCallComplete callback;
+    }
+
+    /**
+     * Non blocking version of CallLog.addCall(...)
+     */
+    public AsyncTask addCall(AddCallArgs args) {
+        assertUiThread();
+        return new AddCallTask().execute(args);
+    }
+
+    /** Interface to retrieve the last dialed number asynchronously. */
+    public interface OnLastOutgoingCallComplete {
+        /** @param number The last dialed number or an empty string if
+         *                none exists yet. */
+        void lastOutgoingCall(String number);
+    }
+
+    /**
+     * CallLog.getLastOutgoingCall(...)
+     */
+    public AsyncTask getLastOutgoingCall(GetLastOutgoingCallArgs args) {
+        assertUiThread();
+        return new GetLastOutgoingCallTask(args.callback).execute(args);
+    }
+
+    /**
+     * AsyncTask to save calls in the DB.
+     */
+    private class <span style="padding: 0px; color: rgb(255, 0, 0);">AddCallTask </span>extends AsyncTask&lt;AddCallArgs, Void, Uri[]&gt; {
+        @Override
+        protected Uri[] doInBackground(AddCallArgs... callList) {
+            int count = callList.length;
+            Uri[] result = new Uri[count];
+            //Add by kylin 2012.02.14
+            try {
+                for (int i = 0; i &lt; count; i++) {
+                    AddCallArgs c = callList[i];
+
+                    
+                    // May block.
+                    result[i] = Calls.addCall(
+                        <a href="http://c.ci">c.ci</a>, c.context, c.number, c.presentation,
+                        c.callType, c.timestamp, c.durationInSec, c.dialType);
+                    
+                }
+                        } catch (Exception e) {
+                                // TODO: handle exception
+                        }
+            //end
+            return result;
+        }
+
+        // Perform a simple sanity check to make sure the call was
+        // written in the database. Typically there is only one result
+        // per call so it is easy to identify which one failed.
+        @Override
+        protected void onPostExecute(Uri[] result) {
+            for (Uri uri : result) {
+                if (uri == null) {
+                    Log.e(TAG, &quot;Failed to write call to the log.&quot;);
+                }
+            }
+        }
+    }
+
+    /**
+     * AsyncTask to get the last outgoing call from the DB.
+     */
+    private class GetLastOutgoingCallTask extends AsyncTask&lt;GetLastOutgoingCallArgs, Void, String&gt; {
+        private final OnLastOutgoingCallComplete mCallback;
+        private String mNumber;
+        public GetLastOutgoingCallTask(OnLastOutgoingCallComplete callback) {
+            mCallback = callback;
+        }
+
+        // Happens on a background thread. We cannot run the callback
+        // here because only the UI thread can modify the view
+        // hierarchy (e.g enable/disable the dial button). The
+        // callback is ran rom the post execute method.
+        @Override
+        protected String doInBackground(GetLastOutgoingCallArgs... list) {
+            int count = list.length;
+            String number = &quot;&quot;;
+            for (GetLastOutgoingCallArgs args : list) {
+                // May block. Select only the last one.
+                number = Calls.getLastOutgoingCall(args.context);
+            }
+            return number;  // passed to the onPostExecute method.
+        }
+
+        // Happens on the UI thread, it is safe to run the callback
+        // that may do some work on the views.
+        @Override
+        protected void onPostExecute(String number) {
+            assertUiThread();
+            mCallback.lastOutgoingCall(number);
+        }
+    }
+
+    private void assertUiThread() {
+        if (!Looper.getMainLooper().equals(Looper.myLooper())) {
+            throw new RuntimeException(&quot;Not on the UI thread!&quot;);
+        }
+    } 
+</pre></div>
+<div><span style="font-family: 'Courier New'; background-color: rgb(255, 255, 252); font-size: 16px; line-height: 24px;">}</span><br/></div>
+</span>
+</div></body></html> 

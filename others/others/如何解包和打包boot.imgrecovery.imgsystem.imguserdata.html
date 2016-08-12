@@ -1,0 +1,87 @@
+<html>
+<head>
+  <title>如何解包和打包boot.img/recovery.img/system.img/userdata.img</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="93966F50-2FB1-4556-8905-1CDE2C9F2397"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2372"/>
+<h1>如何解包和打包boot.img/recovery.img/system.img/userdata.img</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4"><span style="-evernote-last-insertion-point:true;"></span>[DESCRIPTION]</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">      </font><font size="2">MTK在ALPS codebase中已经提供了针对boot.img/recovery.img/system.img(ext4)/userdata.img(ext4)的解包和打包工具，主要针对以下几种应用场景：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3"><font size="2">(1) 在debug时，需要快速修改或替换image中的文件然后再打包dowload到手机中做验证;</font></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3"><font size="2">(2) 解包image后替换其中的资源文件或APK，即客制化ROM的操作，然后再打包生成新的ROM;</font></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3"><font size="2">(3) 客退机，产线download或stress test后无法正常开机，这时需要解包比较image中内容是否有被修改或变化;  </font>  </font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4">[KEYWORD]</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">打包(pack)</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">解包(unpack)</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">boot.img</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">recovery.img</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">system.img</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">userdata.img</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4">[SOLUTION]</font></div>
+<ul style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<li><font size="2">解包/打包工具路径：<font color="#FF0000">alps/mediatek/build/tools/images/</font></font></li>
+<li><font size="2">对于较早的JB2/JB3/JB5 branch, 工具会存在使用异常，因此请先确认是否有打上<font color="#FF0000">ALPS00393168</font>这笔Patch，如果没有的话，请到PMS系统申请。</font></li>
+<li><font size="2">该工具只能解包和打包针对emmc的ext4格式的system.img/userdata.img，针对nand flash的ubifs格式的system.img/userdata.img暂时还不能支援。</font></li>
+</ul>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4"><strong>环境设定</strong>：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">1. alps/mediatek/build/tools/images/目录下的工具只能在Linux环境下使用，建议最好是在可以正常build ALPS的机器上来运行以减少软件兼容性方面的问题；</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">2. 这个工具基于python，python版本(python --version查看版本)请严格按照ALPS_Build_Environment_on_Ubuntu_10.04_64-bit_Installation_SOP_4.x.docx配置，比如ICS/JB版本使用2.6.X，否则可能出现错误：RuntimeError: Bad magic number in .pyc file;</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">3. alps/mediatek/build/tools/images/目录下的工具可以整体拷贝到一个目录下(tool_dir)，然后编辑~/.bashrc文件把tool_dir添加到$PATH环境变量中，然后source ~/.bashrc使设置生效；</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">     当然也可以直接把要解包的image拷贝到alps/mediatek/build/tools/images/目录下直接在该目录下执行解包/打包工具。</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4"><img src="如何解包和打包boot.imgrecovery.imgsystem.imguserdata_files/Image.jpg" type="image/jpeg" alt="image tools"/></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4"><strong>Image解包</strong>：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4">  </font><font size="2">  Image解包使用的工具是diff.pyc，</font><font size="2">用法如下,</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3"><strong>* diff.pyc  &lt;image_file&gt;</strong></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">- 把image解包到/tmp/tmpXXXXXX这样的目录下，目录名称会被随机定义.</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><img src="如何解包和打包boot.imgrecovery.imgsystem.imguserdata_files/Image [1].jpg" type="image/jpeg" alt="unpack"/></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><strong><font color="#FF0000" size="3">或 </font></strong></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><strong><font size="3">* diff.pyc -o &lt;output_dir&gt;  &lt;image_file&gt;</font></strong></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">- &lt;output_dir&gt;是自己定义将要解包的目录，可以是绝对路径或相对路径.</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">- &lt;image_file&gt;是被解包的image，name并不限定于boot.img/recovery.img/system.img/userdata.img，这里不会检查image name，而是会自动判断image的类型；</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">- 如果解包的是boot.img和recovery.img，额外在&lt;output_dir&gt;的同级目录下还会生成kernel image，命名方法是&lt;output_dir&gt;-kernel</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">  比如要解包boot.img到当前目录下的ramdisk目录，那么执行diff.pyc -o ramdisk boot.img之后，就会在当前目录下生成ramdisk-kernel文件.</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">- <font color="#FF0000">需要注意的的是解包boot.img/recovery.img时，传入的&lt;output_dir&gt;路径的最后请不要带上&quot;/&quot;，否则生成的kernel image文件会跑到&lt;output_dir&gt;目录下并被命名成-kernel</font>.</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">     diff.pyc可以同时对<font color="#FF0000">sparse</font>(透过build flow编译生成)和<font color="#FF0000">raw</font> ext4(透过flash tool从手机readback)格式的image进行解包操作。如果您需要从手机中readback回image后再解包，那么请先参考以下这两个FAQ:</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font color="#FF0000">[FAQ05169][Storage]如何从手机上readback任意分区的image回来？</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font color="#FF0000">[FAQ10347][SP FlashTool]MT6592平台在format,readback,write memory时需要选择对应的emmc region</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3"><strong>Image打包</strong>：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">      Image打包使用的工具是pack.pyc，用法如下,</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">(1) 打包boot.img/recovery.img</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><strong><font size="3">* pack.pyc &lt;kernel&gt; &lt;ramdisk&gt; &lt;build_version&gt; &lt;boot/recovery&gt;</font></strong></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- &lt;kernel&gt; 是kernel image文件</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- &lt;ramdisk&gt; 包含ramdisk rootfs的目录</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- &lt;build_version&gt; 可以是任意一个15个字符的字符串，可以只填入0.</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- &lt;boot/recovery&gt;表示生成的是boot image还是recovery image，如果您发现您的版本不支援这个参数的话(default生成boot image)，请提交CR，我们会为您release patch.</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- 执行命令后会在&lt;ramdisk&gt;同级目录下生成&lt;ramdisk&gt;.img文件，这就是生成的boot.img或recovery.img.</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">   以上面解包的例子继续说明，打包时就需要执行pack.pyc ramdisk-kernel ramdisk 0 boot/recovery，会在当前目录下生成ramdisk.img，烧写时需要重命名成boot.img或recovery.img.</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">(2) 打包system.img/userdata.img (ext4 sparse)</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><strong><font size="3">* pack.pyc -&lt;partition_size&gt; &lt;source_dir&gt;</font></strong></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- -&lt;partition_size&gt;表示要生成的image分区的size，比如-600就表示600MB。具体分区的size，请参考download时使用的scatter file(MT65XX_Android_scatter.txt)，查看其中ANDROID，USRDATA, CACHE分区的大小;</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">- <font color="#FF0000">&lt;source_dir&gt;目录的名字只能是system, data, cache其中一个，目前不接受其他的目录名</font>，生成的image分别对应的是system.img, userdata.img和cache.img</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">- 例如pack.pyc -600 system, 把当前目录下的system目录中的内容打包成partition size为600MB的system.img</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<span style="font-family: verdana, Helvetica, sans-serif; font-size: 12px;">    </span><strong style="font-family: verdana, Helvetica, sans-serif; font-size: 12px;"><font color="#FF0000">特别需要注意的是</font></strong><span style="font-family: verdana, Helvetica, sans-serif; font-size: 12px;">，打包system.img时会设定多个目录/文件的权限，这些权限配置信息的来源是</span><font color="#FF0000" style="font-family: verdana, Helvetica, sans-serif; font-size: 12px;">android_filesystem_config.h </font><span style="font-family: verdana, Helvetica, sans-serif; font-size: 12px;">(alps\system\core\include\private)，如果您有修改过这个.h文件，那么请重新编译过整个工程后，使用您最新build出来的alps/out/host/linux-x86/bin/make_ext4fs这支文件替换</span><font size="2" style="font-family: verdana, Helvetica, sans-serif;">tool_dir目录下的同名文件后再执行打包的操作，否则可能会造成打包后的文件/目录权限与您设置的有差异。</font>
+</span>
+</div></body></html> 

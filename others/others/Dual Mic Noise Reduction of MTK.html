@@ -1,0 +1,220 @@
+<html>
+<head>
+  <title>Dual Mic Noise Reduction of MTK</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2209"/>
+<h1>Dual Mic Noise Reduction of MTK</h1>
+
+<div>
+<span>
+<div><span style="font-size: 22px;">1. MTK’s Reference Design</span></div>
+<div><b>Design reference 2-mic circuit schematics</b></div>
+<ul>
+<li>2-mic connectivity</li>
+</ul>
+<div>         <img src="Dual Mic Noise Reduction of MTK_files/Image.png" type="image/png" style="height:auto;" width="569"/></div>
+<div><br/></div>
+<div><br/></div>
+<div><b>Design reference 2-mic IDME(Industry Design and Mechanical Engineering) design</b><br/></div>
+<ul>
+<li>The SNR(Signal to Noise Ratio) difference between main microphone and 2nd microphone is more than 6dB</li>
+</ul>
+<div>          Microphone placement:</div>
+<div>               Place main microphone in the lower side of phone.</div>
+<div>               Place 2nd microphone in the upper side of phone.</div>
+<div>               Let main microphone close to the mouth at normal hand-held position.</div>
+<div>               The straight line distance from mouth to the 2nd microphone is double(or more) to the main microphone.</div>
+<div>               Please refer to below figure.</div>
+<div>               <img src="Dual Mic Noise Reduction of MTK_files/Image [1].png" type="image/png" style="height:auto;" width="510"/></div>
+<div>               Best performance is as below figure.</div>
+<div>                    <img src="Dual Mic Noise Reduction of MTK_files/CB6AE637-1C29-4716-9E9B-687A33EC34F4.png" type="image/png" style="height:auto;" width="580"/> </div>
+<div>               （Note：HD means High Definition, DMNR means Dual MIC Noise Reduction)</div>
+<div>               Keeping main and 2nd microphone in the similar Y-axis is best.       </div>
+<div>               The position of microphone can’t be blocked by user’s hand easily.</div>
+<div>          </div>
+<div>          Microphone Selection</div>
+<div>          Omni-directional microphone use the same model for main and 2nd microphone.</div>
+<div>          The sensitivity tolerance of microphone unit is under +/-3dB</div>
+<div>          Meet the below parameters are better:</div>
+<div>               For narrow band application: +/-3dB from 200Hz to 3.4kHz</div>
+<div>               For wide band application: +/-3dB from 200Hz to 6.7kHz</div>
+<div>         Use the same type for main and 2nd microphone.</div>
+<div>
+<div><br/></div>
+</div>
+<div><br/></div>
+<div>          Microphone tube:</div>
+<div>               Shorten the length of microphone tube.</div>
+<div>               Enlarge the area of port opening.</div>
+<div>               The frequency of peak response is suggested to be higher than 6.5kHz for NB(Narrow Band) application,</div>
+<div>          and 9kHz for WB(Wide Band)application.</div>
+<div>               Keep general design(rubber/sponge) for microphone sealing. If using rubber boot, thin sponge or other</div>
+<div>          sealing material for microphone air tight and good sealing performance.</div>
+<div><br/></div>
+<div><b>Design reference 2-mic software option switch</b></div>
+<ul>
+<li>Enable digital/analog microphone</li>
+</ul>
+<div>          — Project.mak</div>
+<div>               Analog mic: DIGITAL_MIC_SUPPORT = no;</div>
+<div>               Digital mic: DIGITAL_MIC_SUPPORT = yes;</div>
+<ul>
+<li> Enable 2-mic support</li>
+</ul>
+<div>          — Project.mak</div>
+<div>               1-mic: DUAL_MIC_SUPPORT = FALSE</div>
+<div>               2-mic: DUAL_MIC_SUPPORT = TRUE</div>
+<ul>
+<li>DMNR_COMPLEX_ARCH_SUPPORT = yes</li>
+</ul>
+<div><br/></div>
+<div><span style="font-size: 22px;">2. Richtech’s Design</span></div>
+<div><b>Implement 2-mic circuit schematics</b></div>
+<div><b>Main Mic</b></div>
+<div>         <img src="Dual Mic Noise Reduction of MTK_files/2A4B00C4-7E05-4B89-A2E7-47589F9B3374.png" type="image/png" style="height: auto;"/></div>
+<ul>
+<li><b>Second Mic</b></li>
+</ul>
+<div>         <img src="Dual Mic Noise Reduction of MTK_files/FD35CDBD-7D18-4BD1-94E1-0B24CBE6E7A3.png" type="image/png" style="height: auto;"/></div>
+<div><br/></div>
+<div><b>Implement 2-mic software macro definition</b></div>
+<ul>
+<li>Enable 2-mic support</li>
+</ul>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [2].png" type="image/png" style="height: auto;"/></div>
+<ul>
+<li>Enable analog microphone</li>
+<li><img src="Dual Mic Noise Reduction of MTK_files/Image [3].png" type="image/png" style="height: auto;"/><br/></li>
+<li><img src="Dual Mic Noise Reduction of MTK_files/Image [4].png" type="image/png" style="height: auto;"/><br/></li>
+<li><img src="Dual Mic Noise Reduction of MTK_files/Image [5].png" type="image/png" style="height: auto;"/><br/></li>
+</ul>
+<div><b><br/></b></div>
+<div><b>Implement 2-mic IDME design</b></div>
+<div>                   <img src="Dual Mic Noise Reduction of MTK_files/712D3992-C990-4E61-A508-BB34DDF9C4D6.png" type="image/png" style="height: auto;"/></div>
+<div>                    (TPU means Thermoplastic Polyurethane)</div>
+<div><b><br/></b></div>
+<div>                   <img src="Dual Mic Noise Reduction of MTK_files/D09BEBFA-C845-4184-BAA0-F19670929EF2.png" type="image/png" style="height: auto;"/></div>
+<div>                   <img src="Dual Mic Noise Reduction of MTK_files/01015F63-875A-467F-88F6-FD0A03B0D9C8.png" type="image/png" style="height: auto;"/></div>
+<div><b><br/></b></div>
+<div>                   <img src="Dual Mic Noise Reduction of MTK_files/DE6DC7F2-F3A3-4C17-A789-1545B9A0B53A.png" type="image/png" style="height: auto;"/><b><br/></b></div>
+<div><b><br/></b></div>
+<div><span style="font-size: 22px;">3. Testing and Calibration</span></div>
+<div><br/></div>
+<ul>
+<li>Quality Evaluation Standard</li>
+</ul>
+<div>        <img src="Dual Mic Noise Reduction of MTK_files/Image [6].png" type="image/png" style="height: auto;"/></div>
+<div>(MOS means Mean Opinion Score)</div>
+<table style="background-color: rgb(249, 249, 249); border: 1px solid rgb(170, 170, 170); border-collapse: collapse; color: black; font-family: sans-serif; text-align: left;">
+<caption style="font-weight: bold;"><b>Mean opinion score (MOS)</b></caption>
+<tbody>
+<tr>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">MOS</th>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">Quality</th>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">Impairment</th>
+</tr>
+<tr>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">5</th>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Excellent</td>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Imperceptible</td>
+</tr>
+<tr>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">4</th>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Good</td>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Perceptible but not annoying</td>
+</tr>
+<tr>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">3</th>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Fair</td>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Slightly annoying</td>
+</tr>
+<tr>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">2</th>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Poor</td>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Annoying</td>
+</tr>
+<tr>
+<th style="border: 1px solid rgb(170, 170, 170); padding: 0.2em; background-color: rgb(242, 242, 242); text-align: center;">1</th>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">Bad</td>
+<td style="border: 1px solid rgb(170, 170, 170); padding: 0.2em;">
+<div>Very annoying</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div>For mostly, more than 3.5 score can be accepted.</div>
+<div><br/></div>
+<ul>
+<li>Calibration:</li>
+</ul>
+<div>Before testing, we should apply for MTK for professional calibration in MTK audio lab. A description of</div>
+<div>calibration refer to appendix. we can assign stuffs to cowork with MTK engineers.  </div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 22px;">Appendix：</span></div>
+<div>
+<div>Equipments in Need:</div>
+<ul>
+<li>Acoustic Chamber,  Type 3.3 Artificial Head, ACQUA(Advanced Communication Quality Analysis)</li>
+<li>Instrument Designed by MTK for sensitivity difference calculation.</li>
+<li>Runtime Audio Tool</li>
+</ul>
+</div>
+<div><span style="font-size: 22px;"><br/></span></div>
+<div>Calibration Data:</div>
+<div>     Audio Tool will generate 44 words for NB while 76 words for WB in sph_coeff_dmnr_default.h,</div>
+<div>which includes the information of SNR difference between 2 MICs.</div>
+<div><br/></div>
+<div>Calibration Setting:</div>
+<div>    <img src="Dual Mic Noise Reduction of MTK_files/Image [7].png" type="image/png" style="height: auto;"/></div>
+<div><br/></div>
+<div>Calibration Flow:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [8].png" type="image/png" style="height:auto;" width="666"/></div>
+<div>(ECM means Electret condenser microphone, MEMS means Microelectromechanical systems)</div>
+<div><br/></div>
+<div>Sensitivity difference test — well adapted mode:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [9].png" type="image/png" style="height:auto;" width="674"/></div>
+<div><br/></div>
+<div>SNR difference test — well adapted mode:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [10].png" type="image/png" style="height:auto;" width="682"/></div>
+<div><br/></div>
+<div>Robustness test — well adapted mode:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [11].png" type="image/png" style="height:auto;" width="688"/></div>
+<div><br/></div>
+<div>SNR difference test — free mode:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [12].png" type="image/png" style="height:auto;" width="690"/></div>
+<div><br/></div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [13].png" type="image/png" style="height:auto;" width="693"/></div>
+<div><br/></div>
+<div>Parameters Description:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [14].png" type="image/png" style="height:auto;" width="722"/></div>
+<div><br/></div>
+<div>Parameters word 42/70:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [15].png" type="image/png" style="height:auto;" width="627"/><br/></div>
+<div><br/></div>
+<div>Parameters word 13/14:</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [16].png" type="image/png" style="height:auto;" width="624"/></div>
+<div><br/></div>
+<div>Parameters word 11/27</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [17].png" type="image/png" style="height:auto;" width="608"/></div>
+<div><br/></div>
+<div>VM log for debug</div>
+<div><img src="Dual Mic Noise Reduction of MTK_files/Image [18].png" type="image/png" style="height:auto;" width="582"/></div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+</span>
+</div></body></html> 

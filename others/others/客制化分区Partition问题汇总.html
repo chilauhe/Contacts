@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>客制化分区Partition问题汇总</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="98902BC0-171F-40AE-B1F5-2DF7636BE559"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2367"/>
+<h1>客制化分区Partition问题汇总</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4"><span style="-evernote-last-insertion-point:true;"></span>[DESCRIPTION]</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">      客制化Partition的需求主要就是调整分区size和新增分区，目前MOL系统针对客制化分区的FAQ有很多个并且过于分散，本FAQ主要针对目前已有的FAQ进行汇总，同时也汇总了DCC上需要参考的相关文档。</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4">[DESCRIPTION]</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">分区客制化</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">调整分区大小</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">添加新的分区</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4">[SOLUTION]</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<ul>
+<li><font size="2">如果有分区客制化的需求，请首先到DCC搜索以下几份文档参考:</font></li>
+</ul>
+</div>
+<blockquote dir="ltr" style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<p>(1)Partition Layout Introduction and Customization_V1.pptx</p>
+<p>(2)MT6582_Partition_Layout_Introduction_and_Customization_V2.pptx</p>
+<p>(3)How_to_Add_an_Image_Partition.ppt</p>
+<p>(4)How to add a ext4 partition_MT6572.pptx</p>
+<p>(5)How to add a ext4 partition_MT6572_AOSP.pptx</p>
+<p>(6)How to add a ext4 partition _MT6589（JB）（customer）.pptx</p>
+<p>(7)How to add a UBIFS partition.pptx</p>
+</blockquote>
+<p style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">    基本上参考这几份文档就比较明确如何做分区客制化操作了。</p>
+<ul style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<li>相关的FAQ汇总如下:</li>
+</ul>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">(1) 分区含义介绍</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ03559"><font size="2">[FAQ03559][Storage]MTK platform partition meaning</font></a><font size="2"> </font></div>
+<p style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">(2) 添加raw data分区<br/>
+<br/></font><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ04465"><font size="2">[FAQ04465]【partition】如何在77或89平台上添加raw data分区</font></a><font size="2"> </font></p>
+<p style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">(3) emmc添加ext4分区<br/>
+<br/></font><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ03487"><font size="2">[FAQ03487][Partition]mt6577如何新添加ext4文件系统分区</font></a><br/>
+<br/>
+<a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ05719"><font size="2">[FAQ05719]【partition】如何在75JB上新建Ext4分区</font></a><br/>
+<br/>
+<a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ04466"><font size="2">[FAQ04466]【partition】如何在JB平台上添加ext4分区</font></a><font size="2"> </font></p>
+<p style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">(4) nand flash添加UBIFS分区</font><br/>
+<br/>
+<a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ06763"><font size="2">[FAQ06763][Storage]如何在mt6572 UBIFS 上创建新分区</font></a><font size="2"> </font></p>
+<p style="font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">(5) nand flash添加FAT分区<br/>
+<br/></font><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ04352"><font size="2">[FAQ04352][Storage]如何实现在nand上创建一个FAT分区</font></a></p>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">(6) 分区大小设定</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ06257">[FAQ06257]Flash上新建分区的大小限定</a><br/>
+<br/>
+<a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ04658">[FAQ04658]【partition】android\cache\userdata三个partition大小设定</a> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ11957">[FAQ11957] 【Partition】一套代码多个项目只有一个分区表，如何调整不同项目的Partition Size</a></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">(7) 修改分区表</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ04503">[FAQ04503]【partition】partition_table中各sheet的名称的含义</a><br/>
+<br/>
+<a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ11445">[FAQ11445]【Partition】修改了分区表文件partition_table_MT65XX.xls，但是没有生效</a> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ09996">[FAQ09996]同一套代码实现不同的项目使用不同的客制化分区表</a> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">(8) 去掉内置T卡分区</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ04137">[FAQ04137][Storage]如何将emmc上的内置sdcard拿掉</a> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><a href="https://online.mediatek.com/Pages/FAQ.aspx?List=SW&amp;FAQID=FAQ06774">[FAQ06774]ICS\ICS2\JB版本上如何去掉内置SD卡</a></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div><br/></div>
+</span>
+</div></body></html> 

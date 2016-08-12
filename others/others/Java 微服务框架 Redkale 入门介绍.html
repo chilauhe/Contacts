@@ -1,0 +1,616 @@
+<html>
+<head>
+  <title>Java 微服务框架 Redkale 入门介绍</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1232"/>
+<h1>Java 微服务框架 Redkale 入门介绍</h1>
+
+<div>
+<span><div style="margin: 0px auto; text-align: left; position: relative;"><div><br/></div></div><div style="width: 1150px; float: right; min-height: 2000px;"><div style="margin-left: 330px; overflow: hidden; margin-right: 180px;"><div style="margin: 0px 0px 15px; padding: 0px; color: rgb(59, 141, 209); text-align: center; font-weight: bold; font-size: 22px;"><div><a href="http://www.codeceo.com/article/java-redkale-guide.html" style="color: rgb(42, 94, 142); text-decoration: none; cursor: pointer;" title="Java 微服务框架 Redkale 入门介绍 - 码农网">Java 微服务框架 Redkale 入门介绍</a></div></div><div style="margin: 0px; padding: 0px;"><span style="font-size: 18px;"><b><a href="http://www.codeceo.com/article/java-redkale-guide.html" style="color: rgb(0, 136, 219); text-decoration: none; cursor: pointer;" target="_blank" title="Redkale">Redkale</a></b></span><span style="color: rgb(34, 34, 34);"><span style="font-size: 18px;"><b> 功能</b></span></span></div><div style="word-break: break-all; word-wrap: break-word;"><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">Redkale虽然只有1.xM大小，但是麻雀虽小五脏俱全。既可作为服务器使用，也可当工具包使用。作为独立的工具包提供以下功能：<br/>
+1、convert包提供JSON的序列化和反序列化功能，类似Gson、<a href="http://www.codeceo.com/article/java-json-jackson.html" style="color: rgb(0, 136, 219); text-decoration: none; cursor: pointer;" target="_blank" title="Jackson">Jackson</a>。<br/>
+2、convert包提供Java对象二进制的序列化和反序列化功能，类似Protobuf。<br/>
+3、source包提供很简便的数据库操作功能，类似JPA、Hibernate。<br/>
+4、net包提供TCP/UDP服务功能， 类似Mina。<br/>
+5、net.http提供HTTP服务， 类似Tomcat、Netty。<br/>
+6、ResourceFactory提供轻量级的依赖注入功能， 类似Google Guice。</span></p><h2 style="margin: 30px 0px 14px; padding: 0px 0px 5px; color: rgb(34, 34, 34); border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid; font-size: 18px;">Redkale 服务器</h2><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">Redkale作为服务器的目录如下:<br/><strong style="margin: 0px; padding: 0px;">bin</strong>   ： 存放启动关闭脚本(start.sh、shutdown.sh、start.bat、shutdown.bat)<br/><strong style="margin: 0px; padding: 0px;">conf</strong> ： 存放服务器所需配置文件:<br/>
+application.xml： 服务配置文件 (必需)；<br/>
+logging.properties：日志配置文件 (可选)；<br/>
+persistence.xml：数据库配置文件 (可选)；<br/><strong style="margin: 0px; padding: 0px;">lib</strong>    ： 存放服务所依赖的第三方包，redkale.jar 放在此处。<br/><strong style="margin: 0px; padding: 0px;">logs</strong> ： logging.properties 配置中默认的日志存放目录。<br/><strong style="margin: 0px; padding: 0px;">root</strong> ： application.xml 配置中HTTP服务所需页面的默认根目录。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">Redkale启动的流程如下：</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">1、加载 application.xml 并解析。<br/>
+2、初始化 <strong style="margin: 0px; padding: 0px;">&lt;resources&gt;</strong> 节点中的资源。<br/>
+3、解析所有的 <strong style="margin: 0px; padding: 0px;">&lt;server&gt;</strong> 节点。<br/>
+4、初始化并启动所有<strong style="margin: 0px; padding: 0px;">&lt;server&gt;</strong> 节点的Server服务 (优先加载SNCP协议的Server)。<br/>
+5、初始化单个Server：<br/>
+5.1、扫描classpath加载所有可用的Service实现类(没有标记为@AutoLoad(false)的类)并实例化，然后相互依赖注入。<br/>
+5.2、Service实例在依赖注入过程中加载所需的DataSource、CacheSource资源。<br/>
+5.3、调用所有本地模式Service的init方法。<br/>
+5.4、扫描classpath加载所有可用的Servlet实现类(没有标记为@AutoLoad(false)的类)并实例化 (优先实例化WebSocketServlet)。<br/>
+5.5、给所有Servlet依赖注入所需的Service。<br/>
+5.6、调用所有Servlet的init方法。<br/>
+5.7、启动Server的服务监听。<br/>
+6、启动进程本身的监听服务。</span></p><h2 style="margin: 30px 0px 14px; padding: 0px 0px 5px; color: rgb(34, 34, 34); border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid; font-size: 18px;">基于Redkale的开发与调试</h2><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">基于Redkale创建一个Java应用程序工程(即使是Web项目也不要创建Java-Web工程)，引用redkale.jar 并创建Redkale所需的几个目录和文件。一个普通的Web项目只需要编写业务层的Service和接入层的HttpServlet的代码。数据库DataSource通过配置文件进行设置。<br/>
+编写完代码可以通过启动脚本进行调试， 也可以在IDE设置项目的主类为 org.redkale.boot.Application 或者工程内定义主类进行启动调试:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+public final class Bootstrap {
+
+    public static void main(String[] args) throws Exception {
+        org.redkale.boot.Application.main(args);
+    }
+}
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">若需要调试单个Service，可以通过 <strong style="margin: 0px; padding: 0px;">Application.singleton</strong> 方法进行调试：</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+public static void main(String[] args) throws Exception {
+        UserService service = Application.singleton(UserService.class);
+        LoginBean bean = new LoginBean();
+        bean.setAccount(&quot;myaccount&quot;);
+        bean.setPassword(&quot;123456&quot;);
+        System.out.println(service.login(bean));
+    }
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">Application.singleton 运行流程与通过bin脚本启动的流程基本一致，区别在于singleton运行时不会启动Server和Application自身的服务监听。Redkale提倡接入层(Servlet)与业务层(Service)分开，Service在代码上不能依赖于Servlet，因此调试Service自身逻辑时不需要启动接入层服务(类似WebSocket依赖Servlet的功能除外)。</span></p><h2 style="margin: 30px 0px 14px; padding: 0px 0px 5px; color: rgb(34, 34, 34); border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid; font-size: 18px;">Redkale的依赖注入</h2><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">Redkale内置的依赖注入实现很简单，只有三个类: javax.annotation.Resource、org.redkale.util.ResourceType、org.redkale.util.ResourceFactory，采用反射技术，由于依赖注入通常不会在频繁的操作中进行，因此性能要求不会很高。其中前两个是注解，ResourceFactory是主要操作类，主要提供注册和注入两个接口。ResourceFactory的依赖注入不仅提供其他依赖注入框架的常规功能，还能动态的自动更新通过inject注入的资源。</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+public class AService {
+
+    @Resource(name = &quot;property.id&quot;)
+    private String id;
+
+    @Resource(name = &quot;property.id&quot;) //property.开头的资源名允许String自动转换成primitive数值类型
+    private int intid;
+
+    @Resource(name = &quot;bigint&quot;)
+    private BigInteger bigint;
+
+    @Resource(name = &quot;seqid&quot;)
+    private int seqid;
+
+    @Resource
+    private ResourceTest.BService bservice;
+
+    @Override
+    public String toString() {
+        return &quot;{id:/&quot;&quot; + id + &quot;/&quot;, intid: &quot; + intid + &quot;, bigint:&quot; + bigint + &quot;}&quot;;
+    }
+
+    /** 以下省略getter setter方法 */
+}
+
+public class BService {
+
+    @Resource(name = &quot;property.id&quot;)
+    private String id;
+
+    @Resource
+    private AService aservice;
+
+    private String name = &quot;&quot;;
+
+    @java.beans.ConstructorProperties({&quot;name&quot;})
+    public BService(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;{name:/&quot;&quot; + name + &quot;/&quot;, id: &quot; + id + &quot;, aserivce:&quot; + aservice + &quot;}&quot;;
+    }
+
+    /** 以下省略getter setter方法 */
+}
+
+public static void main(String[] args) throws Exception {
+    ResourceFactory factory = ResourceFactory.root();
+    factory.register(&quot;property.id&quot;, &quot;2345&quot;); //注入String类型的property.id
+    AService aservice = new AService();
+    BService bservice = new BService(&quot;eee&quot;);
+
+    factory.register(aservice);  //放进Resource池内，默认的资源名name为&quot;&quot;
+    factory.register(bservice);  //放进Resource池内，默认的资源名name为&quot;&quot;
+
+    factory.inject(aservice);  //给aservice注入id、bservice，bigint没有资源，所以为null
+    factory.inject(bservice);  //给bservice注入id、aservice
+    System.out.println(aservice); //输出结果为：{id:&quot;2345&quot;, intid:2345, bigint:null, bservice:{name:eee}}
+    System.out.println(bservice); //输出结果为：{name:&quot;eee&quot;, id:2345, aserivce:{id:&quot;2345&quot;, intid:2345, bigint:null, bservice:{name:eee}}}
+
+    factory.register(&quot;seqid&quot;, 200); //放进Resource池内, 同时ResourceFactory会自动更新aservice的seqid值
+    System.out.println(factory.find(&quot;seqid&quot;, int.class));   //输出结果为：200
+    factory.register(&quot;bigint&quot;, new BigInteger(&quot;66666&quot;)); //放进Resource池内, 同时ResourceFactory会自动更新aservice对象的bigint值   
+    System.out.println(aservice); //输出结果为：{id:&quot;2345&quot;, intid:2345, bigint:66666, bservice:{name:eee}}可以看出seqid与bigint值都已自动更新
+
+    factory.register(&quot;property.id&quot;, &quot;6789&quot;); //更新Resource池内的id资源值, 同时ResourceFactory会自动更新aservice、bservice的id值
+    System.out.println(aservice); //输出结果为：{id:&quot;6789&quot;, intid:6789, bigint:66666, bservice:{name:eee}}
+    System.out.println(bservice); //输出结果为：{name:&quot;eee&quot;, id:6789, aserivce:{id:&quot;6789&quot;, intid:6789, bigint:66666, bservice:{name:eee}}}
+
+    bservice = new BService(&quot;ffff&quot;);
+    factory.register(bservice);   //更新Resource池内name=&quot;&quot;的BService资源, 同时ResourceFactory会自动更新aservice的bservice对象
+    factory.inject(bservice);
+    System.out.println(aservice); //输出结果为：{id:&quot;6789&quot;, intid: 6789, bigint:66666, bservice:{name:ffff}}
+
+}
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">如上例，通过ResourceFactory.inject注入的对象都会自动更新资源的变化，若不想自动更新可以使用带boolean autoSync参数的register系列方法(autoSync传false)注册新资源。</span></p><h2 style="margin: 30px 0px 14px; padding: 0px 0px 5px; color: rgb(34, 34, 34); border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid; font-size: 18px;">Redkale 架构部署</h2><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">通常一个系统会分为三层：接入层、业务层、数据层。对应到Redkale的组件是： Servlet、Service、Source。大部分系统提供的是HTTP服务，为了方便演示Redkale从集中式到分布式的变化，以一个简单的HTTP服务作为范例。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">开发一个极简单的小论坛系统。包含三个模块：</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">用户模块    UserSerivice:     提供用户注册、登录、更新资料等功能， UserServlet作为接入层。<br/>
+帖子模块 ForumSerivice:     提供看帖、发帖、删帖等功能， ForumServlet作为接入层。<br/>
+通知模块  NotifySerivice:     提供用户操作、回帖等消息通知功能， NotifyWebSocket是WebSocket的Servlet, 且name为 <strong style="margin: 0px; padding: 0px;">ws_notify</strong>，</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">作为接入层。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">其中数据源有：</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">DataSource:    在persistence.xml里配置的数据库Source的name为demodb ,三个模块都需要使用demodb。<br/>
+CacheSource:    仅供UserSerivice用于存放session的缓存Service，name为 usersessions, 且session只存放用户ID( int 类型)。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;"><strong style="margin: 0px; padding: 0px;">1、单点部署</strong></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">在早期用户量很少或者开发、调试环境中只需部署一个进程就可满足需求。</span></p><p style="margin: 0px 0px 15px; padding: 0px; text-align: center;"><span style="font-size: 14px;"><img src="Java 微服务框架 Redkale 入门介绍_files/Image.png" type="image/png" alt="Java 微服务框架 Redkale 入门介绍" height="507" style="margin: 0px auto; padding: 5px; border: 1px solid rgb(230, 230, 230); max-width: 628px; display: block; height: auto;" width="640"/></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">如上图，所有模块的HttpServlet、Service与Source数据库操作全部署在一起。 application.xml作简单的配置即可:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;       
+    &lt;server protocol=&quot;HTTP&quot; port=&quot;6060&quot; root=&quot;root&quot;&gt; 
+        &lt;services autoload=&quot;true&quot; /&gt;  
+        &lt;servlets autoload=&quot;true&quot;/&gt;
+    &lt;/server&gt;             
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;"><strong style="margin: 0px; padding: 0px;">2、多点部署</strong></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">在生产环境需要避免单点问题，一个服务一般会部署多套。在此做个简单的容灾部署，最前端部署一个nginx作反向代理和<a href="http://www.codeceo.com/article/balanced-algorithm.html" style="color: rgb(0, 136, 219); text-decoration: none; cursor: pointer;" target="_blank" title="负载均衡">负载均衡</a>服务器，后面部署两套系统。</span></p><p style="margin: 0px 0px 15px; padding: 0px; text-align: center;"><span style="font-size: 14px;"><img src="Java 微服务框架 Redkale 入门介绍_files/Image [1].png" type="image/png" alt="Java 微服务框架 Redkale 入门介绍" height="290" style="margin: 0px auto; padding: 5px; border: 1px solid rgb(230, 230, 230); max-width: 628px; display: block; height: auto;" width="700"/></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">如上图，两个进程间的Serivce都是本地模式，两者会通过SNCP服务保持数据同步，若DataSource开启了数据缓存也会自动同步。两套的配置文件相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;   
+    &lt;resources&gt;   
+        &lt;group name=&quot;ALL&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- HTTP 监听 Server --&gt;
+    &lt;server protocol=&quot;HTTP&quot; port=&quot;6060&quot; root=&quot;root&quot;&gt; 
+        &lt;!-- 前端配置了nginx，需要配置才能获取客户端真实的IP地址 --&gt;
+        &lt;request&gt;
+            &lt;remoteaddr value=&quot;request.headers.X-RemoteAddress&quot;/&gt;
+        &lt;/request&gt;
+        &lt;services autoload=&quot;true&quot; groups=&quot;ALL&quot;/&gt;  
+        &lt;servlets autoload=&quot;true&quot; /&gt;
+    &lt;/server&gt; 
+
+    &lt;!-- SNCP 监听 Server --&gt;
+    &lt;server protocol=&quot;SNCP&quot; port=&quot;7070&quot;&gt; 
+        &lt;services autoload=&quot;true&quot;  groups=&quot;ALL&quot;&gt;
+            &lt;!-- 有WebSocketServlet的服务必须配置WebSocketNodeService，且Redkale同时会自动创建一个同名(ws_notify)的 CacheSource --&gt;
+            &lt;service name=&quot;ws_notify&quot; value=&quot;org.redkale.service.WebSocketNodeService&quot;/&gt;
+            &lt;!-- 存在DataSource必须配置DataSourceService --&gt;
+            &lt;service name=&quot;demodb&quot; value=&quot;org.redkale.service.DataSourceService&quot;/&gt;
+            &lt;!-- 存放用户HTTP session信息的CacheSource --&gt;
+            &lt;service name=&quot;usersessions&quot; value=&quot;org.redkale.service.CacheSourceService&quot;&gt;
+                &lt;property name=&quot;key-type&quot; value=&quot;java.lang.String&quot;/&gt;
+                &lt;property name=&quot;value-type&quot; value=&quot;java.lang.Integer&quot;/&gt;
+            &lt;/service&gt;
+        &lt;/services&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;"><strong style="margin: 0px; padding: 0px;">3、分层部署</strong></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">随着业务的复杂度增加，接入层与业务层混在一起会越来越难部署和维护，因此需要进行分层部署。</span></p><p style="margin: 0px 0px 15px; padding: 0px; text-align: center;"><span style="font-size: 14px;"><img src="Java 微服务框架 Redkale 入门介绍_files/Image [2].png" type="image/png" alt="Java 微服务框架 Redkale 入门介绍" height="283" style="margin: 0px auto; padding: 5px; border: 1px solid rgb(230, 230, 230); max-width: 628px; display: block; height: auto;" width="700"/></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">如上图，对HttpServlet与Service进行了分离。每个接入层的Service都是远程模式，业务层只需提供SNCP供远程调用。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">接入层中每个进程的配置相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;  
+    &lt;resources&gt;   
+        &lt;group name=&quot;ALL&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- HTTP 监听 Server --&gt;
+    &lt;server protocol=&quot;HTTP&quot; port=&quot;6060&quot; root=&quot;root&quot;&gt; 
+        &lt;!-- 前端配置了nginx，需要配置才能获取客户端真实的IP地址 --&gt;
+        &lt;request&gt;
+            &lt;remoteaddr value=&quot;request.headers.X-RemoteAddress&quot;/&gt;
+        &lt;/request&gt;
+        &lt;services autoload=&quot;true&quot; groups=&quot;ALL&quot;&gt;
+            &lt;!-- 有WebSocketServlet的服务必须配置WebSocketNodeService，且Redkale同时会自动创建一个同名(ws_notify)的 CacheSource --&gt;
+            &lt;service name=&quot;ws_notify&quot; value=&quot;org.redkale.service.WebSocketNodeService&quot;/&gt;
+        &lt;/services&gt;
+        &lt;servlets autoload=&quot;true&quot; /&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">业务层中每个进程的配置相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;  
+    &lt;resources&gt;   
+        &lt;group name=&quot;ALL&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- SNCP 监听 Server --&gt;
+    &lt;server protocol=&quot;SNCP&quot; port=&quot;7070&quot;&gt; 
+        &lt;services autoload=&quot;true&quot; groups=&quot;ALL&quot;&gt;
+            &lt;!-- 有WebSocketServlet的服务必须配置WebSocketNodeService，且Redkale同时会自动创建一个同名(ws_notify)的 CacheSource --&gt;
+            &lt;service name=&quot;ws_notify&quot; value=&quot;org.redkale.service.WebSocketNodeService&quot;/&gt;
+            &lt;!-- 存在DataSource必须配置DataSourceService --&gt;
+            &lt;service name=&quot;demodb&quot; value=&quot;org.redkale.service.DataSourceService&quot;/&gt;
+            &lt;!-- 存放用户HTTP session信息的CacheSource --&gt;
+            &lt;service name=&quot;usersessions&quot; value=&quot;org.redkale.service.CacheSourceService&quot;&gt;
+                &lt;property name=&quot;key-type&quot; value=&quot;java.lang.String&quot;/&gt;
+                &lt;property name=&quot;value-type&quot; value=&quot;java.lang.Integer&quot;/&gt;
+            &lt;/service&gt;
+        &lt;/services&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;"><strong style="margin: 0px; padding: 0px;">4、微服务部署</strong></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">当用户量和发帖量增加到上百万的时候，明显地将所有模块的服务部署到一个进程里是不行的。 因此需要将Service服务都独立部署形成微服务架构。</span></p><p style="margin: 0px 0px 15px; padding: 0px; text-align: center;"><span style="font-size: 14px;"><img src="Java 微服务框架 Redkale 入门介绍_files/Image [3].png" type="image/png" alt="Java 微服务框架 Redkale 入门介绍" height="398" style="margin: 0px auto; padding: 5px; border: 1px solid rgb(230, 230, 230); max-width: 628px; display: block; height: auto;" width="700"/></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">如上图，将Serivice都独立部署并进行容灾部署，当然如果有需要，Servlet之间、Source都可以各自分离独立部署。不同类型的Service之间都是远程模式调用。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">接入层中每个进程的配置相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;   
+    &lt;resources&gt;   
+        &lt;group name=&quot;USER_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.111&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;NOTIFY_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.121&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;FORUM_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.130&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.131&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- HTTP 监听 Server --&gt;
+    &lt;server protocol=&quot;HTTP&quot; port=&quot;6060&quot; root=&quot;root&quot;&gt; 
+        &lt;!-- 前端配置了nginx，需要配置才能获取客户端真实的IP地址 --&gt;
+        &lt;request&gt;
+            &lt;remoteaddr value=&quot;request.headers.X-RemoteAddress&quot;/&gt;
+        &lt;/request&gt;
+        &lt;services autoload=&quot;true&quot;&gt;        
+            &lt;service value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE&quot;/&gt;
+            &lt;service value=&quot;org.redkale.demo.NotifyService&quot; groups=&quot;NOTIFY_SERVICE&quot;/&gt;
+            &lt;service value=&quot;org.redkale.demo.ForumService&quot; groups=&quot;FORUM_SERVICE&quot;/&gt;
+            &lt;!-- 有WebSocketServlet的服务必须配置WebSocketNodeService，且Redkale同时会自动创建一个同名(ws_notify)的 CacheSource --&gt;
+            &lt;service name=&quot;ws_notify&quot; value=&quot;org.redkale.service.WebSocketNodeService&quot; groups=&quot;NOTIFY_SERVICE&quot;/&gt;
+        &lt;/services&gt;
+        &lt;servlets autoload=&quot;true&quot; /&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">用户模块UserService服务群中各个进程的配置相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;  
+    &lt;resources&gt;   
+        &lt;group name=&quot;USER_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.111&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;NOTIFY_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.121&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;FORUM_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.130&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.131&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- SNCP 监听 Server --&gt;
+    &lt;server protocol=&quot;SNCP&quot; port=&quot;7070&quot;&gt; 
+        &lt;services autoload=&quot;true&quot;&gt;        
+            &lt;service value=&quot;org.redkale.demo.NotifyService&quot; groups=&quot;NOTIFY_SERVICE&quot;/&gt;
+            &lt;service value=&quot;org.redkale.demo.ForumService&quot; groups=&quot;FORUM_SERVICE&quot;/&gt;
+            &lt;!-- 存在DataSource必须配置DataSourceService --&gt;
+            &lt;service name=&quot;demodb&quot; value=&quot;org.redkale.service.DataSourceService&quot; groups=&quot;USER_SERVICE&quot;/&gt;
+            &lt;!-- 存放用户HTTP session信息的CacheSource --&gt;
+            &lt;service name=&quot;usersessions&quot; value=&quot;org.redkale.service.CacheSourceService&quot; groups=&quot;USER_SERVICE&quot;&gt;
+                &lt;property name=&quot;key-type&quot; value=&quot;java.lang.String&quot;/&gt;
+                &lt;property name=&quot;value-type&quot; value=&quot;java.lang.Integer&quot;/&gt;
+            &lt;/service&gt;
+        &lt;/services&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">通知模块NotifyService服务群中各个进程的配置相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;  
+    &lt;resources&gt;   
+        &lt;group name=&quot;USER_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.111&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;NOTIFY_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.121&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;FORUM_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.130&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.131&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- SNCP 监听 Server --&gt;
+    &lt;server protocol=&quot;SNCP&quot; port=&quot;7070&quot;&gt; 
+        &lt;services autoload=&quot;true&quot;&gt;        
+            &lt;service value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE&quot;/&gt;
+            &lt;service value=&quot;org.redkale.demo.ForumService&quot; groups=&quot;FORUM_SERVICE&quot;/&gt;
+            &lt;!-- 有WebSocketServlet的服务必须配置WebSocketNodeService，且Redkale同时会自动创建一个同名(ws_notify)的 CacheSource --&gt;
+            &lt;service name=&quot;ws_notify&quot; value=&quot;org.redkale.service.WebSocketNodeService&quot; groups=&quot;NOTIFY_SERVICE&quot;/&gt;
+            &lt;!-- 存在DataSource必须配置DataSourceService --&gt;
+            &lt;service name=&quot;demodb&quot; value=&quot;org.redkale.service.DataSourceService&quot; groups=&quot;NOTIFY_SERVICE&quot;/&gt;
+        &lt;/services&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">帖子模块ForumService服务群中各个进程的配置相同，配置如下:</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;  
+    &lt;resources&gt;   
+        &lt;group name=&quot;USER_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.111&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;NOTIFY_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.120&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.121&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;FORUM_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.130&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.131&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+    &lt;/resources&gt;
+
+    &lt;!-- SNCP 监听 Server --&gt;
+    &lt;server protocol=&quot;SNCP&quot; port=&quot;7070&quot;&gt; 
+        &lt;services autoload=&quot;true&quot;&gt;        
+            &lt;service value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE&quot;/&gt;
+            &lt;service value=&quot;org.redkale.demo.NotifyService&quot; groups=&quot;NOTIFY_SERVICE&quot;/&gt;
+            &lt;!-- 存在DataSource必须配置DataSourceService --&gt;
+            &lt;service name=&quot;demodb&quot; value=&quot;org.redkale.service.DataSourceService&quot; groups=&quot;FORUM_SERVICE&quot;/&gt;
+        &lt;/services&gt;
+    &lt;/server&gt;     
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;"><strong style="margin: 0px; padding: 0px;">5、API网关式部署</strong></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">随着用户量到了上千万时，一个UserService的服务进程是无法提供全部用户服务。 因此可以考虑按用户段进行分布式部署。将192.168.50.110、192.168.50.111上的UserService服务改成网关式的服务。下面是以 Service本地模式介绍中的UserService 为范例进行编写：</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+@ResourceType({UserService.class})
+public class UserServiceGateWay extends UserService {
+
+    @Resource(name = &quot;userservice_reg&quot;)
+    private UserService regUserService;  //只用于注册的服务节点
+
+    @Resource(name = &quot;userservice_mob&quot;)
+    private UserService mobUserService;  //只用于查询手机号码对应的userid的服务节点
+
+    @Resource(name = &quot;userservice_node01&quot;)
+    private UserService userService01;  //userid小于2000000的用户的服务节点
+
+    @Resource(name = &quot;userservice_node02&quot;)
+    private UserService userService02;  //userid小于4000000的用户的服务节点
+
+    @Resource(name = &quot;userservice_node03&quot;)
+    private UserService userService03;  //userid小于6000000的用户的服务节点
+
+    @Resource(name = &quot;userservice_node04&quot;)
+    private UserService userService04;  //userid大于6000000的用户的服务节点
+
+    private UserService getService(int userid) {
+        if (userid &lt;= 200_0000) return userService01;
+        if (userid &lt;= 400_0000) return userService02;
+        if (userid &lt;= 600_0000) return userService03;
+        return userService04;
+    }
+
+    @Override
+    public UserInfo findUserInfo(int userid) {
+        return this.getService(userid).findUserInfo(userid);
+    }
+
+    @Override
+    public RetResult&lt;UserInfo&gt; login(LoginBean bean) { //手机号码用long存储，0表示无手机号码
+        int userid = mobUserService.findUserid(bean.getMobile());
+        if (userid &lt; 1) return new RetResult&lt;&gt;(10001, &quot;not found mobile &quot; + bean.getMobile());
+        return this.getService(userid).login(bean);
+    }
+
+    @Override
+    public void register(UserInfo user) {
+        regUserService.register(user); //会生成userid
+        this.getService(user.getUserid()).putUserInfo(user);
+    }
+
+    @Override
+    public UserInfo updateUsername(int userid, String username) {
+        return this.getService(userid).updateUsername(userid, username);
+    }
+}
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">从代码看出，UserServiceGateWay继承了UserService， 确保了UserService对外的服务接口不变，上面代码是用户量在600-800万之间的写法，通过简单的用户ID分段，根据不同用户ID调不同的服务节点。</span></p><p style="margin: 0px 0px 15px; padding: 0px; text-align: center;"><span style="font-size: 14px;"><img src="Java 微服务框架 Redkale 入门介绍_files/Image [4].png" type="image/png" alt="Java 微服务框架 Redkale 入门介绍" height="393" style="margin: 0px auto; padding: 5px; border: 1px solid rgb(230, 230, 230); max-width: 628px; display: block; height: auto;" width="700"/></span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">如上图，网关下的UserService部署分三类： userservice_reg只用于注册用户；userservice_mob提供查询手机号码与用户ID间的关系的服务；userservice_node按用户段提供已有用户的服务。且每个UserService的实例在UserServiceGateWay都是远程模式。每种类型可以部署多个节点（为了结构图简单，上图每个类型只部署一个节点）。UserServiceGateWay（192.168.50.110、192.168.50.111）的配置如下：</span></p><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;application port=&quot;5050&quot;&gt;  
+    &lt;resources&gt;   
+        &lt;group name=&quot;USER_SERVICE_REG&quot;&gt;
+            &lt;node addr=&quot;192.168.70.110&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;USER_SERVICE_MOB&quot;&gt;
+            &lt;node addr=&quot;192.168.70.150&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;USER_SERVICE_NODE01&quot;&gt;
+            &lt;node addr=&quot;192.168.70.201&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;USER_SERVICE_NODE02&quot;&gt;
+            &lt;node addr=&quot;192.168.70.202&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;USER_SERVICE_NODE03&quot;&gt;
+            &lt;node addr=&quot;192.168.70.203&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;group name=&quot;USER_SERVICE_NODE04&quot;&gt;
+            &lt;node addr=&quot;192.168.70.204&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+
+        &lt;group name=&quot;USER_SERVICE&quot;&gt;
+            &lt;node addr=&quot;192.168.50.110&quot; port=&quot;7070&quot;/&gt;
+            &lt;node addr=&quot;192.168.50.111&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;        
+    &lt;/resources&gt;
+
+    &lt;!-- SNCP 监听 Server --&gt;
+    &lt;server protocol=&quot;SNCP&quot; port=&quot;7070&quot;&gt; 
+        &lt;services autoload=&quot;true&quot;&gt;        
+            &lt;!-- 配置UserService网关 --&gt;
+            &lt;service name=&quot;&quot; value=&quot;org.redkale.demo.UserServiceGateWay&quot; groups=&quot;USER_SERVICE&quot;/&gt;
+            &lt;!-- 配置UserService分段节点 --&gt;
+            &lt;service name=&quot;userservice_reg&quot; value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE_REG&quot;/&gt;
+            &lt;service name=&quot;userservice_mob&quot; value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE_MOB&quot;/&gt;
+            &lt;service name=&quot;userservice_node01&quot; value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE_NODE01&quot;/&gt;
+            &lt;service name=&quot;userservice_node02&quot; value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE_NODE02&quot;/&gt;
+            &lt;service name=&quot;userservice_node03&quot; value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE_NODE03&quot;/&gt;
+            &lt;service name=&quot;userservice_node04&quot; value=&quot;org.redkale.demo.UserService&quot; groups=&quot;USER_SERVICE_NODE03&quot;/&gt;
+        &lt;/services&gt;
+    &lt;/server&gt; 
+&lt;/application&gt;
+</pre></div><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">由以上几种部署方式的范例可以看出，Redkale提供了非常强大的架构，集中式到微服务架构不需要增加修改一行代码即可随意切换，即使网关式部署也只是新增很少的代码就可切换，且不影响其他服务。真正可以做到敏捷开发，复杂的系统都可如小系统般快速地开发出来。</span></p><p style="margin: 0px 0px 15px; padding: 0px;"><span style="font-size: 14px;">为了降低接入层与业务层代码的耦合， 可以将Service分接口与实现两个类，接入层只加载接口包、业务层使用实现包。</span></p><h2 style="margin: 30px 0px 14px; padding: 0px 0px 5px; color: rgb(34, 34, 34); border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid; font-size: 18px;">appplication.xml 配置说明</h2><div><pre style="margin: 15px auto; padding: 10px 15px; word-break: break-all; word-wrap: break-word; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: &apos;courier new&apos;; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); background: rgb(251, 251, 251);">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- 
+    文件说明:
+        ${APP_HOME} 指当前程序的根目录APP_HOME
+        required： 被声明required的属性值不能为空
+--&gt;
+&lt;!--     
+    address:  本地的IP地址， 默认值为默认网卡的ip，当不使用默认值需要指定值，如127.0.0.1
+    port: required  程序的管理Server的端口，用于关闭或者与监管系统进行数据交互
+    host:  程序的管理Server的地址; 默认为127.0.0.1。
+    lib:  加上额外的lib路径,多个路径用分号;隔开； 默认为空。  例如: ${APP_HOME}/lib/a.jar;${APP_HOME}/lib2/b.jar;
+--&gt;
+&lt;application port=&quot;6560&quot; lib=&quot;&quot;&gt;   
+
+    &lt;!-- 所有服务所需的资源 --&gt;      
+    &lt;resources&gt;  
+        &lt;!--
+            transport节点只能有一个，用于配置所有Transport的池参数，没配置该节点将自动创建一个。
+            threads： 线程总数， 默认: &lt;group&gt;节点数*CPU核数*8
+            bufferCapacity: ByteBuffer的初始化大小， 默认: 8K; 
+            bufferPoolSize： ByteBuffer池的大小，默认: &lt;group&gt;节点数*CPU核数*8
+        --&gt;
+        &lt;transport capacity=&quot;8192&quot; bufferPoolSize=&quot;32&quot; threads=&quot;32&quot;/&gt;
+        &lt;!--
+            一个组包含多个NODE， 同一Service服务可以由多个进程提供，这些进程称为一个GROUP，且同一GROUP内的进程必须在同一机房或局域网内
+            一个group节点对应一个 Transport 对象。
+            name: 服务组ID，长度不能超过11个字节. 默认为空字符串。 注意: name不能包含$符号。
+            protocol：值只能是UDP TCP， 默认TCP
+            注意: 一个node只能所属一个group。只要存在protocol=SNCP的Server节点信息， 就必须有group节点信息。
+        --&gt;
+        &lt;group name=&quot;&quot; protocol=&quot;TCP&quot;&gt;
+            &lt;!--
+                需要将本地node的addr与port列在此处。
+                同一个&lt;node&gt;节点值只能存在一个&lt;group&gt;节点内，即同一个addr+port只能属于一个group。
+                addr: required IP地址
+                port: required 端口
+                clients: 连接池数， 默认: CPU核数*4
+                buffers: ByteBuffer对象池的大小， 默认: CPU核数*8
+            --&gt;
+            &lt;node addr=&quot;127.0.0.1&quot; port=&quot;7070&quot;/&gt;
+        &lt;/group&gt;
+        &lt;!-- 
+            全局的参数配置, 可以通过@Resource(name=&quot;property.xxxxxx&quot;) 进行注入, 被注解的字段类型只能是String、primitive class
+            如果name是system.property.开头的值将会在进程启动时进行System.setProperty(&quot;yyyy&quot;, &quot;YYYYYY&quot;)操作。
+            如果name是mimetype.property.开头的值将会在进程启动时进行MimeType.add(&quot;yyyy&quot;, &quot;YYYYYY&quot;)操作。
+            load:  加载文件，多个用;隔开。
+            默认置入的system.property.的有：
+               System.setProperty(&quot;convert.json.tiny&quot;, &quot;true&quot;);
+               System.setProperty(&quot;convert.bson.tiny&quot;, &quot;true&quot;);
+               System.setProperty(&quot;convert.json.pool.size&quot;, &quot;128&quot;);
+               System.setProperty(&quot;convert.bson.pool.size&quot;, &quot;128&quot;);
+               System.setProperty(&quot;convert.json.writer.buffer.defsize&quot;, &quot;4096&quot;);
+               System.setProperty(&quot;convert.bson.writer.buffer.defsize&quot;, &quot;4096&quot;);
+        --&gt;
+        &lt;properties load=&quot;config.properties&quot;&gt;
+            &lt;property name=&quot;system.property.yyyy&quot; value=&quot;YYYYYY&quot;/&gt;
+            &lt;property name=&quot;xxxxxx&quot; value=&quot;XXXXXXXX&quot;/&gt;
+            &lt;property name=&quot;xxxxxx&quot; value=&quot;XXXXXXXX&quot;/&gt;
+            &lt;property name=&quot;xxxxxx&quot; value=&quot;XXXXXXXX&quot;/&gt;
+        &lt;/properties&gt;
+    &lt;/resources&gt; 
+    &lt;!--
+        protocol: required  server所启动的协议，有HTTP、SNCP， 目前只支持HTTP、SNCP。SNCP使用TCP实现; 
+        host:  服务所占address ， 默认: 0.0.0.0
+        port:  required 服务所占端口 
+        root:  如果是web类型服务，则包含页面  默认:{APP_HOME}/root
+        lib: server额外的class目录， 默认为空        
+        charset: 文本编码， 默认: UTF-8
+        backlog:  默认10K
+        threads： 线程总数， 默认: CPU核数*16
+        maxbody: request.body最大值， 默认: 64K
+        bufferCapacity: ByteBuffer的初始化大小， 默认: 8K;  如果是HTTP协议则默认: 16K + 8B (兼容HTTP 2.0)
+        bufferPoolSize： ByteBuffer池的大小，默认: CPU核数*512
+        responsePoolSize： Response池的大小，默认: CPU核数*256
+        readTimeoutSecond: 读操作超时秒数， 默认0， 表示永久不超时
+        writeTimeoutSecond:  写操作超时秒数， 默认0， 表示永久不超时        
+    --&gt;
+    &lt;server protocol=&quot;HTTP&quot; host=&quot;127.0.0.1&quot; port=&quot;6060&quot; root=&quot;root&quot; lib=&quot;&quot;&gt; 
+
+        &lt;!-- 
+           加载所有的Service服务;
+           在同一个进程中同一个name同一类型的Service将共用同一个实例
+           autoload=&quot;true&quot;  默认值. 自动加载以下目录（如果存在的话）下所有的Service类:
+                                 server.lib;    server.lib/*;    server.classes;    
+           autoload=&quot;false&quot; 需要显著的指定Service类
+           includes： 当autoload=&quot;true&quot;， 拉取类名与includes中的正则表达式匹配的类, 多个正则表达式用分号;隔开
+           excludes： 当autoload=&quot;true&quot;， 排除类名与excludes中的正则表达式匹配的类, 多个正则表达式用分号;隔开           
+           groups:   所属组的节点,多个节点值用;隔开，如果配置文件中存在多个SNCP协议的Server节点，需要显式指定group属性.
+                    当 protocol == SNCP 时 group表示当前Server与哪些节点组关联。
+                    当 protocol != SNCP 时 group只能是空或者一个group的节点值，不能为多个节点值。
+        --&gt;
+        &lt;services autoload=&quot;true&quot; includes=&quot;&quot; excludes=&quot;&quot;&gt;
+
+            &lt;!-- 显著加载指定的Service的接口类 --&gt;
+            &lt;service value=&quot;com.xxx.XXX1Service&quot;/&gt;
+            &lt;!-- 
+               name:   显式指定name，覆盖默认的空字符串值。 注意: name不能包含$符号。
+               groups: 显式指定groups，覆盖&lt;services&gt;节点的groups默认值。
+            --&gt;
+            &lt;service value=&quot;com.xxx.XXX2Service&quot; name=&quot;&quot; groups=&quot;xxx;yyy&quot;/&gt;
+            &lt;!--   给Service增加配置属性 --&gt;
+            &lt;service value=&quot;com.xxx.XXX1Service&quot;&gt;
+                &lt;property name=&quot;xxxxxx&quot; value=&quot;XXXXXXXX&quot;/&gt;
+                &lt;property name=&quot;xxxxxx&quot; value=&quot;XXXXXXXX&quot;/&gt;
+            &lt;/service&gt;
+        &lt;/services&gt;
+
+        &lt;!--
+           当Server为HTTP协议时, request节点才有效。
+           remoteaddr 节点: 替换请求方节点的IP地址， 通常请求方是由nginx等web静态服务器转发过的则需要配置该节点。
+           且value值只能是以request.headers.开头，表示从request.headers中获取对应的header值。
+           例如下面例子获取request.getRemoteAddr()值，如果header存在X-RemoteAddress值则返回X-RemoteAddress值，不存在返回getRemoteAddress()。
+        --&gt;
+        &lt;request&gt;
+            &lt;remoteaddr value=&quot;request.headers.X-RemoteAddress&quot;/&gt;
+        &lt;/request&gt;
+
+        &lt;!--
+           当Server为HTTP协议时, response节点才有效。
+           defcookie 节点: 当response里输出的cookie没有指定domain 和path时，使用该节点的默认值。
+           如果addheader、setheader 的value值以request.headers.开头则表示从request.headers中获取对应的header值
+           例如下面例子是在Response输出header时添加两个header（一个addHeader， 一个setHeader）。
+        --&gt;
+        &lt;response&gt;
+            &lt;defcookie domain=&quot;&quot; path=&quot;&quot;/&gt;
+            &lt;addheader name=&quot;Access-Control-Allow-Origin&quot; value=&quot;request.headers.Origin&quot; /&gt; 
+            &lt;setheader name=&quot;Access-Control-Allow-Credentials&quot; value=&quot;true&quot;/&gt; 
+        &lt;/response&gt;
+
+        &lt;!-- 
+           加载所有的Servlet服务;
+           path:  servlet的ContextPath前缀 默认为空
+           autoload=&quot;true&quot;  默认值. 自动加载以下目录（如果存在的话）下所有的Servlet类:
+                                 ${APP_HOME}/lib;    ${APP_HOME}/root/lib/*;    ${APP_HOME}/root/classes;   
+           autoload=&quot;false&quot; 需要显著的指定Service类
+           includes： 当autoload=&quot;true&quot;， 拉取类名与includes中的正则表达式匹配的类, 多个正则表达式用分号;隔开
+           excludes： 当autoload=&quot;true&quot;， 排除类名与excludes中的正则表达式匹配的类, 多个正则表达式用分号;隔开
+        --&gt;
+        &lt;servlets path=&quot;/pipes&quot; autoload=&quot;true&quot; includes=&quot;&quot; excludes=&quot;&quot;&gt;
+            &lt;!-- 
+               当Server为HTTP协议时，ResourceServlet才有效. 默认存在一个有默认属性的resource-servlet节点
+               webroot: web资源的根目录, 默认取server节点中的root值
+            --&gt;
+            &lt;resource-servlet webroot=&quot;root&quot;&gt;
+                &lt;!--
+                    资源缓存的配置, 默认存在一个含默认属性的caches节点
+                    limit:  资源缓存最大容量， 默认: 128M, 为0表示不缓存， 单位可以是B、K、M、G，不区分大小写
+                    lengthmax: 可缓存的文件大小上限， 默认: 1M（超过1M的文件不会被缓存）
+                --&gt;
+                &lt;caches  limit=&quot;128M&quot; lengthmax=&quot;1M&quot; /&gt;
+                &lt;!--
+                   支持类似nginx中的rewrite， 目前只支持静态资源对静态资源的跳转。
+                   type: 匹配的类型, 目前只支持location(匹配requestURI), 默认: location
+                   match: 匹配的正则表达式
+                   forward: 需跳转后的资源链接
+                   例如下面例子是将/xxx-yyy.html的页面全部跳转到/xxx.html
+                --&gt;
+                &lt;rewrite type=&quot;location&quot; match=&quot;^/([^-]+)-[^-/.]+/.html(.*)&quot; forward=&quot;/$1.html&quot;/&gt;
+            &lt;/resource-servlet&gt;
+            &lt;!-- 显著加载指定的Servlet --&gt;
+            &lt;servlet value=&quot;com.xxx.XXX1Servlet&quot; /&gt;
+            &lt;servlet value=&quot;com.xxx.XXX2Servlet&quot; /&gt;
+            &lt;servlet value=&quot;com.xxx.XXX3Servlet&quot; &gt;
+                &lt;property name=&quot;xxxxxx&quot; value=&quot;XXXXXXXX&quot;/&gt;
+                &lt;property name=&quot;yyyyyy&quot; value=&quot;YYYYYYYY&quot;/&gt;
+            &lt;/servlet&gt;
+        &lt;/servlets&gt;
+    &lt;/server&gt;
+
+    &lt;server protocol=&quot;SNCP&quot; host=&quot;127.0.0.1&quot; port=&quot;7070&quot; root=&quot;root&quot; lib=&quot;&quot;&gt; 
+        &lt;!-- 参数完全同上 --&gt;
+        &lt;services autoload=&quot;true&quot; includes=&quot;&quot; excludes=&quot;&quot; /&gt;
+    &lt;/server&gt;
+&lt;/application&gt;
+</pre></div><a name="soft-link" style="color: rgb(0, 136, 219); text-decoration: none; cursor: pointer;"></a><div style="width: 336px; height: 280px; margin: 40px auto;"><div><br/></div></div></div></div></div><div style="position: absolute; right: 0px;"><div style="padding: 0px 10px; border: 1px solid rgb(236, 236, 236); clear: both; margin-bottom: 16px;"><ul style="margin: 10px 0px; padding: 0px; list-style: none;"><li style="margin: 0px; padding: 8px 0px; border-bottom-style: none; font-size: 14px;"><span style="font-size: 14px;"><b><img src="Java 微服务框架 Redkale 入门介绍_files/Image [5].png" type="image/png" alt="Linux" style="margin: 0px 5px 0px 0px; padding: 0px; border: 0px; float: left; width: 36px;"/></b></span><div style="margin: 0px 0px 8px; padding: 0px; font-weight: bold; font-size: 14px;"><br/></div></li></ul></div></div></span>
+</div></body></html> 

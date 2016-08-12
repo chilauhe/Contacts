@@ -1,0 +1,317 @@
+<html>
+<head>
+  <title>死机问题-Backtrace分析</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="BA469589-02A4-4FBD-AC2A-75EB449404E2"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2590"/>
+<h1>死机问题-Backtrace分析</h1>
+
+<div><span><br/><div style="font-size: 16px"><div style="box-sizing:border-box;font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;font-size:11pt;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);line-height:1.6em;color:rgb(53, 54, 48);"><div style="background-size:cover;box-sizing:border-box;overflow:auto;color:rgb(53, 54, 48);font-size:14px;background-color:rgb(255, 255, 255);font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;background-repeat:no-repeat;line-height:1.42857143;word-break:keep-all;background-image:url(https://onlinesso.mediatek.com/_layouts/15/1033/styles/Themable/corev15.css?rev=ox%2BqLd6WTqhn6d%2FMqf2BMw%3D%3D);height:100%;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;background-color:rgba(255, 255, 255, 0.85098);overflow:visible;height:547px;width:1265px;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;overflow:auto;"><span style="display:table;"> </span>
+             <h3 style="box-sizing:border-box;margin:auto;font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;color:rgb(53, 54, 48);line-height:1.1;margin-top:20px;margin-bottom:10px;font-weight:bold;font-size:24px;text-transform:uppercase;">Quick Start</h3>
+		     <hr style="box-sizing:content-box;border-top-style:solid;border-top-color:rgb(238, 238, 238);height:0.1875em;margin:0px 0.1875em;border:0px none;background-color:rgb(0, 161, 222);"/>
+             <div style="box-sizing:border-box;text-align:center;font-size:18px;color:rgb(0, 153, 204);padding:32px;">
+	             
+	             <span style="box-sizing:border-box;">死机问题快速分析</span>
+	         </div>
+	     
+             <div style="box-sizing:border-box;margin-right:-15px;margin-left:-15px;"><span style="display:table;"> </span>
+				   <div style="box-sizing:border-box;">
+					 <div style="box-sizing:border-box;position:relative;min-height:1px;padding-right:15px;padding-left:15px;float:left;width:25%;"><ul style="box-sizing:border-box;list-style:none;margin:0px;padding:0px;">
+						 
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机问题</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=600" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">1</span>死机现象
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=601" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">2</span>可能导致死机的原因
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机分析资讯与工具</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=602" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">3</span>死机分析数据
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);margin:0px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);border-right-width:0px;background:rgb(255, 255, 255);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=681" style="box-sizing:border-box;background-color:transparent;text-decoration:none;color:rgb(0, 153, 204);font-weight:700;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">4</span>Backtrace 分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;border-color:transparent transparent transparent rgb(0, 153, 204);"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=721" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">5</span>系统运行环境分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=722" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">6</span>进程运行环境分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机分析流程</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=603" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">7</span>死机问题场景
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=723" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">8</span>死机现场分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=724" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">9</span>无现场猜测与分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=725" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">10</span>死机资讯抓取
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机与重启的关系</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=604" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">11</span>死机与重启的关系
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">经典案例</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=605" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">12</span>经典案例
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">附录</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=606" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">13</span>附录
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+					  </ul></div><div style="box-sizing:border-box;position:relative;min-height:1px;padding-right:15px;padding-left:15px;float:left;width:75%;border-right-width:1px;border-right-style:solid;border-right-color:rgb(221, 221, 221);"><div style="box-sizing:border-box;overflow:hidden;padding-right:10px;position:relative;word-wrap:break-word;word-break:break-all;display:block;">
+
+
+
+
+     
+	
+
+    
+
+
+
+
+     <div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;">
+
+
+</div>
+
+
+
+
+         
+	    <span style="box-sizing:border-box;"><div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;"><font size="4" style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">1. Java Backtrace</strong></font><br style="box-sizing:border-box;"/>从Java Backtrace, 我们可以知道当时Process 的虚拟机执行状态. Java Backtrace 依靠SignalCatcher 来抓取.<br style="box-sizing:border-box;"/>Google default: SignalCatcher catchs SIGQUIT(3), and then print the java backtrace to /data/anr/trace.txt<br style="box-sizing:border-box;"/>MTK Enhance:  SignalCatcher catchs SIGSTKFLT(16), and then print the java backtrace to /data/anr/mtktrace.txt( After 6577.SP/ICS2.MP)<br style="box-sizing:border-box;"/>You can update system properties dalvik.vm.stack-trace-file to  Change the address,  default is /data/anr/traces.txt</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">1.1 抓取的方式</strong><br style="box-sizing:border-box;"/>* 在ENG Build 中<br style="box-sizing:border-box;"/>adb remount<br style="box-sizing:border-box;"/>adb shell chmod 0777 data/anr<br style="box-sizing:border-box;"/>adb shell kill -3 pid<br style="box-sizing:border-box;"/>adb pull /data/anr</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* 在User Build 中<br style="box-sizing:border-box;"/>没有root 权限的情况下，只能直接pull 已经存在的backtrace.<br style="box-sizing:border-box;"/>adb pull /data/anr</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* 你可以尝试直接使用下面的脚本一次性抓取</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>adb remount</div>
+<div style="box-sizing:border-box;">adb shell chmod 0777 data/anr</div>
+<div style="box-sizing:border-box;">adb shell ps</div>
+<div style="box-sizing:border-box;">@echo off<br style="box-sizing:border-box;"/>set processid=<br style="box-sizing:border-box;"/>set /p processid=Please Input process id:</div>
+<div style="box-sizing:border-box;">@echo on<br style="box-sizing:border-box;"/>adb shell kill -3 %processid%</div>
+<div style="box-sizing:border-box;">@echo off<br style="box-sizing:border-box;"/>ping -n 8 127.0.0.1&gt;nul</div>
+<div style="box-sizing:border-box;">@echo on<br style="box-sizing:border-box;"/>adb pull data/anr/traces.txt trace-%processid%.txt</div>
+<div style="box-sizing:border-box;">pause</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">1.2 JavaBacktrace 解析</strong><br style="box-sizing:border-box;"/>下面是一小段system server 的java backtrace 的开始<br style="box-sizing:border-box;"/>----- pid 682 at 2014-07-30 18:04:53 -----<br style="box-sizing:border-box;"/>Cmd line: system_server</div>
+<div style="box-sizing:border-box;">JNI: CheckJNI is off; workarounds are off; pins=4; globals=1484 (plus 50 weak)</div>
+<div style="box-sizing:border-box;">DALVIK THREADS:<br style="box-sizing:border-box;"/>(mutexes: tll=0 tsl=0 tscl=0 ghl=0)</div>
+<div style="box-sizing:border-box;">&quot;main&quot; prio=5 tid=1 NATIVE<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x4193fde0 self=0x418538f8<br style="box-sizing:border-box;"/>  | sysTid=682 nice=-2 sched=0/0 cgrp=apps handle=1074835940<br style="box-sizing:border-box;"/>  | state=S schedstat=( 47858718206 26265263191 44902 ) utm=4074 stm=711 core=0<br style="box-sizing:border-box;"/>  at android.os.MessageQueue.nativePollOnce(Native Method)<br style="box-sizing:border-box;"/>  at android.os.MessageQueue.next(MessageQueue.java:138)<br style="box-sizing:border-box;"/>  at android.os.Looper.loop(Looper.java:150)<br style="box-sizing:border-box;"/>  at com.android.server.ServerThread.initAndLoop(SystemServer.java:1468)<br style="box-sizing:border-box;"/>  at com.android.server.SystemServer.main(SystemServer.java:1563)<br style="box-sizing:border-box;"/>  at java.lang.reflect.Method.invokeNative(Native Method)<br style="box-sizing:border-box;"/>  at java.lang.reflect.Method.invoke(Method.java:515)<br style="box-sizing:border-box;"/>  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:829)<br style="box-sizing:border-box;"/>  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:645)<br style="box-sizing:border-box;"/>  at dalvik.system.NativeStart.main(Native Method)<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>我们一行一行来解析.<br style="box-sizing:border-box;"/>* 0# 最开始是 -----PID at Time  然后接着 Cmd line: process name</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* 1#  the backtrace header: dvm thread ：“DALVIK THREADS:”</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* 2#  Global DVM mutex value: if 0 unlock,  else lock<br style="box-sizing:border-box;"/> tll:  threadListLock, <br style="box-sizing:border-box;"/> tsl:  threadSuspendLock, <br style="box-sizing:border-box;"/> tscl: threadSuspendCountLock<br style="box-sizing:border-box;"/> ghl:  gcHeapLock<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/> (mutexes: tll=0 tsl=0 tscl=0 ghl=0)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* 3# thread name, java thread Priority, [daemon], DVM thread id, DVM thread status.<br style="box-sizing:border-box;"/> &quot;main&quot;  -&gt; main thread -&gt; activity thread<br style="box-sizing:border-box;"/> prio  -&gt; java thread priority default is 5, (nice =0, linux thread priority 120),  domain is [1,10]<br style="box-sizing:border-box;"/> DVM thread id, NOT linux thread id<br style="box-sizing:border-box;"/> DVM thread Status:<br style="box-sizing:border-box;"/>  ZOMBIE,  RUNNABLE, TIMED_WAIT, MONITOR, WAIT, INITALIZING,STARTING, NATIVE, VMWAIT, SUSPENDED,UNKNOWN<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/> &quot;main&quot; prio=5 tid=1 NATIVE</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* 4# DVM thread status <br style="box-sizing:border-box;"/> group: default is “main”<br style="box-sizing:border-box;"/>   Compiler,JDWP,Signal Catcher,GC,FinalizerWatchdogDaemon,FinalizerDaemon,ReferenceQueueDaemon are system group<br style="box-sizing:border-box;"/> sCount:  thread suspend count<br style="box-sizing:border-box;"/> dsCount: thread dbg suspend count<br style="box-sizing:border-box;"/> obj:     thread obj address<br style="box-sizing:border-box;"/> Sef:  thread point address<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/> group=&quot;main&quot; sCount=1 dsCount=0 obj=0x4193fde0 self=0x418538f8<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/>* #5 Linux thread status<br style="box-sizing:border-box;"/> sysTId:  linux thread tid<br style="box-sizing:border-box;"/> Nice: linux thread nice value<br style="box-sizing:border-box;"/> sched: cgroup policy/gourp id<br style="box-sizing:border-box;"/> cgrp:  c group  <br style="box-sizing:border-box;"/> handle:  handle address</div>
+<div style="box-sizing:border-box;"> sysTid=682 nice=-2 sched=0/0 cgrp=apps handle=1074835940<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/>* #6 CPU Sched stat<br style="box-sizing:border-box;"/> Schedstat (Run CPU Clock/ns, Wait CPU Clock/ns,  Slice times)<br style="box-sizing:border-box;"/> utm: utime, user space time(jiffies)<br style="box-sizing:border-box;"/> stm: stime, kernel space time(jiffies)<br style="box-sizing:border-box;"/> Core now running in cpu.</div>
+<div style="box-sizing:border-box;"> state=S schedstat=( 47858718206 26265263191 44902 ) utm=4074 stm=711 core=0<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/>* #7-more Call Stack</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">1.3 几种常见的java backtrace</strong></div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">1.3.1 ActivityThread 正常状态/ActivityThread Normal Case </div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>Message Queue is empty, and thread wait for next message.<br style="box-sizing:border-box;"/> &quot;main&quot; prio=5 tid=1 NATIVE<br style="box-sizing:border-box;"/>   | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x4193fde0 self=0x418538f8<br style="box-sizing:border-box;"/>   | sysTid=11559 nice=0 sched=0/0 cgrp=apps/bg_non_interactive handle=1074835940<br style="box-sizing:border-box;"/>   | state=S schedstat=( 2397315020 9177261498 7975 ) utm=100 stm=139 core=1<br style="box-sizing:border-box;"/>   at android.os.MessageQueue.nativePollOnce(Native Method)<br style="box-sizing:border-box;"/>   at android.os.MessageQueue.next(MessageQueue.java:138)<br style="box-sizing:border-box;"/>   at android.os.Looper.loop(Looper.java:150)<br style="box-sizing:border-box;"/>   at android.app.ActivityThread.main(ActivityThread.java:5299)<br style="box-sizing:border-box;"/>   at java.lang.reflect.Method.invokeNative(Native Method)<br style="box-sizing:border-box;"/>   at java.lang.reflect.Method.invoke(Method.java:515)<br style="box-sizing:border-box;"/>   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:829)<br style="box-sizing:border-box;"/>   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:645)<br style="box-sizing:border-box;"/>   at dalvik.system.NativeStart.main(Native Method)<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>1.3.2 Java Backtrace Monitor case</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>Synchronized Lock： 等待同步锁时的backtrace.<br style="box-sizing:border-box;"/> &quot;AnrMonitorThread&quot; prio=5 tid=24 MONITOR<br style="box-sizing:border-box;"/>   | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x41fd80c8 self=0x551ac808<br style="box-sizing:border-box;"/>   | sysTid=711 nice=0 sched=0/0 cgrp=apps handle=1356369328<br style="box-sizing:border-box;"/>   | state=S schedstat=( 8265377638 4744771625 6892 ) utm=160 stm=666 core=0<br style="box-sizing:border-box;"/>   at com.android.server.am.ANRManager$AnrDumpMgr.dumpAnrDebugInfoLocked(SourceFile:~832)<br style="box-sizing:border-box;"/>   - waiting to lock &lt;0x42838968&gt; (a com.android.server.am.ANRManager$AnrDumpRecord) held by tid=20 (ActivityManager)<br style="box-sizing:border-box;"/>   at com.android.server.am.ANRManager$AnrDumpMgr.dumpAnrDebugInfo(SourceFile:824)<br style="box-sizing:border-box;"/>   at com.android.server.am.ANRManager$AnrMonitorHandler.handleMessage(SourceFile:220)<br style="box-sizing:border-box;"/>   at android.os.Handler.dispatchMessage(Handler.java:110)<br style="box-sizing:border-box;"/>   at android.os.Looper.loop(Looper.java:193)<br style="box-sizing:border-box;"/>   at android.os.HandlerThread.run(HandlerThread.java:61)<br style="box-sizing:border-box;"/>   <br style="box-sizing:border-box;"/>1.3.3 执行JNI code 未返回，状态是native 的情况</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/> &quot;WifiP2pService&quot; prio=5 tid=37 NATIVE<br style="box-sizing:border-box;"/>   | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x427a9910 self=0x55f088d8<br style="box-sizing:border-box;"/>   | sysTid=734 nice=0 sched=0/0 cgrp=apps handle=1443230288<br style="box-sizing:border-box;"/>   | state=S schedstat=( 91121772 135245305 170 ) utm=7 stm=2 core=1<br style="box-sizing:border-box;"/>   #00  pc 00032700  /system/lib/libc.so (epoll_wait+12)<br style="box-sizing:border-box;"/>   #01  pc 000105e3  /system/lib/libutils.so (android::Looper::pollInner(int)+94)<br style="box-sizing:border-box;"/>   #02  pc 00010811  /system/lib/libutils.so (android::Looper::pollOnce(int, int*, int*, void**)+92)<br style="box-sizing:border-box;"/>   #03  pc 0006c96d  /system/lib/libandroid_runtime.so (android::NativeMessageQueue::pollOnce(_JNIEnv*, int)+22)<br style="box-sizing:border-box;"/>   #04  pc 0001eacc  /system/lib/libdvm.so (dvmPlatformInvoke+112)<br style="box-sizing:border-box;"/>   #05  pc 0004fed9  /system/lib/libdvm.so (dvmCallJNIMethod(unsigned int const*, JValue*, Method const*, Thread*)+484)<br style="box-sizing:border-box;"/>   #06  pc 00027ea8  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #07  pc 0002f4b0  /system/lib/libdvm.so (dvmMterpStd(Thread*)+76)<br style="box-sizing:border-box;"/>   #08  pc 0002c994  /system/lib/libdvm.so (dvmInterpret(Thread*, Method const*, JValue*)+188)<br style="box-sizing:border-box;"/>   #09  pc 000632a5  /system/lib/libdvm.so (dvmCallMethodV(Thread*, Method const*, Object*, bool, JValue*, std::__va_list)+340)<br style="box-sizing:border-box;"/>   #10  pc 000632c9  /system/lib/libdvm.so (dvmCallMethod(Thread*, Method const*, Object*, JValue*, ...)+20)<br style="box-sizing:border-box;"/>   #11  pc 00057961  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #12  pc 0000dd40  /system/lib/libc.so (__thread_entry+72)<br style="box-sizing:border-box;"/>   at android.os.MessageQueue.nativePollOnce(Native Method)<br style="box-sizing:border-box;"/>   at android.os.MessageQueue.next(MessageQueue.java:138)<br style="box-sizing:border-box;"/>   at android.os.Looper.loop(Looper.java:150)<br style="box-sizing:border-box;"/>   at android.os.HandlerThread.run(HandlerThread.java:61)<br style="box-sizing:border-box;"/>   <br style="box-sizing:border-box;"/>1.3.4 执行object.wait 等待状态</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/> &quot;AsyncTask #1&quot; prio=5 tid=33 WAIT<br style="box-sizing:border-box;"/>   | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x427a8480 self=0x56036b40<br style="box-sizing:border-box;"/>   | sysTid=733 nice=10 sched=0/0 cgrp=apps/bg_non_interactive handle=1443076000<br style="box-sizing:border-box;"/>   | state=S schedstat=( 1941480839 10140523154 4229 ) utm=119 stm=75 core=0<br style="box-sizing:border-box;"/>   at java.lang.Object.wait(Native Method)<br style="box-sizing:border-box;"/>   - waiting on &lt;0x427a8618&gt; (a java.lang.VMThread) held by tid=33 (AsyncTask #1)<br style="box-sizing:border-box;"/>   at java.lang.Thread.parkFor(Thread.java:1212)<br style="box-sizing:border-box;"/>   at sun.misc.Unsafe.park(Unsafe.java:325)<br style="box-sizing:border-box;"/>   at java.util.concurrent.locks.LockSupport.park(LockSupport.java:157)<br style="box-sizing:border-box;"/>   at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2017)<br style="box-sizing:border-box;"/>   at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:410)<br style="box-sizing:border-box;"/>   at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1035)<br style="box-sizing:border-box;"/>   at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1097)<br style="box-sizing:border-box;"/>   at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:587)<br style="box-sizing:border-box;"/>   at java.lang.Thread.run(Thread.java:848)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">1.3.5 Suspend 状态，通常表明是抓取backtrace 时，当时还正在执行java code, 被强制suspend 的情况<br style="box-sizing:border-box;"/> &quot;FileObserver&quot; prio=5 tid=23 SUSPENDED<br style="box-sizing:border-box;"/>   | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x41fd1dc8 self=0x551abda0<br style="box-sizing:border-box;"/>   | sysTid=710 nice=0 sched=0/0 cgrp=apps handle=1427817920<br style="box-sizing:border-box;"/>   | state=S schedstat=( 130152222 399783851 383 ) utm=9 stm=4 core=0<br style="box-sizing:border-box;"/>   #00  pc 000329f8  /system/lib/libc.so (__futex_syscall3+8)<br style="box-sizing:border-box;"/>   #01  pc 000108cc  /system/lib/libc.so (__pthread_cond_timedwait_relative+48)<br style="box-sizing:border-box;"/>   #02  pc 0001092c  /system/lib/libc.so (__pthread_cond_timedwait+64)<br style="box-sizing:border-box;"/>   #03  pc 00055a93  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #04  pc 0005614d  /system/lib/libdvm.so (dvmChangeStatus(Thread*, ThreadStatus)+34)<br style="box-sizing:border-box;"/>   #05  pc 0004ae7f  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #06  pc 0004e353  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #07  pc 000518d5  /system/lib/libandroid_runtime.so<br style="box-sizing:border-box;"/>   #08  pc 0008af9f  /system/lib/libandroid_runtime.so<br style="box-sizing:border-box;"/>   #09  pc 0001eacc  /system/lib/libdvm.so (dvmPlatformInvoke+112)<br style="box-sizing:border-box;"/>   #10  pc 0004fed9  /system/lib/libdvm.so (dvmCallJNIMethod(unsigned int const*, JValue*, Method const*, Thread*)+484)<br style="box-sizing:border-box;"/>   #11  pc 00027ea8  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #12  pc 0002f4b0  /system/lib/libdvm.so (dvmMterpStd(Thread*)+76)<br style="box-sizing:border-box;"/>   #13  pc 0002c994  /system/lib/libdvm.so (dvmInterpret(Thread*, Method const*, JValue*)+188)<br style="box-sizing:border-box;"/>   #14  pc 000632a5  /system/lib/libdvm.so (dvmCallMethodV(Thread*, Method const*, Object*, bool, JValue*, std::__va_list)+340)<br style="box-sizing:border-box;"/>   #15  pc 000632c9  /system/lib/libdvm.so (dvmCallMethod(Thread*, Method const*, Object*, JValue*, ...)+20)<br style="box-sizing:border-box;"/>   #16  pc 00057961  /system/lib/libdvm.so<br style="box-sizing:border-box;"/>   #17  pc 0000dd40  /system/lib/libc.so (__thread_entry+72)<br style="box-sizing:border-box;"/>   at android.os.FileObserver$ObserverThread.observe(Native Method)<br style="box-sizing:border-box;"/>   at android.os.FileObserver$ObserverThread.run(FileObserver.java:88)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><font size="4" style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2. Native Backtrace</strong></font></div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2.1 Native Backtrace 抓取方式</strong></div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">2.1.1 利用debuggerd 抓取<br style="box-sizing:border-box;"/>MTK 已经制作了一个利用debuggerd 抓取Native backtrace 的tool RTT(Runtime Trace), 对应的执行命令是:<br style="box-sizing:border-box;"/>rtt built timestamp (Apr 18 2014 15:36:21)<br style="box-sizing:border-box;"/>USAGE : rtt [-h] -f function -p pid [-t tid]<br style="box-sizing:border-box;"/>  -f funcion : current support functions:<br style="box-sizing:border-box;"/>                 bt  (Backtrace function)<br style="box-sizing:border-box;"/>  -p pid     : pid to trace<br style="box-sizing:border-box;"/>  -t tid     : tid to trace<br style="box-sizing:border-box;"/>  -n name    : process name to trace<br style="box-sizing:border-box;"/>  -h         : help menu<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>2.1.2 添加代码直接抓取<br style="box-sizing:border-box;"/>Google 默认提供了CallStack API, 请参考<br style="box-sizing:border-box;"/>system/core/include/libutils/CallStack.h <br style="box-sizing:border-box;"/>system/core/libutils/CallStack.cpp<br style="box-sizing:border-box;"/>可快速打印单个线程的backtrace.</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2.2 解析Native Backtrace</strong><br style="box-sizing:border-box;"/>你可以使用GDB, 或者addr2line 等 tool 来解析抓回的Native Backtrace, 从而知道当时正在执行的native 代码.<br style="box-sizing:border-box;"/>如addr2line 执行<br style="box-sizing:border-box;"/>arm-linux-androideabi-addr2line -f -C -e symbols address</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><font size="4" style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">3. Kernel Backtrace</strong></font></div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">3.1 Kernel Backtrace 抓取方式</strong></div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">3.1.1 运行时抓取<br style="box-sizing:border-box;"/>* AEE/RTT 工具</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/> </div>
+<div style="box-sizing:border-box;">* Proc System<br style="box-sizing:border-box;"/>  cat proc/pid/task/tid/stack</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/> </div>
+<div style="box-sizing:border-box;">* Sysrq-trigger<br style="box-sizing:border-box;"/> adb shell cat proc/kmsg &gt; kmsg.txt<br style="box-sizing:border-box;"/> adb shell &quot;echo 8 &gt; proc/sys/kernel/printk“ //修改printk loglevel<br style="box-sizing:border-box;"/> adb shell &quot;echo t &gt; /proc/sysrq-trigger“ //打印所有的backtrace<br style="box-sizing:border-box;"/> adb shell &quot;echo w &gt; /proc/sysrq-trigger“//打印'-D' status 'D' 的 process<br style="box-sizing:border-box;"/></div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">* KDB<br style="box-sizing:border-box;"/> Long press volume UP and DOWN more then 10s<br style="box-sizing:border-box;"/> btp             &lt;pid&gt;                <br style="box-sizing:border-box;"/> Display stack for process &lt;pid&gt;<br style="box-sizing:border-box;"/> bta             [DRSTCZEUIMA]        <br style="box-sizing:border-box;"/> Display stack all processes<br style="box-sizing:border-box;"/> btc                                  <br style="box-sizing:border-box;"/> Backtrace current process on each cpu<br style="box-sizing:border-box;"/> btt             &lt;vaddr&gt;              <br style="box-sizing:border-box;"/> Backtrace process given its struct task add</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">3.1.2 添加代码直接抓取<br style="box-sizing:border-box;"/></div>
+<div style="box-sizing:border-box;">* #include &lt;linux/sched.h&gt;<br style="box-sizing:border-box;"/> 当前thread:  dump_stack();<br style="box-sizing:border-box;"/> 其他thread:  show_stack(task, NULL);</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">3.2 Process/Thread 状态</strong><br style="box-sizing:border-box;"/> &quot;R (running)&quot;,  /*   0 */<br style="box-sizing:border-box;"/> &quot;S (sleeping)&quot;,  /*   1 */<br style="box-sizing:border-box;"/> &quot;D (disk sleep)&quot;, /*   2 */<br style="box-sizing:border-box;"/> &quot;T (stopped)&quot;,  /*   4 */<br style="box-sizing:border-box;"/> &quot;t (tracing stop)&quot;, /*   8 */<br style="box-sizing:border-box;"/> &quot;Z (zombie)&quot;,  /*  16 */<br style="box-sizing:border-box;"/> &quot;X (dead)&quot;,  /*  32 */<br style="box-sizing:border-box;"/> &quot;x (dead)&quot;,  /*  64 */<br style="box-sizing:border-box;"/> &quot;K (wakekill)&quot;,  /* 128 */<br style="box-sizing:border-box;"/> &quot;W (waking)&quot;,  /* 256 */<br style="box-sizing:border-box;"/> </div>
+<div style="box-sizing:border-box;">通常一般的Process 处于的状态都是S (sleeping), 而如果一旦发现处于如D (disk sleep), T (stopped), Z (zombie) 等就要认真审查.</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><font size="4" style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">4. 几种典型的异常情况</strong></font></div><div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/><strong style="box-sizing:border-box;font-weight:700;">4.1 Deadlock</strong><br style="box-sizing:border-box;"/>下面这个case 可以看到PowerManagerService, ActivityManager, WindowManager 相互之间发生deadlock.<br style="box-sizing:border-box;"/>&quot;PowerManagerService&quot; prio=5 tid=25 MONITOR<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x42bae270 self=0x6525d5c0<br style="box-sizing:border-box;"/>  | sysTid=913 nice=0 sched=0/0 cgrp=apps handle=1696964440<br style="box-sizing:border-box;"/>  | state=S schedstat=( 5088939411 10237027338 34016 ) utm=232 stm=276 core=2<br style="box-sizing:border-box;"/>  at com.android.server.am.ActivityManagerService.bindService(ActivityManagerService.java:~14079)<br style="box-sizing:border-box;"/>  - waiting to lock &lt;0x42aa0f78&gt; (a com.android.server.am.ActivityManagerService) held by tid=16 (ActivityManager)<br style="box-sizing:border-box;"/>  at android.app.ContextImpl.bindServiceCommon(ContextImpl.java:1665)<br style="box-sizing:border-box;"/>  at android.app.ContextImpl.bindService(ContextImpl.java:1648)<br style="box-sizing:border-box;"/>  at com.android.server.power.PowerManagerService.bindSmartStandByService(PowerManagerService.java:4090)<br style="box-sizing:border-box;"/>  at com.android.server.power.PowerManagerService.handleSmartStandBySettingChangedLocked(PowerManagerService.java:4144)<br style="box-sizing:border-box;"/>  at com.android.server.power.PowerManagerService.access$5600(PowerManagerService.java:102)<br style="box-sizing:border-box;"/>  at com.android.server.power.PowerManagerService$SmartStandBySettingObserver.onChange(PowerManagerService.java:4132)<br style="box-sizing:border-box;"/>  at android.database.ContentObserver$NotificationRunnable.run(ContentObserver.java:181)<br style="box-sizing:border-box;"/>  at android.os.Handler.handleCallback(Handler.java:809)<br style="box-sizing:border-box;"/>  at android.os.Handler.dispatchMessage(Handler.java:102)<br style="box-sizing:border-box;"/>  at android.os.Looper.loop(Looper.java:139)<br style="box-sizing:border-box;"/>  at android.os.HandlerThread.run(HandlerThread.java:58)<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>  &quot;ActivityManager&quot; prio=5 tid=16 MONITOR<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x42aa0d08 self=0x649166b0<br style="box-sizing:border-box;"/>  | sysTid=902 nice=-2 sched=0/0 cgrp=apps handle=1687251744<br style="box-sizing:border-box;"/>  | state=S schedstat=( 39360881460 25703061063 69675 ) utm=1544 stm=2392 core=2<br style="box-sizing:border-box;"/>  at com.android.server.wm.WindowManagerService.setAppVisibility(WindowManagerService.java:~4783)<br style="box-sizing:border-box;"/>  - waiting to lock &lt;0x42d17590&gt; (a java.util.HashMap) held by tid=12 (WindowManager)<br style="box-sizing:border-box;"/>  at com.android.server.am.ActivityStack.stopActivityLocked(ActivityStack.java:2432)<br style="box-sizing:border-box;"/>  at com.android.server.am.ActivityStackSupervisor.activityIdleInternalLocked(ActivityStackSupervisor.java:2103)<br style="box-sizing:border-box;"/>  at com.android.server.am.ActivityStackSupervisor$ActivityStackSupervisorHandler.activityIdleInternal(ActivityStackSupervisor.java:2914)<br style="box-sizing:border-box;"/>  at com.android.server.am.ActivityStackSupervisor$ActivityStackSupervisorHandler.handleMessage(ActivityStackSupervisor.java:2921)<br style="box-sizing:border-box;"/>  at android.os.Handler.dispatchMessage(Handler.java:110)<br style="box-sizing:border-box;"/>  at android.os.Looper.loop(Looper.java:147)<br style="box-sizing:border-box;"/>  at com.android.server.am.ActivityManagerService$AThread.run(ActivityManagerService.java:2112)<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>  &quot;WindowManager&quot; prio=5 tid=12 MONITOR<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x42a92550 self=0x6491dd48<br style="box-sizing:border-box;"/>  | sysTid=898 nice=-4 sched=0/0 cgrp=apps handle=1687201104<br style="box-sizing:border-box;"/>  | state=S schedstat=( 60734070955 41987172579 219755 ) utm=4659 stm=1414 core=1<br style="box-sizing:border-box;"/>  at com.android.server.power.PowerManagerService.setScreenBrightnessOverrideFromWindowManagerInternal(PowerManagerService.java:~3207)<br style="box-sizing:border-box;"/>  - waiting to lock &lt;0x42a95140&gt; (a java.lang.Object) held by tid=25 (PowerManagerService)<br style="box-sizing:border-box;"/>  at com.android.server.power.PowerManagerService.setScreenBrightnessOverrideFromWindowManager(PowerManagerService.java:3196)<br style="box-sizing:border-box;"/>  at com.android.server.wm.WindowManagerService.performLayoutAndPlaceSurfacesLockedInner(WindowManagerService.java:9686)<br style="box-sizing:border-box;"/>  at com.android.server.wm.WindowManagerService.performLayoutAndPlaceSurfacesLockedLoop(WindowManagerService.java:8923)<br style="box-sizing:border-box;"/>  at com.android.server.wm.WindowManagerService.performLayoutAndPlaceSurfacesLocked(WindowManagerService.java:8879)<br style="box-sizing:border-box;"/>  at com.android.server.wm.WindowManagerService.access$500(WindowManagerService.java:170)<br style="box-sizing:border-box;"/>  at com.android.server.wm.WindowManagerService$H.handleMessage(WindowManagerService.java:7795)<br style="box-sizing:border-box;"/>  at android.os.Handler.dispatchMessage(Handler.java:110)<br style="box-sizing:border-box;"/>  at android.os.Looper.loop(Looper.java:147)<br style="box-sizing:border-box;"/>  at android.os.HandlerThread.run(HandlerThread.java:58)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">4.2 执行JNI native code 后一去不复返</strong><br style="box-sizing:border-box;"/>&quot;main&quot; prio=5 tid=1 NATIVE<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x41bb3d98 self=0x41ba2878<br style="box-sizing:border-box;"/>  | sysTid=814 nice=-2 sched=0/0 cgrp=apps handle=1074389380<br style="box-sizing:border-box;"/>  | state=D schedstat=( 22048890928 19526803112 32612 ) utm=1670 stm=534 core=0<br style="box-sizing:border-box;"/>  (native backtrace unavailable)<br style="box-sizing:border-box;"/>  at android.hardware.SystemSensorManager$BaseEventQueue.nativeDisableSensor(Native Method)<br style="box-sizing:border-box;"/>  at android.hardware.SystemSensorManager$BaseEventQueue.disableSensor(SystemSensorManager.java:399)<br style="box-sizing:border-box;"/>  at android.hardware.SystemSensorManager$BaseEventQueue.removeAllSensors(SystemSensorManager.java:325)<br style="box-sizing:border-box;"/>  at android.hardware.SystemSensorManager.unregisterListenerImpl(SystemSensorManager.java:194)<br style="box-sizing:border-box;"/>  at android.hardware.SensorManager.unregisterListener(SensorManager.java:560)<br style="box-sizing:border-box;"/>  at com.android.internal.policy.impl.WindowOrientationListener.disable(WindowOrientationListener.java:139)<br style="box-sizing:border-box;"/>  at com.android.internal.policy.impl.PhoneWindowManager.updateOrientationListenerLp(PhoneWindowManager.java:774)<br style="box-sizing:border-box;"/>  at com.android.internal.policy.impl.PhoneWindowManager.screenTurnedOff(PhoneWindowManager.java:4897)<br style="box-sizing:border-box;"/>  at com.android.server.power.Notifier.sendGoToSleepBroadcast(Notifier.java:518)<br style="box-sizing:border-box;"/>  at com.android.server.power.Notifier.sendNextBroadcast(Notifier.java:434)<br style="box-sizing:border-box;"/>  at com.android.server.power.Notifier.access$500(Notifier.java:63)<br style="box-sizing:border-box;"/>  at com.android.server.power.Notifier$NotifierHandler.handleMessage(Notifier.java:584)<br style="box-sizing:border-box;"/>  at android.os.Handler.dispatchMessage(Handler.java:110)<br style="box-sizing:border-box;"/>  at android.os.Looper.loop(Looper.java:193)<br style="box-sizing:border-box;"/>  at com.android.server.ServerThread.initAndLoop(SystemServer.java:1436)<br style="box-sizing:border-box;"/>  at com.android.server.SystemServer.main(SystemServer.java:1531)<br style="box-sizing:border-box;"/>  at java.lang.reflect.Method.invokeNative(Native Method)<br style="box-sizing:border-box;"/>  at java.lang.reflect.Method.invoke(Method.java:515)<br style="box-sizing:border-box;"/>  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:824)<br style="box-sizing:border-box;"/>  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:640)<br style="box-sizing:border-box;"/>  at dalvik.system.NativeStart.main(Native Method)<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>===&gt;<br style="box-sizing:border-box;"/>KERNEL SPACE BACKTRACE, sysTid=814<br style="box-sizing:border-box;"/> [&lt;ffffffff&gt;] 0xffffffff from [&lt;c07e5140&gt;] __schedule+0x3fc/0x950<br style="box-sizing:border-box;"/> [&lt;c07e4d50&gt;] __schedule+0xc/0x950 from [&lt;c07e57e4&gt;] schedule+0x40/0x80<br style="box-sizing:border-box;"/> [&lt;c07e57b0&gt;] schedule+0xc/0x80 from [&lt;c07e5ae4&gt;] schedule_preempt_disabled+0x20/0x2c<br style="box-sizing:border-box;"/> [&lt;c07e5ad0&gt;] schedule_preempt_disabled+0xc/0x2c from [&lt;c07e3c3c&gt;] mutex_lock_nested+0x1b8/0x560<br style="box-sizing:border-box;"/> [&lt;c07e3a90&gt;] mutex_lock_nested+0xc/0x560 from [&lt;c05667d8&gt;] gsensor_operate+0x1bc/0x2c0<br style="box-sizing:border-box;"/> [&lt;c0566628&gt;] gsensor_operate+0xc/0x2c0 from [&lt;c0495fa0&gt;] hwmsen_enable+0xa8/0x30c<br style="box-sizing:border-box;"/> [&lt;c0495f04&gt;] hwmsen_enable+0xc/0x30c from [&lt;c0496500&gt;] hwmsen_unlocked_ioctl+0x2fc/0x528<br style="box-sizing:border-box;"/> [&lt;c0496210&gt;] hwmsen_unlocked_ioctl+0xc/0x528 from [&lt;c018ad98&gt;] do_vfs_ioctl+0x94/0x5bc<br style="box-sizing:border-box;"/> [&lt;c018ad10&gt;] do_vfs_ioctl+0xc/0x5bc from [&lt;c018b33c&gt;] sys_ioctl+0x7c/0x8c<br style="box-sizing:border-box;"/> [&lt;c018b2cc&gt;] sys_ioctl+0xc/0x8c from [&lt;c000e480&gt;] ret_fast_syscall+0x0/0x40<br style="box-sizing:border-box;"/> [&lt;ffffffff&gt;]  from [&lt;ffffffff&gt;] <br style="box-sizing:border-box;"/></div></div></span>
+        <span style="box-sizing:border-box;"></span>
+    
+
+
+</div>
+
+
+</div></div>
+					 
+				  </div>
+             <span style="display:table;clear:both;"> </span></div>
+         <span style="display:table;clear:both;"> </span></div></div></div></div></div></div></div></div></div></div></div></div><br/></span>
+</div></body></html> 

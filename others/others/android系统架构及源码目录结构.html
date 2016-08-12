@@ -1,0 +1,183 @@
+<html>
+<head>
+  <title>android系统架构及源码目录结构</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1643"/>
+<h1>android系统架构及源码目录结构</h1>
+
+<div>
+<span><div><div style="top: 150px; width: 131px; height: 301px; right: 308px; overflow: hidden; z-index: 2147483647; box-sizing: content-box;position:relative;"><div style="box-sizing: content-box;position:absolute;width:131px;height:20px;top:NaNpx;left:0;cursor:pointer;background-color:#999999;color:#fff;font-size:12px;font-family: 微软雅黑;text-align:center;"><div>闭</div></div></div><div style="left: 308px; top: 150px; width: 131px; height: 301px; overflow: hidden; z-index: 2147483647; box-sizing: content-box;position:relative;"><div style="box-sizing: content-box;position:absolute;width:131px;height:20px;top:NaNpx;left:0;cursor:pointer;background-color:#999999;color:#fff;font-size:12px;font-family: 微软雅黑;text-align:center;"><div><br/></div></div></div><ul><li><h1>android系统架构及源码目录结构</h1>
+ <span style="float: right;"><a href="http://m.fx114.net/qa-48-146132.aspx">手机版</a></span> <span style="float: right;"><a href="http://www.dropgg.com/">Amazon Price Tracker</a></span></li></ul><div><a href="http://www.fx114.net/"><img src="android系统架构及源码目录结构_files/Image.png" type="image/png" alt="分享查询网" style="height: auto;"/></a></div><ul><li><a href="http://www.fx114.net/">首页</a></li><li><a href="http://www.fx114.net/Portal-1.aspx">.Net技术</a></li><li><a href="http://www.fx114.net/Portal-15.aspx">Web开发</a></li><li><a href="http://www.fx114.net/Portal-7.aspx">Java开发</a></li><li><a href="http://www.fx114.net/Portal-11.aspx">PHP编程</a></li><li><a href="http://www.fx114.net/List-2-68-1.aspx">ASP编程</a></li><li><a href="http://www.fx114.net/Portal-28.aspx">移动平台</a></li><li><a href="http://www.fx114.net/Portal-31.aspx">云计算</a></li><li><a href="http://www.fx114.net/Portal-17.aspx">程序生涯</a></li><li><a href="http://www.fx114.net/Portal-8.aspx">Linux技术</a></li><li><a href="http://www.fx114.net/List-2-251-1.aspx">Mysql数据库</a></li><li><a href="http://www.fx114.net/Portal-9.aspx">SQL数据库</a></li></ul><ul><li><font color="gray">分类导航：</font> <a href="http://www.fx114.net/List-2-48-1.aspx" title="智能电视">智能电视</a>|  <a href="http://www.fx114.net/List-2-41-1.aspx" title="硬件设计">硬件设计</a>|  <a href="http://www.fx114.net/List-2-40-1.aspx" title="单片机/工控">单片机/工控</a>|  <a href="http://www.fx114.net/List-2-44-1.aspx" title="VxWorks开发">VxWorks开发</a>|  <a href="http://www.fx114.net/List-2-45-1.aspx" title="嵌入开发(WinCE)">嵌入开发(WinCE)</a>|  <a href="http://www.fx114.net/List-2-47-1.aspx" title="其他硬件开发">其他硬件开发</a>|  <a href="http://www.fx114.net/List-2-46-1.aspx" title="无线">无线</a>|  <a href="http://www.fx114.net/List-2-42-1.aspx" title="驱动开发/核心开发">驱动开发/核心开发</a>|  <a href="http://www.fx114.net/List-2-43-1.aspx" title="非技术区">非技术区</a>| </li></ul><div style="left: 0px; top: 0px; width: 100%; height: 50px; right: auto; overflow: visible; margin-top: -50px; display: none; position: fixed; z-index: 2147483647; zoom: 1;"><div style="width: 40px; height: 20px; text-align: center; right: 0px; bottom: -20px; color: rgb(255, 255, 255); font-size: 12px; position: absolute; z-index: 112; cursor: pointer;">关闭</div></div><div><div><dl><dd>当前位置：<a href="http://www.fx114.net/" title="分享查询网">分享查询网</a> &gt; <a href="http://www.fx114.net/Portal-29.aspx" title="硬件/嵌入开发">硬件/嵌入开发</a> &gt; <a href="http://www.fx114.net/List-2-48-1.aspx" title="智能电视">智能电视</a> &gt;<a href="http://www.fx114.net/qa-48-146132.aspx" title="android系统架构及源码目录结构">android系统架构及源码目录结构</a></dd></dl><dl><dd><h2>android系统架构及源码目录结构</h2></dd><dd>发布时间：2015-12-29 19:29:43编辑：www.fx114.net <a href="http://www.fx114.net/" title="分享查询网">分享查询网</a><a href="http://www.fx114.net/qa-48-146132.aspx#pinglun" title="我要评论">我要评论</a></dd></dl><div>本篇文章主要介绍了&quot;android系统架构及源码目录结构&quot;，主要涉及到android系统架构及源码目录结构方面的内容，对于android系统架构及源码目录结构感兴趣的同学可以参考一下。</div><div><div><p><strong><span style="font-size:18px">1. android系统架构：</span></strong></p><p>  android系统架构采用了分层架构的思想，如下图所示，从上到下共4层，分别为：应用程序层、应用程序框架层、系统库和android运行时层、linux内核层。</p><p><img src="android系统架构及源码目录结构_files/Image.jpg" type="image/jpeg" style="height: auto;"/><br/></p><p><br/></p><p>每层功能简要介绍如下：</p><p><strong>应用程序层（JAVA应用程序）：</strong></p><p>  该层提供一些核心应用程序包，例如电子邮件、短信、日历、地图、浏览器和联系人管理等。同时，开发者可以利用Java语言设计和编写属于自己的应用程序，而这些程序与那些核心应用程序彼此平等、友好共处。</p><p><br/></p><p><strong>应用程序框架层（JAVA框架）：</strong></p><p>  该层是Android应用开发的基础，开发人员大部分情况是在和她打交道。应用程序框架层包括活动管理器、窗口管理器、内容提供者、视图系统、包管理器、电话管理器、资源管理器、位置管理器、通知管理器和XMPP服务十个部分。在Android平台上，开发人员可以完全访问核心应用程序所使用的API框架。并且，任何一个应用程序都可以发布自身的功能模块，而其他应用程序则可以使用这些已发布的功能模块。基于这样的重用机制，用户就可以方便地替换平台本身的各种应用程序组件。</p><p><br/></p><p><strong>系统库和android运行时层（本地框架和JAVA运行环境）：</strong></p><p>  系统库包括九个子系统，分别是图层管理、媒体库、SQLite、OpenGLEState、FreeType、WebKit、SGL、SSL和libc。</p><p>  Android运行时包括核心库和Dalvik虚拟机，前者既兼容了大多数Java语言所需要调用的功能函数，又包括了Android的核心库，比如android.os、android.net、android.media等等。后者是一种基于寄存器的java虚拟机，Dalvik虚拟机主要是完成对生命周期的管理、堆栈的管理、线程的管理、安全和异常的管理以及垃圾回收等重要功能。</p><p><br/></p><p><strong>LINUX内核层：</strong></p><p>  Android核心系统服务依赖于Linux内核，如安全性、内存管理、进程管理、网络协议栈和驱动模型。Linux内核也是作为硬件与软件栈的抽象层。</p><p>  驱动：显示驱动、摄像头驱动、键盘驱动、WiFi驱动、Audio驱动、flash内存驱动、Binder（IPC）驱动、电源管理等。</p><p><br/></p><p><strong><span style="font-size:18px">2. android源码目录结构：</span></strong><br/></p><pre>
+Android 5.1
+|-- Makefile
+|-- abi
+|-- art
+|-- bionic （bionic C库）
+|-- bootable （启动引导相关代码）
+|-- build （存放系统编译规则及generic等基础开发包配置）
+|-- cts （Android兼容性测试套件标准）
+|-- dalvik （dalvik JAVA虚拟机）
+|-- developers
+|-- development （应用程序开发相关）
+|-- device
+|-- docs
+|-- external （android使用的一些开源的模组）
+|-- frameworks （核心框架——java及C++语言）
+|-- hardware （部分厂家开源的硬解适配层HAL代码）
+|-- kernel
+|-- libcore
+|-- libnativehelper
+|-- ndk
+|-- out （编译完成后的代码输出与此目录）
+|-- packages （应用程序包）
+|-- pdk
+|-- prebuilts （x86和arm架构下预编译的一些资源）
+|-- sdk （sdk及模拟器）
+|-- system （底层文件系统库、应用及组件——C语言）
+|-- tools
+`-- vendor （厂商定制代码）
+
+bionic 目录
+|-- benchmarks
+|-- libc （C库）
+| |-- arch-arm （ARM架构，包含系统调用汇编实现）
+| |-- ...
+| |-- bionic （由C实现的功能，架构无关）
+| |-- dns
+| |-- include （头文件）
+| |-- kernel （Linux内核中的一些头文件）
+| |-- private （？一些私有的头文件）
+| |-- stdio （stdio实现）
+| |-- tools （几个工具）
+| |-- tzcode （时区相关代码）
+| |-- upstream-dlmalloc
+| |-- upstream-freebsd
+| |-- upstream-netbsd
+| |-- upstream-openbsd
+| `-- zoneinfo （时区信息）
+|-- libdl （libdl实现，dl是动态链接，提供访问动态链接库的功能）
+|-- libm （libm数学库的实现，）
+|-- libstdc++ （libstdc++ C++实现库）
+|-- linker （动态链接器）
+`-- test
+
+bootable 目录
+|-- bootloader （适合各种bootloader的通用代码）
+| |-- legacy （估计不能直接使用，可以参考）
+| `-- lk
+`-- recovery （系统恢复相关）
+| |-- edify （升级脚本使用的edify脚本语言）
+| |-- etc （init.rc恢复脚本）
+| |-- minui （一个简单的UI）
+| |-- minzip （一个简单的压缩工具）
+| |-- mtdutils （mtd工具）
+| |-- res （资源）
+| |-- tools （工具）
+| | `-- ota （OTA Over The Air Updates升级工具）
+| `-- updater （升级器）
+
+build目录
+|-- core （核心编译规则）
+|-- libs 
+| `-- host （主机端库，有android “cp”功能替换）
+|-- target （目标机编译对象）
+| |-- board （开发平台）
+| |-- product （开发平台对应的编译规则）
+`-- tools （编译中主机使用的工具及脚本）
+
+
+dalvik目录 dalvik虚拟机
+|-- dexdump （dex反汇编）
+|-- dexgen
+|-- dexlist （List all methods in all concrete classes in a DEX file.）
+|-- docs （文档）
+|-- dx （dx工具，将多个java转换为dex）
+|-- hit （？java语言写成）
+|-- opcode-gen
+|-- tools （工具）
+`-- vm （虚拟机实现）
+
+development 目录 （开发者需要的一些例程及工具）
+|-- apps （一些核心应用程序）
+| |-- BluetoothDebug （蓝牙调试程序）
+| |-- CustomLocale （自定义区域设置）
+| |-- Development （开发）
+| |-- Fallback （和语言相关的一个程序）
+| |-- FontLab （字库）
+| |-- GestureBuilder （手势动作）
+| |-- NinePatchLab （？）
+| |-- OBJViewer （OBJ查看器）
+| |-- SdkSetup （SDK安装器）
+| |-- SpareParts （高级设置）
+| |-- Term （远程登录）
+| `-- launchperf （？）
+|-- build （编译脚本模板）
+|-- cmds （有个monkey工具）
+|-- docs （文档）
+|-- host （主机端USB驱动等）
+|-- ide （集成开发环境）
+|-- libraries
+|-- ndk （本地开发套件——c语言开发套件）
+|-- samples （例程）
+| |-- AliasActivity （？）
+| |-- ApiDemos （API演示程序）
+| |-- BluetoothChat （蓝牙聊天）
+| |-- BrowserPlugin （浏览器插件）
+| |-- BusinessCard （商业卡）
+| |-- Compass （指南针）
+| |-- ContactManager （联系人管理器）
+| |-- CubeLiveWallpaper （动态壁纸的一个简单例程）
+| |-- FixedGridLayout （像是布局）
+| |-- GlobalTime （全球时间）
+| |-- HelloActivity （Hello）
+| |-- Home （Home）
+| |-- JetBoy （jetBoy游戏）
+| |-- LunarLander （貌似又是一个游戏）
+| |-- MailSync （邮件同步）
+| |-- MultiResolution （多分辨率）
+| |-- MySampleRss （RSS）
+| |-- NotePad （记事本）
+| |-- RSSReader （RSS阅读器）
+| |-- SearchableDictionary （目录搜索）
+| |-- SimpleJNI （JNI例程）
+| |-- SkeletonApp （空壳APP）
+| |-- Snake （snake程序）
+| |-- SoftKeyboard （软键盘）
+| |-- Wiktionary （？维基）
+| `-- WiktionarySimple（？维基例程）
+|-- scripts （脚本）
+|-- sdk （sdk配置）
+|-- sdk_overlay
+|-- sys-img
+|-- testrunner （？测试用）
+|-- tools （一些工具）
+`-- tutorials
+
+external 目录
+|-- apache-http （网页服务器）
+|-- bison （自动生成语法分析器，将无关文法转换成C、C++）
+|-- blktrace （blktrace is a block layer IO tracing mechanism）
+|-- bluetooth （蓝牙相关、协议栈）
+|-- bsdiff （diff工具）
+|-- bzip2 （压缩工具）
+|-- dhcpcd （DHCP服务）
+|-- e2fsprogs （EXT2文件系统工具）
+|-- elfcopy （复制ELF的工具）
+|-- elfutils （ELF工具）
+|-- embunit （Embedded Unit Project）
+|-- emma （java代码覆盖率统计工具）
+|-- esd （Enlightened Sound Daemon，将多种音频流混合在一个设备上播放）
+|-- expat （Expat is a stream-oriented XML parser.）
+|-- fdlibm （FDLIBM (Freely Distributable LIBM)）
+</pre><br/><br/><p>参考资料：</p><p>  android系统架构： http://blog.csdn.net/wangloveall/article/details/8033725</p><p>  android源码结构： http://www.cnblogs.com/shaweng/p/4043573.html</p></div><br/></div><ul><li><div><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到QQ空间"></a> <a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到新浪微博"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到腾讯微博"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到人人网"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到微信"></a> <a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到一键分享"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到百度云收藏"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到百度相册"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到百度贴吧"></a> <a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到QQ好友"></a><a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到豆瓣网"></a> <a href="http://www.fx114.net/qa-48-146132.aspx#" title="分享到百度新首页"></a></div></li></ul></div><dl><dt><b>上一篇:</b><a href="http://www.fx114.net/qa-48-146131.aspx" title="Java创建与发布WebService">Java创建与发布WebService</a></dt><dd><b>下一篇:</b><a href="http://www.fx114.net/qa-48-146133.aspx" title="Laravel 上传文件报找不到临时文件的问题">Laravel 上传文件报找不到临时文件的问题</a></dd></dl><dl><dd><h4>相关文章</h4></dd></dl><div>关键词： <strong><a href="http://www.fx114.net/qa-48-146132.aspx" target="_blank">android系统架构及源码目录结构</a></strong></div><div><h4>相关评论</h4><div style="width: 100%; height: auto;"><div><strong>评论</strong>(<em>0</em>人参与<i>，</i><em>0</em>条评论)</div><div style="display: none;"><a href="http://zt.pinglun.sohu.com/s2014/sljyhgy/index.shtml" target="_blank">搜狐“我来说两句”用户公约</a></div><div style="width:1px;height:1px;overflow:hidden;"><img src="android系统架构及源码目录结构_files/Image [1].jpg" type="image/jpeg" style="visibility:hidden;width:1px;height:1px;"/></div><div><a target="_self"><img src="android系统架构及源码目录结构_files/Image.gif" type="image/gif" height="42" style="height: auto;" width="42"/></a></div><div><ul><li><a title="表情"></a></li></ul></div><div><ul><li style="display:block"><div><a target="_self" title="搜狐">搜狐登录</a></div></li><li style="display:block"><div><a target="_self" title="新浪微博">微博登录</a></div></li><li style="display:block"><div><a target="_self" title="QQ">QQ登录</a></div></li><li><div><a target="_self">手机登录</a></div></li></ul></div><div style="display: none;">等级不够，发表评论升至指定级别才能获得该特权。详情请参见<a>等级说明</a>。</div><div><a>1</a></div><div><a href="http://changyan.sohu.com/?from=changyan" target="_blank">分享查询网正在使用畅言</a></div></div></div><div><ul><li><b>本文标题：</b><a href="http://www.fx114.net/qa-48-146132.aspx">android系统架构及源码目录结构</a></li><li><b>本页链接：</b><a href="http://www.fx114.net/qa-48-146132.aspx">http://www.fx114.net/qa-48-146132.aspx</a></li></ul></div></div><div style="border-bottom: 1px solid #02598e; padding-bottom: 5px;"><div><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=网页设计" target="_blank" title="网页设计">网页设计</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=高性能计算" target="_blank" title="高性能计算">高性能计算</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=C/C++" target="_blank" title="C/C++">C/C++</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=网络编程" target="_blank" title="网络编程">网络编程</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=数据隐私保护" target="_blank" title="数据隐私保护">数据隐私保护</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=树状数组" target="_blank" title="树状数组">树状数组</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=面向对象" target="_blank" title="面向对象">面向对象</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=密度分辨率" target="_blank" title="密度分辨率">密度分辨率</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=空间复杂度" target="_blank" title="空间复杂度">空间复杂度</a><a href="http://so.fx114.net/cse/search?s=5712359222851038195&amp;entry=1&amp;q=脚本语言" target="_blank" title="脚本语言">脚本语言</a></div></div><div><h3>最近更新</h3><ul><li><a href="http://www.fx114.net/qa-48-147201.aspx" title="sap信贷管理的操作流程">sap信贷管理的操作流程</a></li><li><a href="http://www.fx114.net/qa-48-147200.aspx" title="Ninja自己的技术栈">Ninja自己的技术栈</a></li><li><a href="http://www.fx114.net/qa-48-147199.aspx" title="sdk不能更新">sdk不能更新</a></li><li><a href="http://www.fx114.net/qa-48-147198.aspx" title="去除inline-block元素间间距的N种方法">去除inline-block元素间间距的N种方法</a></li><li><a href="http://www.fx114.net/qa-48-147197.aspx" title="Mysql主从复制配置笔记">Mysql主从复制配置笔记</a></li><li><a href="http://www.fx114.net/qa-48-147196.aspx" title="Android Studio1.0升级到1.5编译报错的处理">Android Studio1.0升级到1.5编译报错的处理</a></li><li><a href="http://www.fx114.net/qa-48-147195.aspx" title="CMake 编程简介">CMake 编程简介</a></li><li><a href="http://www.fx114.net/qa-48-147194.aspx" title="命令行之2048">命令行之2048</a></li><li><a href="http://www.fx114.net/qa-48-147193.aspx" title="iOS开发--系统通讯录的访问与添加联系人">iOS开发--系统通讯录的访问与添加联系人</a></li><li><a href="http://www.fx114.net/qa-48-147192.aspx" title="面向对象编程(十三)——面向对象三大特性之封装">面向对象编程(十三)——面向对象三大特性之封装</a></li><li><a href="http://www.fx114.net/qa-48-147191.aspx" title="WCF RESTFUL SERVICE">WCF RESTFUL SERVICE</a></li><li><a href="http://www.fx114.net/qa-48-147190.aspx" title="电影推荐">电影推荐</a></li><li><a href="http://www.fx114.net/qa-48-147189.aspx" title="fatal error C1083: 无法打开源文件">fatal error C1083: 无法打开源文件</a></li><li><a href="http://www.fx114.net/qa-48-147188.aspx" title="bootstrap中使用日历控件">bootstrap中使用日历控件</a></li><li><a href="http://www.fx114.net/qa-48-147187.aspx" title="Hibernate主要查询方式">Hibernate主要查询方式</a></li><li><a href="http://www.fx114.net/qa-48-147186.aspx" title="绝对定位对margin外边距的影响">绝对定位对margin外边距的影响</a></li><li><a href="http://www.fx114.net/qa-48-147185.aspx" title="enable apache2 rewrite_mod on ubuntu14.04">enable apache2 rewrite_mod on ubuntu14.04</a></li><li><a href="http://www.fx114.net/qa-48-147184.aspx" title="单例初始化（MRC模式之autorelease）">单例初始化（MRC模式之autorelease）</a></li><li><a href="http://www.fx114.net/qa-48-147183.aspx" title="VoHelper">VoHelper</a></li><li><a href="http://www.fx114.net/qa-48-147182.aspx" title="tab使用 TabActivity TabHost Tabspec常用方法">tab使用 TabActivity TabHost Tabspec常用方法</a></li></ul></div><div><a href="http://bangbaotao.taobao.com/?leexiaochong" rel="nofollow" target="blank"><img src="android系统架构及源码目录结构_files/Image [2].jpg" type="image/jpeg" style="height: auto;"/></a></div><dl><dt><a href="http://www.fx114.net/About.aspx" rel="nofollow">关于本站</a> | <a href="http://www.fx114.net/Ad.aspx" rel="nofollow">广告合作</a> | <a href="http://www.fx114.net/Contact.aspx" rel="nofollow">联系我们</a> | <a href="http://www.fx114.net/Tougao.aspx" rel="nofollow">投稿说明</a> | <a href="http://www.fx114.net/ShengMing.aspx" rel="nofollow">网站声明</a></dt><dd><p>CopyRight © 2009-2016 <a href="http://www.fx114.net/"><strong>分享查询网</strong></a> Fx114.Net , All Rights Reserved. <a href="http://www.miibeian.gov.cn/" rel="nofollow">辽ICP备14015563号-1</a></p></dd></dl></div><div><a href="http://tongji.baidu.com/hm-web/welcome/ico?s=b668ac6874ec0621a52a5dfe1df0700b" target="_blank"><img src="android系统架构及源码目录结构_files/Image [1].gif" type="image/gif" border="0" height="20" style="height: auto;" width="20"/></a></div><div style="left: 753px; top: 4650px; width: 300px; display: none;"><div style="width: 300px;">分享到<a href="http://www.baidu.com/s?wd=CubeLiveWallpaper （动态壁纸的一个简&amp;tn=SE_hldp08010_vurs2xrp" target="_blank">百度一下</a></div><div><ul><li><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a></li><li><a href="http://www.fx114.net/qa-48-146132.aspx#"></a></li></ul></div></div><div style="left: 440.95px; top: 1090.43px; width: 568px; height: 48px; font-size: 14px; display: none; position: absolute;"><div>分享到：<a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a><a href="http://www.fx114.net/qa-48-146132.aspx#"></a></div></div></span>
+</div></body></html> 

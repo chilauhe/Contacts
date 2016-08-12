@@ -1,0 +1,557 @@
+<html>
+<head>
+  <title>MTK Android Driver知识大全</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1760"/>
+<h1>MTK Android Driver知识大全</h1>
+
+<div>
+<span><div style="padding: 0px; border-bottom-style: none; font-family: Helvetica, &apos;Tahoma, Arial&apos;, sans-serif; font-size: 0.75em; color: rgb(51, 51, 51); height: 40px; background: rgb(72, 82, 94);"><div style="box-sizing: content-box; margin: 0px auto; padding: 0px; text-align: left; width: 960px;"><div style="box-sizing: content-box; display: block; margin: 0px; padding: 0px; text-align: left; overflow: visible; float: left; font-size: 12px; height: 40px; width: auto;"><a href="http://www.csdn.net/?ref=toolbar" style="color: rgb(51, 51, 51); text-decoration: none; box-sizing: content-box; font-size: 16px; font-weight: normal; width: 40px; height: 40px; margin: 0px; position: relative; z-index: 1001; display: block; float: left; padding: 0px; background-image: url(http://c.csdnimg.cn/public/common/toolbar/images/f_icon.png); background-position: 0px 0px; background-repeat: no-repeat;" target="_blank" title="CSDN首页"></a><a href="http://blog.csdn.net/?ref=toolbar_logo" style="color: rgb(51, 51, 51); text-decoration: none; box-sizing: content-box; font-size: 12px; font-weight: normal; margin-left: 10px; width: 120px; height: 40px; float: left; background-image: url(http://c.csdnimg.cn/public/common/toolbar/images/f_name.png); background-position: -162px -52px;" title="频道首页"></a></div><div style="box-sizing: content-box; margin: 0px; padding: 0px; text-align: left; float: right;"><ul style="box-sizing: content-box; margin: 0px; padding: 0px; text-align: left; list-style: none;"><li><a href="https://passport.csdn.net/account/login?ref=toolbar" style="color: rgb(221, 221, 221); text-decoration: none; box-sizing: content-box; font-size: 12px; font-weight: normal;" target="_top">登录 </a>|<a href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister" style="color: rgb(221, 221, 221); text-decoration: none; box-sizing: content-box; font-size: 12px; font-weight: normal;" target="_top"> 注册</a></li></ul></div></div></div><div style="width: 1903px; clear: both; background: url(http://static.blog.csdn.net/skin/default/images/head_bg.jpg) 50% 0% no-repeat;"><div style="width: 980px; height: 30px; margin: 0px auto; padding: 70px 0px 0px; text-align: left;"><div><h2 style="margin: 0px 20px 0px 0px; padding: 0px; display: inline-block; float: left; color: rgb(255, 255, 255); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 30px; font-family: &apos;Microsoft YaHei&apos;;"><a href="http://blog.csdn.net/cbk861110" style="color: rgb(255, 255, 255); text-decoration: none;">cbk861110的专栏</a></h2><h3 style="margin: 0px; padding: 2px 0px 0px; display: inline-block; float: left; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 18px; font-family: &apos;Microsoft YaHei&apos;;"></h3></div></div><div style="display: block; clear: both; width: 980px; height: 42px; margin: 0px auto; padding: 22px 0px 0px; text-align: left;"><div style="text-align: right;"><ul style="float: right;"><li style="display: inline; float: left; margin: 0px 5px;"><a href="http://blog.csdn.net/cbk861110?viewmode=contents" style="color: rgb(102, 102, 102); text-decoration: none; display: inline-block; height: 26px; padding: 0px 0px 0px 10px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial, Helvetica, sans-serif; cursor: pointer; background: url(http://static.blog.csdn.net/images/btn_pub_nav.gif) 0% 0px no-repeat;"><span style="display: inline-block; height: 16px; padding: 5px 10px 5px 0px; background: url(http://static.blog.csdn.net/images/btn_pub_nav.gif) 100% -26px no-repeat;"><img src="MTK Android Driver知识大全_files/Image.gif" type="image/gif" style="border: none; margin: 0px 4px 0px 0px; vertical-align: middle; height: auto;"/>目录视图</span></a></li><li style="display: inline; float: left; margin: 0px 5px;"><a href="http://blog.csdn.net/cbk861110?viewmode=list" style="color: rgb(102, 102, 102); text-decoration: none; display: inline-block; height: 26px; padding: 0px 0px 0px 10px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial, Helvetica, sans-serif; cursor: pointer; background: url(http://static.blog.csdn.net/images/btn_pub_nav.gif) 0% 0px no-repeat;"><span style="display: inline-block; height: 16px; padding: 5px 10px 5px 0px; background: url(http://static.blog.csdn.net/images/btn_pub_nav.gif) 100% -26px no-repeat;"><img src="MTK Android Driver知识大全_files/Image [1].gif" type="image/gif" style="border: none; margin: 0px 4px 0px 0px; vertical-align: middle; height: auto;"/>摘要视图</span></a></li><li style="display: inline; float: left; margin: 0px 5px;"><a href="http://blog.csdn.net/cbk861110/rss/list" style="color: rgb(102, 102, 102); text-decoration: none; display: inline-block; height: 26px; padding: 0px 0px 0px 10px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial, Helvetica, sans-serif; cursor: pointer; background: url(http://static.blog.csdn.net/images/btn_pub_nav.gif) 0% 0px no-repeat;"><span style="display: inline-block; height: 16px; padding: 5px 10px 5px 0px; background: url(http://static.blog.csdn.net/images/btn_pub_nav.gif) 100% -26px no-repeat;"><img src="MTK Android Driver知识大全_files/Image [2].gif" type="image/gif" style="border: none; margin: 0px 4px 0px 0px; vertical-align: middle; height: auto;"/>订阅</span></a></li></ul></div></div><div style="display: block; clear: both; overflow: hidden; width: 960px; margin: 0px auto; padding: 9px; border: 1px solid rgb(221, 221, 221); border-radius: 8px; text-align: left; background: rgb(255, 255, 255);"><div style="float: right; width: 748px; overflow: hidden; padding: 7px 0px; border: 1px solid rgb(221, 221, 221); border-radius: 4px;"><div><div style="margin: 10px 2px; padding: 2px 4px 2px 20px; border: 1px dashed rgb(248, 204, 126); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial; background: url(http://static.blog.csdn.net/images/ico_notice.png) 5px 50% no-repeat rgb(255, 252, 231);"><a href="http://edu.csdn.net/app" style="color: rgb(255, 90, 0); text-decoration: none;" target="_blank"><font color="red">学院APP首次下载，可得50C币！ </font></a>    <a href="http://bbs.csdn.net/topics/391876796" style="color: rgb(255, 90, 0); text-decoration: none;" target="_blank"><font color="blue">欢迎来帮助开源“进步” </font></a>    <a href="http://bss.csdn.net/m/topic/cuanke_vote" style="color: rgb(255, 90, 0); text-decoration: none;" target="_blank"><font color="red">当讲师？爱学习？投票攒课吧 </font></a>    <a href="http://blog.csdn.net/atlassian2013/article/details/50291561" style="color: rgb(255, 90, 0); text-decoration: none;" target="_blank"><font color="blue">认识Atlassian Datacenter产品 </font></a>    <a href="http://bbs.csdn.net/topics/391880332" style="color: rgb(255, 90, 0); text-decoration: none;" target="_blank"><font color="red">深圳小伙伴的福利来啦</font></a></div><div style="padding: 0px; margin: 0px; border: 0px;"><div style="width: 311px; height: 286px; overflow: hidden; z-index: 2147483647; position: fixed; bottom: 10px; right: 130px;"><div style="position: absolute; width: 61px; height: 20px; top: 0px; left: 250px; margin: 0px 0px 5px; padding: 0px; cursor: pointer; overflow: hidden;"><div style="width: 40px; height: 20px; color: rgb(255, 255, 255); float: left; margin-right: 1px; font-size: 12px; font-family: 微软雅黑; text-align: center; background-color: rgb(153, 153, 153);">关闭</div><a style="color: rgb(51, 102, 153); text-decoration: none; padding: 0px; display: inline-block; border: none; overflow: hidden; height: 20px; cursor: pointer; width: 20px; margin-bottom: 3px; float: left; background: url(http://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.1/xuanfu_close.png) 0px 0px no-repeat;"></a></div></div></div><div style="margin: 20px;"><div style="display: block; margin: 5px 0px; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 20px; font-family: &apos;Microsoft YaHei&apos;;"> 
+<h1 style="margin: 0px; padding: 0px; display: inline; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 20px; font-family: &apos;Microsoft YaHei&apos;; vertical-align: middle;"><a href="http://blog.csdn.net/cbk861110/article/details/40931835" style="color: rgb(0, 0, 0); text-decoration: none;">MTK Android Driver知识大全</a></h1></div><div style="padding: 0px 20px 5px; color: rgb(153, 153, 153); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-align: right; display: block; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgb(237, 237, 237); margin: 0px -20px; overflow: hidden;"><div><span style="margin: 0px 5px 0px 0px;">2014-11-08 23:24</span> <span style="margin: 0px 5px; padding: 0px 0px 0px 14px; background: url(http://static.blog.csdn.net/images/ico_view.png) 0% 50% no-repeat;" title="阅读次数">14855人阅读</span> <span style="margin: 0px 5px; padding: 0px 0px 0px 14px; background: url(http://static.blog.csdn.net/images/ico_comm.png) 0% 50% no-repeat;" title="评论次数"><a href="http://blog.csdn.net/cbk861110/article/details/40931835#comments" style="color: rgb(51, 102, 153); text-decoration: none;">评论</a>(1)</span> <span style="margin: 0px 5px;"><a style="color: rgb(51, 102, 153); text-decoration: none;" title="收藏">收藏</a></span> <span style="margin: 0px 5px;"><a href="http://blog.csdn.net/cbk861110/article/details/40931835#report" style="color: rgb(51, 102, 153); text-decoration: none;" title="举报">举报</a></span></div></div><div style="display: block; margin: 0px -20px; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgb(237, 237, 237); padding: 0px 20px;"><div style="display: block; font-size: 14px; color: rgb(51, 51, 51); width: 63.7188px; float: left; padding-top: 5px;"><img src="MTK Android Driver知识大全_files/Image.jpg" type="image/jpeg" style="border: none; vertical-align: middle; height: auto;"/> <span style="display: inline-block; vertical-align: middle;">分类：</span></div><div style="display: block; font-size: 14px; color: rgb(223, 52, 52); width: 637.188px; float: left;">MTK Android 驱动开发<em style="font-style: normal;">（22）</em> <img src="MTK Android Driver知识大全_files/Image [1].jpg" type="image/jpeg" style="border: none; display: inline; height: auto;"/></div></div><div style="padding: 20px 0px;"><p style="height: 14px; border-left-style: solid; border-left-width: 3px; border-left-color: rgb(228, 28, 30); padding-left: 10px; color: rgb(102, 102, 102); font-size: 14px;">版权声明：本文为博主原创文章，未经博主允许不得转载。</p></div><div style="margin: 20px 0px 0px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; font-family: Arial;"><p><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 13.6364px;">转载请注明出处：http://blog.csdn.net/cbk861110/article/details/40931835</span><br/></p><p>一、Display</p>
+1.lcm 相关概念<br/>
+1.1) MIPI接口：一共有三种接口：DBI(也做CPU或MCU接口)、DPI(也叫RGB接口)、DSI.<br/>
+在使用DSI接口时，目前75/77都只支持到2条data lane，加上一条clock lane.<br/>
+使用DPI接口时，根据LCM IC支持的情况，可以选择16bus、18bus传输RGB格式文件，在GPIO部分分为R、G、B分别对应 8个GPIO(GPIO20~46期间)，客户采用DPI接口需要根据选择的bus方式进行配置，推荐RGB端口全部配置为对应的复选模 式，并设置为OUT输出。<br/>
+采用DBI接口，有两种模式选择，一种是选择共用DPI的bus脚 +DPI控制线，另一种是共用nand data pin+CPU 控制线。<br/><br/><br/>
+1.2) DSI接口有两种sync 模式：video mode和command mode，其中video mode是BB端一直刷数据到LCM，cmd mode是在有数 据更新时刷数据到LCM GRAM中)<br/>
+和DSI command mode相比，video mode 是需要实时传输image data到lcm端，DSI 的refresh rate决定了lcm的refresh rate。<br/><br/><br/>
+1.3)EDS机制：<br/>
+92平台LCM driver中定义了esd_check和esd_recovery的接口，但ESD线程不工作。<br/>
+目前在MT6589之前平台，video mode的ESD实现有三种模式，分别是：ext TE(外部TE信号检测)、int TE(内部TE信号检 测)、non cout clk<br/><br/><br/>
+不同ESD方式需要注意的方面<br/>
+a) int TE和ext TE的检测，都不需要实现lcm_esd_check函数，而需要实现lcm_esd_recover函数。<br/>
+   non cont clk则不需要实现lcm_esd_check函数和lcm_esd_recover函数，而只需要在上面 params中配置为TRUE即可<br/>
+b) ext TE的实现，需要LCM外接TE pin到BB端，同时在inital code中配置寄存器打开TE信号的输出 (一般是写0x35寄存器，具体需要和LCM IC FAE确认)<br/><br/><br/>
+1.4)HDMI/MHL:<br/>
+目前我司HDMI/MHL的相关code和driver都是有集成在codebase中的，要使用的话，只需要只需要在对应的 ProjectConfig.mk文件中开启，并且在dct中配置好对应的引脚定义即可。<br/>
+以下以MHL为例：<br/>
+ProjectConfig中配置：<br/>
+MTK_HDMI_SUPPORT=yes #表明开启HDMI/MHL功能<br/>
+CUSTOM_KERNEL_HDMI=Sii8338 #表明配置为MHL的IC型号<br/><br/><br/>
+1.4)TE 信号：<br/>
+大部分TE问题是由于没有正常开启TE所导致，首先检查TE是否开启。<br/>
+89平台使用内部TE，lcm driver中只需要在init过程中打开LCM TE即可，一般是写0x35寄存器，部分IC需要额外写其他 寄存器，可与FAE确认。<br/>
+检查TE是否正常开启，如果是工版，则可使用如下方式打开fps的log,查看TE信息：<br/>
+adb shell<br/>
+cd sys/kernel/debug<br/>
+echo fps:on&gt;mtkfb<br/>
+然后查看mtklog, 搜索“FPS”，若看到等待TE时间为0， 表示TE未正常开启，需要与LCM IC的FAE进一步确认开启流程 。<br/>
+若TE已经成功开启，依然有Teering现象，可从如下方面思考分析。<br/>
+1)是否使用了竖屏横用，导致对GRAM的读写方向不一致，一般会出现斜线切屏现象。<br/>
+2)是否clock速度过低，FPS低于LCM自刷新率的1/2？<br/>
+3)是否clock速率过快，超过LCM的自刷新率，导致写GRAM时可能从后面赶上读，导致Teering发生。<br/><br/><br/>
+1.5)HS/LP:<br/>
+HS:high speed ， clock切为HS模式，高速模式。<br/>
+LP:low power，低电平<br/>
+有些LCM在开机的时候，如果使用LP下发init code，可能会不准确或者导致花屏等问题，这时候需要使用HS mode发送init code，比如三星的某款OLED（D53D6EA8061V-Amoled）。<br/>
+continuous clock/no-continuous clock模式<br/><br/><br/>
+1.6)dithering:<br/>
+抖动显示技术：<br/>
+MT6572 如所用lcm不支持RGB888 color format, 显示效果差需要开启dithering的。<br/><br/><br/>
+1.7)其他概念：<br/>
+AAL:BB端CABC（即AAL），为1种方式控制背光<br/>
+continuous clock/Non-continuous clock ： Switch clock lane from HS to LP<br/><br/><br/>
+2.LCM时钟配置<br/>
+MT6582 LCM Driver中配置：params-&gt;dsi.PLL_CLOCK = 234；<br/>
+计算方法：<br/><br/><br/>
+展频开关：<br/>
+如果MIPI Clock对RF/WCN产生干扰，并且在尝试寻找相应的频点依然无法解除 EMI，可以尝试做Frequency Hopping；<br/>
+82平台默认打开展频开关，不同于72/89平台，将展频的开关以及展频幅度的选择 ，都开放到LCM Driver中，以如下为例：<br/>
+params-&gt;dsi.ssc_range =4;<br/>
+params-&gt;dsi.ssc_disable = 0;<br/>
+代表：展频打开，ssc_range = 4%<br/><br/><br/>
+3.AAL与CABC背光选择(两种方式控制背光)：<br/>
+参考[FAQ05966]<br/>
+89平台支持BB端CABC（即AAL）或LCM端CABC方式控制背光，两种方式使用方法如下<br/>
+【BB端CABC（即AAL）】<br/>
+   - 打开功能，向MTK申请patch，并在ProjectConfig.mk中打开MTK_AAL_SUPPORT = yes<br/>
+【LCM端CABC】<br/>
+- 对于Video Mode，ALPS.JB2.MP.V1.3(包括1.3)之前的版本，请向MTK申请patch<br/>
+   - lcm driver中实现set_backlight接口<br/>
+   - cust_leds.c（包括lk与kernel中的两支文件）设置如下<br/><br/><br/>
+4. 调整Display 消耗的BW（bandwidth带宽）方法：<br/>
+•LCM driver建议如下：<br/>
+–MIPI的clock 尽量低，建议60fps<br/>
+–For DSI Video mode，建议不要使用burst mode(比较能吃BW)<br/>
+params-&gt;dsi.mode = BURST_VDO_MODE;<br/>
+–Video mode的时序，blank 区间(如VBP/VFP/HBP/HFP)尽量少(当然也需要满足LCM<br/>
+module的spec)<br/><br/><br/>
+5.DSI video mode相关参数配置方法：<br/>
+对应配置文件：\alps\mediatek\custom\common\kernel\lcm\xxxx.c中lcm_get_params()函数<br/>
+1,data lane每帧回LP11（Low Power state，dp，dn都为高电平）,clk一直HS（ High Speed），对应配置：<br/>
+params-&gt;dsi.cont_clock=1;<br/>
+params-&gt;dsi.clk_lp_per_line_enable=0;<br/>
+2,data lane每一行回一次LP11，clk lane每一帧回一次LP，对应配置：<br/>
+params-&gt;dsi.cont_clock=0;<br/>
+params-&gt;dsi.clk_lp_per_line_enable=0;<br/>
+3，data lane和clk lane都是每行回一次LP11，对应配置：<br/>
+params-&gt;dsi.cont_clock=0;<br/>
+params-&gt;dsi.clk_lp_per_line_enable=1;<br/><br/><br/><br/><br/>
+6.LCM CABC 配置<br/>
+参考[FAQ12413]<br/><br/><br/>
+7.MHL 卡顿问题<br/><br/><br/>
+8.ESD机制各个平台的差异：<br/>
+对于89/72/82等新平台，Display架构做了调整，ESD的实现方式与之前的75/77等平台稍有差异。<br/>
+对于之前75/77平台，可以参考FAQ03210及FAQ05163.<br/>
+新旧架构下，主要是DSI Video Mode下ESD方式不一样。<br/>
+之前的架构下Video Mode的屏采用检测外部TE或者内部TE来做ESD Check，因此需要在lcm driver中配置相应的参数。<br/>
+新架构下不支持外部TE或内部TE来做ESD check, lcm_get_params中关于esd的参数不用再配置。<br/>
+如lcm_int_te_monitor、lcm_int_te_period、lcm_ext_te_monitor等无需配置。<br/>
+[SOLUTION]<br/>
+新的Display架构下，DSI Video Mode及DSI Command Mode都采用读寄存器的方式来进行esd check.<br/>
+因此都只需要在lcm driver中实现esd_check和esd_recover函数即可。<br/>
+对于具体读取哪些寄存器来进行esd check，需要与屏厂确认。<br/>
+ESD实现后如果出现每两秒闪屏的问题，可以按如下流程处理：<br/>
+1. 首先检查esd check中是否添了过多的log信息或者有delay操作，建议先去掉所有log测试。<br/>
+2. 如果依然出现每两秒闪屏，可参考FAQ05680和FAQ05681进行处理。<br/><br/><br/><br/><br/>
+9.DBI/DPI接口的GPIO的配置情况<br/>
+DBI：DBI接口分为串行和并行两种。由lcm_params-&gt;ctrl这个参数控制。<br/>
+LCM_CTRL_SERIAL_DBI/LCM_CTRL_PARALLEL_DBI<br/><br/><br/>
+1.)如果是serial类型的，是通过MT6572 datasheet里面的0x14012028 DBI_SCNF (DBI Serial Interface Configuration Register)这个寄存器来config串行接口。比如使用LSDI还是LSDA,LSCK上升沿还是下降沿发送数据 ，LSCK在没有数据的时候是LOW/HIGH.<br/>
+配置几个GPIO pin：LSCE0B(相当于数据使能信号，低电平有效), LSCK, LSDA/LSDI(传送command时用),DBI[XX:0](传 送data时用)<br/>
+CSS,CSH：chip select setup time/chip select hold time<br/>
+(这两个时间之内是不会传数据的，Invalid data)<br/>
+2.)如果是Parallel类型的,<br/>
+配置几个GPIO pin：LPCE0B(相当于CS信号，低电平有效), LPA0（RS信号，MTK平台上面和CS信号是同步的）, LCD CLK，LPWRB/LPRDB(类似数据使能信号)和DBI[XX:0](复用DPI的data pin，传送data和command时用)<br/>
+写的时候用LPWRB，读的时候用LPRDB<br/>
+有C2WS和C2WH两个变量：chip selection to write setup time和chip selection to write hold time<br/>
+同理C2RS和C2RH.<br/>
+硬件连接：<br/>
+DBI Parallel类型：BB端需要打开LRDB、LWRB、LPA0 pin脚复用功能，并连接到LCM的RD、WR、RS<br/>
+DBI serial类型: BB端需要打开LSCE0B、LSCK、LSDA/LSDI pin脚复用功能, 并连接到LCM的CSX, SCL, SDA/DOUT/DIN<br/>
+lcm Driver里面变量write wait state time，是处于wait状态的时间。比如大于等于C2WS，参考MT6572 datasheet PAGE1659原理图<br/>
+note:89和72的DBI的clock都是不可调整的，都是130Mhz.<br/>
+但是如果需要调整DBI的FPS的话，可以调整C2WS/C2WH/WST,分别对应write_setup/write_hold/write_wait<br/><br/><br/>
+DPI:<br/>
+使用DPI接口时，根据LCM IC支持的情况，可以选择16bus、18bus传输RGB格式文件，在GPIO部分分为R、G、B分别对应 8个GPIO(GPIO20~46期间)，客户采用DPI接口需要根据选择的bus方式进行配置，推荐RGB端口全部配置为对应的复选模式，并设置为OUT输出。<br/>
+同时DPI的接口需要BB端打开DPIHSYNC、DPIVSYNC、DPIDE、DPICK复用功能，并分别连接到对应的LCM控制端<br/>
+另注：<br/>
+其实DPI和DBI一样，都是可以通过lcm_params-&gt;ctrl这个变量来控制是使用Parallel还是serial还是GPIO的类型来下 command。<br/>
+但是一般DPI都会选择使用LCM_CTRL_SERIAL_DBI这个类型，因为DPI的屏，DB[17..0]只是会用来做数据传输，控制线是 会通过LSDA/LSDI传输。<br/><br/><br/>
+10.LCM Porting时如何配置Clock<br/>
+clock配置方法：<br/>
+lcm driver中配置clock有不同的方式，曾经使用过的配置方法有如下几种：<br/>
+Type1: 配置倍频与分频参数：dsi.pll_div1(倍频)， dsi.pll_div2(分频)--- (适用于75/77等之前的平台)<br/>
+Type2: 配置倍频与分频参数：dsi.pll_fbk_div(倍频)， dsi.pll_div1 &amp; dsi.pll_div2 (分频)---(适用于89/72等前 期版本)<br/>
+Type3: 直接配置clock lane频率：dsi.PLL_CLOCK(前期配置成枚举值，后期将直接配置成对应的频率常数值)----(适 用于89/72/82...)<br/><br/><br/><br/><br/>
+11.如何使用PMIC的LDO方式供给LCM端 1.8/2.8v的电压<br/>
+参考[FAQ10038]<br/>
+1. 如何在开机阶段使用PMIC的LDO方式供给LCM端1.8/2.8v的电压？<br/>
+2. 如何在suspend/resume的时候，断掉/供给LCM端1.8/2.8v的电压？<br/><br/><br/>
+1. )在开机的时候，建议在preloader或者LK阶段就通过PMIC的LDO方式来给LCM端上电，<br/>
+比如可以在alps\mediatek\platform\mt6589\preloader\src\drivers\mtk_pmic_6320.c文件里面的 pmic6320_init函数中做上电1.8/2.8v的操作。<br/>
+AOSP版本mtk_pmic_6320.c的路径 ：alps/bootable/bootloader/preloader/platform/mt6572/src/drivers/mtk_pmic_6320.c<br/>
+下面是在LK阶段的上电/掉电方法：<br/>
+使用upmu_common.c文件里面API来分别控制每一个LDO_VGPX.<br/>
+比如:<br/>
+upmu_set_rg_vgp6_vosel用来控制上电的电压值；<br/>
+upmu_set_rg_vgp6_en用来控制enable VGP6这个pin<br/><br/><br/>
+2. )因为在suspend/resume的时候，kernel都是跑起来的，所以上电/掉电 1.8/2.8v的操作都应该放在kernel里面。<br/>
+下面是在kernel里面的上电/掉电方法,在kernel里面有统一的上电/掉电的接口函数： 上电接口函数：hwPowerOn 掉电接口函数hwPowerDown<br/>
+以下以PMIC6320的VGP6为例。<br/>
+请在您要上电的文件#include &lt;mach/mt_pm_ldo.h&gt; 上电请调用 hwPowerOn，掉电请调用hwPowerDown<br/>
+hwPowerOn(MT65XX_POWER_LDO_VGP6, VOL_2800, &quot;ldo_test&quot;);<br/>
+bool hwPowerDown(MT65XX_POWER_LDO_VGP6, &quot;ldo_test&quot;);<br/><br/><br/>
+12.如何拉低并保持LCM RESET PIN脚为低 电平<br/>
+平台默认RESET PIN脚输出为高平的，如果一定需要拉低，可以配置RESET PIN脚为GPIO模式，再通过GPIO方式拉低。<br/>
+使用mediatek/dct目录下的DCT工具，使用其打开custom/XXX/kernel/dct/dct目录下的DWS文件，将GPIO131配置成 0:GPIO131. <br/>
+对GPIO PIN脚的控制有如下一些方法：<br/>
+lcm_util.set_gpio_mode(GPIO131, GPIO_MODE_00);<br/>
+lcm_util.set_gpio_dir(GPIO131,GPIO_DIR_OUT);<br/>
+lcm_util.set_gpio_out(GPIO131,0);<br/><br/><br/>
+13.如何调节MIPI接口驱动能力<br/>
+在使用DBI、DPI的MIPI接口时，可以在lcm_get_params函数中设置参数 io_driving_current的值来配置IO的驱动电流（6589上面不支持） <br/>
+DSI的MIPI接口，不支持IO驱动电路的调节 ，其可选值的大小可以在lcm_drv.h看到定义。<br/>
+其可选值的大小可以在lcm_drv.h看到定义：<br/>
+typedef enum{<br/>
+}LCM_DRIVING_CURRENT;<br/>
+该值的会在lcd_drv.c文件中写到寄存器中：<br/>
+LCD_STATUS LCD_Set_DrivingCurrent();<br/><br/><br/>
+14.如何通过检测外部TE实现esd check的 功能<br/>
+在72/82/92的JB/KK版本，我们都是通过读取esd寄存器的方式实现esd check，但是由于esd  check的时候会切换到cmd mode去读，所以屏的玻璃存在最大1帧时间的等待，如果这个vdo <br/>
+mode屏的玻璃延时等待时间较小（小于切换的时间），就会出现闪屏，所以不能使用读esd寄存器 的方式做esd check。 <br/>
+如果这个屏有 external TE管脚的话，可以通过检测ext.TE的方式来做esd check，具体原理 为：把原来的esd流程全部关闭，启动一个新的线程，循环检测外部TE中断，如果检测失败，就<br/>
+recovery。<br/>
+新的esd流程里面需要做三件事：<br/>
+1)         物理连接一根外部TE pin，然后在dws文件里面配置一个GPIO口为DSI_TE模式。<br/>
+2)         在DSI初始化的时候，注册该ext.TE的irq处理函数，收到中断则设置irq_flag为TRUE。<br/>
+3)         启动线程定时去wait flag==1，如果超时，则做esd recovery。<br/><br/><br/>
+15.如何配置DSI时钟频率<br/>
+1、)DSI vdo mode下的数据速率data_rate的大致计算公式为： Data rate= (Height+VSA+VBP+VFP)*(Width+HSA+HBP+HFP)* total_bit_per_pixel*frame_per_second/total_lane_num <br/>
+2、)DSI cmd mode下的数据速率data_rate的大致计算公式为： Data rate= width*height*1.2* total_bit_per_pixel*frame_per_second/total_lane_num <br/>
+参数注释：<br/>
+data_rate ： 表示的是数据速率<br/>
+width，height  ：屏幕分辨率<br/>
+VSA VBP VFP ：DSI vdo mode的vertical porch配置参数<br/>
+HSA HBP HFP ：DSI vdo mode的horizontal porch配置参数<br/>
+total_bit_per_pixel ：表示的是一个pixel需要用几个bit来表示，比如RGB565的话 就是16个bit <br/>
+frame_per_second ：就是我们通常看到的fps，叫做帧率，表示每秒发送多少个帧 ，一般是60帧每秒 <br/>
+total_lane_num ：表示的是data lane的对数。<br/><br/><br/>
+3、)DSI采用的是双边采样，则clk等于数据速率的一半，因此： clk=data_rate/2<br/>
+有两种配置clk的方式，第一种方式配置四个参数得到，第二种配置方式直接配置频 率，建议采用第二种。 <br/>
+第一种方式，通过div分频倍频实现，各个平台略有差异，但是原理基本一致，请参 考porting guide，如下举例89平台: <br/>
+   params-&gt;dsi.pll_div1   = ;  //配置范围为0,1,2,3的时候，对应的 div1_real等于1，2，4,4 <br/>
+   params-&gt;dsi.pll_div2   = ;  //配置范围为0,1,2,3的时候，对应的 div2_real等于1，2，4,4 <br/>
+   params-&gt;dsi.fbk_div   = ;  //范围 0..63<br/>
+   params-&gt;dsi.fbk_sel   = ;  //配置范围为0,1,2,3的时候，对应的 fbk_sel_real等于1，2，4,4 <br/>
+   输出频率 =26MHz*（fbk_div+1）*(2*fbk_sel_real)/(div1_real*div2_real) <br/>
+第二种方式，直接配置clk大小：<br/>
+params-&gt;dsi.PLL_CLOCK = LCM_DSI_6589_PLL_CLOCK_234;//这里举例89平台，使用 一个宏，表示配置的clk等于234MHz。但是在89之后的平台，使用直接配置一个频率 <br/>
+数字的方式，比如params-&gt;dsi.PLL_CLOCK = 234，表示234MHZ）<br/>
+4、在lcm porting过程中，这些参数都定义在lcm_drv.h文件中的LCM_DSI_PARAMS结 构体中，随着平台的发展，或许有所不同，但是基本原理都是一致的，如何配置clk的大小，请先根据自己的帧率、像素格式、porch值、屏的分辨率、data lane对数等计算出data_rate，然后计算出clk。<br/><br/><br/>
+16.背光模式设置成 T65XX_LED_MODE_CUST_BLS_PWM，如何修改PWM的工作频率<br/>
+前提：cust_leds.c文件里面使用的背光模式是MT65XX_LED_MODE_CUST_BLS_PWM<br/>
+MT6582版本工作频率计算公式如下：<br/>
+PWM工作频率计算公式：26MHz (clock freq.) / （PWM_CLKDIV+1） / 1024 (period) 26 KHz <br/>
+所以需要修改PWM的工作频率，可以通过修改PWM_CLKDIV，clock freq，或者period的值来达到修 改PWM的工作频率的效果。 <br/>
+以下的三种方法可以任选1～2种来达到想要的PWM工作频率：<br/>
+1.  修改分频参数方法，修改config_data里面的第二个参数：<br/>
+{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_CUST_BLS_PWM, (int)disp_bls_set_backlight,{0, 1, 0, 0, 0}} //设置div=1 <br/>
+2. 修改clock freq：<br/>
+在alps\mediatek\platform\mt6582\kernel\drivers\dispsys\ddp_bls.c文件的 disp_bls_init和disp_bls_config函数中设置CLK_CFG_1这个寄存器的值，来选择合适的时钟源，加入如下代码： <br/>
+mt65xx_reg_sync_writel(DRV_Reg32(CLK_CFG_1) | (0x00000003), CLK_CFG_1); //设置156 MHz的时钟源 <br/><br/><br/><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">转载请注明出处：</span><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">http://blog.csdn.net/cbk861110/article/details/40931835</span><br/><br/>
+二、Driver - Battery Charging<br/>
+1.充电方式<br/>
+a.PMIC直接充电：驱动代码位于：<br/>
+mediatek\platform\mt6592\kernel\drivers\power\charging_hw_pmic.c<br/>
+b.switch charge方式充电（switch charger是功率转换型的芯片）。驱动代码位于：<br/>
+mediatek\platform\mt6592\kernel\drivers\power\charging_hw_xxxx.c<br/>
+比如：fan5405 对应的文件就是charging_hw_fan5405.c<br/>
+            bq24158对应的文件就是charging_hw_bq24158.c<br/>
+具体配置位于：<br/>
+MTK_FAN5405_SUPPORT=no<br/>
+MTK_FASTBOOT_SUPPORT=no<br/><br/><br/>
+2.driver中mdelay() 与msleep()的区别使用：<br/>
+在Ｌinux Ｄriver开发中，经常要用到延迟函数：msleep，mdelay／udelay．<br/>
+虽然msleep和mdelay都有延迟的作用，但他们是有区别的．<br/>
+1.)对于模块本身<br/>
+mdelay是忙等待函数，在延迟过程中无法运行其他任务．这个延迟的时间是准确的．是需要等待多少时间就会真正等待多少时间．<br/>
+msleep是休眠函数，它不涉及忙等待．你如果是msleep(１０)，那实际上延迟的时间，大部分时候是要多于１０ms的，是个不定的时间值．<br/>
+他们的差异，平时我也讲的出来，可是真正用起来的时候，就忘记了．曾在两个driver的i2c的code中，需要用到delay函数，而我用了msleep函数，一直Ｉ２Ｃ速度超慢．而我又不知道哪里出了问题，我潜意识中，认为我只delay了１ms，可是，实际上是十几毫秒．<br/>
+2.)对于系统：<br/>
+mdelay() 会占用cpu资源，导致其他功能此时也无法使用cpu资源。<br/>
+msleep() 则不会占住cpu资源，其他模块此时也可以使用cpu资源。<br/>
+delay函数是忙则等待，占用CPU时间；而sleep函数使调用的进程进行休眠。<br/>
+3.)udelay() mdelay() ndelay() 区别：<br/>
+udelay(); mdelay(); ndelay();实现的原理本质上都是忙等待，ndelay和mdelay都是通过udelay衍生出来的。<br/>
+我们使用这些函数的实现往往会碰到编译器的警告implicit declaration of function 'udelay'，这往往是由于头文件的使用不当造成的。<br/>
+在include/asm-***/delay.h中定义了udelay（），而在include/linux/delay.h中定义了mdelay和ndelay.<br/>
+udelay一般适用于一个比较小的delay，如果你填的数大于2000，系统会认为你这个是一个错误的delay函数，因此如果需要2ms以上的delay需要使用mdelay函数。<br/>
+4.)msleep，ssleep区别：<br/>
+休眠单位不同<br/>
+5.)秒的单位<br/>
+ms是毫秒=0.001秒<br/>
+us是微秒=0.000001秒<br/>
+ns是纳秒=0.000000001秒<br/><br/><br/>
+3.如何配置关机充电（KPOC）中的 长按开机时间<br/>
+ file path:alps/mediatek/platform/mt6589/kernel/drivers/power/pmic_mt6320.c<br/>
+   modify #define LONG_PWRKEY_PRESS_TIME 2000*1000000<br/><br/><br/>
+4.电池充电报警克制化<br/>
+手机充电出现异常的报警主要有：<br/>
+1. 充电电压超过正常允许的电压范围<br/>
+2. 电池温度超过允许的电池温度<br/>
+3. 长时间的超过1A的大电流充电<br/>
+4. 电池电压超过允许的电池电压范围<br/>
+5. 总的充电时间超过24hr.<br/>
+配置文件：alps\mediatek\custom\{project}\kernel\battery\battery\cust_battery.h<br/>
+与上述5个报警相对应的宏：<br/>
+#define BATTERY_NOTIFY_CASE_0001<br/>
+#define BATTERY_NOTIFY_CASE_0002<br/>
+#define BATTERY_NOTIFY_CASE_0003<br/>
+#define BATTERY_NOTIFY_CASE_0004<br/>
+#define BATTERY_NOTIFY_CASE_0005<br/><br/><br/>
+5.如何读取及设置PMIC registers<br/>
+1)进入工程模式，读取和设置<br/>
+拨号界面 ----------输入*#*# 3646633#*#* 进入工程模式 power ------ pmu ------ pmu register<br/>
+或则 hardware testing ----- power ------ pmu ------ pmu register ，所有读写都是16进制<br/>
+2)程序运行时，如何通过ADB cmd 获取及设置pmic registers？<br/>
+adb shell cd /sys/devices/platform/mt-pmic<br/><br/><br/>
+6.关于功耗问题：<br/>
+1)第三方apk引起的，先予以排除；<br/>
+2)wake up by RTC：kernel_log中查找wake up by RTC，分析唤醒源；<br/>
+3)wake up by CCIF_MD：<br/>
+4)wake up by EINT<br/>
+7.高温高压后如何恢复充电<br/>
+参考[FAQ10404]<br/>
+在充电的过程中，如果出现高温或者高压的情况下， 系统会停止充电， 当温度或者充电器的电压值恢复正常后，如何恢复充电。<br/><br/><p><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">转载请注明出处：</span><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">http://blog.csdn.net/cbk861110/article/details/40931835</span></p><p><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;"><br/></span></p>
+三、Driver input system<br/>
+1.如何添加新的kernel模块：<br/>
+参考 [FAQ08517]<br/>
+(1)create new folder<br/>
+alps\mediatek\custom\common\kernel\newdevice\device_a<br/>
+--&gt;notice need create 2 folder: newdevice\device_a<br/>
+(2) copy your code in device_a（code can not include makefile file）<br/>
+(3) Add CUSTOM_KERNEL_NEWDEVICE=device_a to projectconfig.mk<br/>
+(4) compiling kernel<br/><br/><br/>
+2.时钟周期和时钟频率的换算问题<br/>
+F代表频率,单位是Hz; T代表周期，单位是s<br/>
+频率等于一除以周期, 写成公式就是： F (Hz) = 1 / T (s) ,<br/>
+所以倒过来就有周期等于一除以频率，写成公式就是：T = 1 / F<br/>
+120MHZ = 120x10^6HZ<br/>
+所以 T = 1/(120x10^6) = 8.3 x 10^(-9) s = 8.3ns<br/><br/><br/>
+执行时间/时钟周期 = 周期数<br/>
+执行时间*时钟频率 = 周期数<br/>
+时钟周期 = 1/时钟频率<br/>
+举例说明：<br/>
+dws中的Keypress_Perio是消抖周期，基准时钟是32K。如果是1024个周期，则消抖时间是32ms；<br/>
+即：消抖时间 =(1/32000)*1024 s =0.032s =32ms<br/><br/><br/>
+3.触摸屏的供电配置<br/>
+VDD VGP 供电区别<br/><br/><br/>
+4.TP上实现虚拟按键功能：<br/>
+参考[FAQ02518]<br/>
+添加tp的virtual key，需在tp对应的头文件中添加如下设置：<br/>
+1.定义宏TPD_HAVE_BUTTON；<br/>
+2.定义TPD_BUTTON_HEIGHT，TPD_KEY_COUNT，TPD_KEYS和TPD_KEYS_DIM，分别用于定义button被识 别的纵向坐标，button的个数，对应的功能键，和每个功能键的坐标。<br/>
+配置示例：<br/>
+#define TPD_HAVE_BUTTON<br/>
+#define TPD_BUTTON_HEIGHT 480 //这个不小于LCD的分辨率的height<br/>
+#define TPD_KEY_COUNT 4<br/>
+#define TPD_KEYS {KEY_MENU, KEY_HOME, KEY_BACK, KEY_SEARCH}<br/>
+#define TPD_KEYS_DIM {{40,500,40,60},{120,500,40,60},{200,500,40,60},{280,500,40,60}}<br/>
+其中，{40,500,40,60}对应了KEY_MENU的坐标, (40,50)是该key center的坐标，40是该键的宽度 ，60是该键的高度<br/>
+3.button定义初始化成功后，通过adb shell，可以在/sys/board_properties/virtualkeys.mtk- tpd中看到这些button的定义<br/><br/><br/>
+5.TP虚拟按键背光灯时间控制：<br/>
+adjust powermanagerservice.java define LONG_KEYLIGHT_DELAY value<br/><br/><br/>
+6.I2C传输数据速率设定方式：<br/>
+在进行i2c 传输前设置，i2c_client-&gt;timing = timing_number;<br/>
+备注：<br/>
+1.当设备不支持快速mode timing_number &lt;= 100;<br/>
+2.当设备支持快速mode timing_number &lt;= 400;<br/><br/><br/><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">转载请注明出处：</span><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">http://blog.csdn.net/cbk861110/article/details/40931835</span><br/><br/>
+四、Driver - Misc<br/>
+1.关于MTK平台支持的耳机:<br/>
+一般手机（包括Nokia、三星等）是：L、R、MIC、GND。<br/>
+小米、iPhone、HTC等是：L、R、GND、MIC。<br/>
+MTK 平台目前支持第一种：L、R、MIC、GND。 （对于一般3线制耳机MTK也支持）。<br/><br/><br/>
+2.DCT配置GPIO的设置/初 始化：<br/>
+1)当配置GPIO时，有的有勾选M0~M7中的两个，甚至有的还需要勾选勾选多个？最后GPIO配置成了 哪个功能呢？ <br/>
+     (1) GPIO在系统初始化后的mode是由Def.Mode这一栏决定的。 <br/>
+     (2) 如果勾选了M0-M7中的某些项，则会生成类似  #define GPIO_UART_UTXD4_PIN_M_GPIO GPIO_MODE_00 <br/>
+           这样的宏定义，在code中可以直接使用。<br/>
+     (3) 但是系统初始化后的mode还是以Def.Mode这一栏的选择为准。<br/>
+2)当配置成NC的gpio实际开机后是个什么状态？<br/>
+     通常是Mode 0，GPIO Mode，输入模式，使能内部下拉。<br/>
+3) 修改了DCT中的GPIO Setting后，怎样编译？ <br/>
+  ./mk [Project_Name] new preloader<br/>
+  ./mk [Project_Name] new uboot/lk<br/>
+  ./mk [Project_Name] new kernel<br/>
+  ./mk [Project_Name] bootimage<br/>
+4)MT6589的dct配置的参数是在代码的哪个地方生效？ <br/>
+      LK中生效， 具体位置如下：mediatek/platform/mt6589/lk/mt_gpio_init.c 函数为void platform_early_init(void)--&gt;    mt_gpio_set_default();<br/><br/><br/>
+3. 读取和修改GPIO配置参数的 ADB命令<br/><br/><br/>
+4.耳机检测<br/>
+82以及之后的平台，请一定要用EINT+ACCDET方式进行耳机检测。<br/><br/><br/>
+5.Headset accdet常用宏：<br/>
+在accdet.c和accdet_custome.h为了实现一些功能有用到很多宏开关,把目前相应的宏开关介绍如下 : <br/>
+1: ACCDET_EINT<br/>
+   是否启用了外部中断来侦测是否有耳机插入和拔出<br/>
+2: ACCDET_MULTI_KEY_FEATURE<br/>
+   是否支持使用A/D来侦测key,这里要注意的是即使耳机只有一个key若是在89的平台也需打开此宏 开关 <br/>
+3: ACCDET_LOW_POWER<br/>
+当插入三段耳机6s后自动关闭micbias,达到省电的目的<br/>
+以上三个宏可以看成一个宏<br/>
+4: ACCDET_28v_MODE<br/>
+  在我们内部有一个switch是针对外部耳机是用2.8还是1.9V的切换开关，美标的是2.8V, 国标的是 1.9V <br/>
+5: ACCDET_PIN_RECOGNIZATION<br/>
+  美标的插孔识别国标的耳机,国标的耳机识别美标的插孔,目前这个功能还没有实现,此宏不能打开<br/>
+6:  ACCDET_SHORT_PLUGOUT_DEBOUNCE<br/>
+    ACCDET_SHORT_PLUGOUT_DEBOUNCE_CN   25<br/>
+   拔出耳机后有时候图标会再弹出后在消失, 主要解决类似bug<br/>
+7: ACCDET_PIN_SWAP<br/>
+美标的插孔识别国标的耳机，这个时候需要借助accdet的一个上拉电阻，当有这种情形的时候AB一 直为0,达到检测到的目的，当然也有误判的时候, 4段耳机按住按键插入后会有误判<br/><br/><br/>
+6.如何配置PMIC 上的RST_KEY<br/>
+alps/mediatek/custom/$PRJ/kernel/kpd/kpd/mtk_kpd.h<br/>
+配成 vol- :<br/>
+#define KPD_PMIC_RSTKEY_MAP KEY_VOLUMEDOWN<br/>
+配成 home key:<br/>
+#define KPD_PMIC_RSTKEY_MAP KEY_HOME<br/><br/><br/>
+7.怎样添加一个自定义的LED灯<br/>
+1. 修改如下两个文件：<br/>
+alps/mediatek/custom/common/kernel/leds/inc/cust_leds.h<br/>
+enum mt65xx_led_type <br/>
+{<br/>
+MT65XX_LED_TYPE_RED = 0,<br/>
+... ...<br/>
+MT65XX_LED_TYPE_LCD,<br/>
+MT65XX_LED_TYPE_ABC, // Add a new LED type<br/>
+MT65XX_LED_TYPE_TOTAL,<br/>
+};<br/>
+alps/mediatek/custom/YOUR_PRJ/kernel/leds/mt65xx/cust_leds.c<br/>
+static struct cust_mt65xx_led cust_led_list[MT65XX_LED_TYPE_TOTAL] = { <br/>
+{&quot;red&quot;,               MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_CUST, (int)Cust_SetBacklight,{0}},<br/>
+// Set LED params, Please refer to &lt;Driver all in One&gt;<br/>
+{&quot;abc-backlight&quot;, MT65XX_LED_MODE_CUST, (int)Cust_SetBacklight_abc,{0}},<br/>
+};<br/><br/><br/>
+8.BB端PWM FIFO mode配置参数说 明<br/><br/><br/>
+9.如何配置UART1/UART4为Log输 出端口? <br/>
+mediatek\source\external\mhal\src\custom\common\preloader\inc\cust_bldr.h<br/>
+#define CFG_LOG_BAUDRATE 921600<br/>
+#define CFG_UART_LOG (UART1)<br/>
+可以修改如下宏定义切换log输出口：<br/>
+mediatek/custom/project_name/preloader/inc/cust_bldr.h：  CFG_UART_LOG  定义为 1 or 4<br/><br/><br/>
+如何修改UART输出数据的波特率<br/>
+有以下3个地方分别控制不同的部分的波特率<br/>
+1.  设置  preloader  波特率，这里不会设置到uboot和kernel<br/>
+文件为mediatek/custom/proj/preloader/inc/cus_bldr.h<br/>
+#define CFG_LOG_BAUDRATE (115200)<br/>
+2.   修改uboot 波特率<br/>
+mediatek/custom/proj/uboot/inc/configs/ubconfigs.h<br/>
+#define CFG_LOG_BAUDRATE (115200)<br/>
+3.  修改kernel 波特率<br/>
+mediatek/config/mt6575/autoconfig/kconfig/platform<br/>
+CONFIG_CMDLINE=&quot;console=ttyMt3, 115200&quot;<br/><br/><br/>
+10.如何通过adb shell命令 调试Vibrator<br/>
+下面的命令是用于调试，请试着用它找出你想要的时间和震动强度。 1000毫秒 = 1秒<br/>
+adb shell &quot;echo 1000 &gt; /sys/devices/virtual/timed_output/vibrator/enable&quot;<br/><br/><br/><br/><br/>
+11.ACCDET模块耳机检测的原理<br/>
+ACCDET内部有两个比较器，会根据传入的电压判断并产生中断。ACCDET的输入电压即耳机 MIC PIN<br/>
+的电压，内部比较器的输出分别对应A/B两个寄存器。<br/>
+ACCDET内部两个比较器的Vref分别是1.77V和0.4V(硬件决定的，不能修改)，所以，对应的电压有 3个范围: <br/>
+1.77V-1.9V: 未插入耳机的状态(AB=B11)<br/>
+0.4V-1.77V: 插入4段式(有Mic)耳机时的状态(AB = B01)<br/>
+0-0.4V : 插入3段式耳机时的状态,或者4段式按键按下时的状态(AB = B00)<br/>
+耳机的状态会保存到ACCDET的寄存器中,当电压在任意2个范围间切换时,状态发生变化,ACCDET产生<br/>
+中断,中断处理中读取状态寄存器的值,并根据状态的变化做相应的处理.<br/><br/><br/>
+12.如何调整不同sensor驱动的 加载顺序<br/>
+在mt6575_devs.c /mt6577_devs.c 文件内  mt6577_board_init函数，修改不同设备的 注册顺序。 <br/>
+如<br/>
+platform_device_register(&amp;sensor_alsps);<br/>
+platform_device_register(&amp;sensor_gsensor);<br/>
+调整上述的注册顺序，即可调整驱动中probe的加载顺序。<br/><br/><br/>
+13.SIM1和SIM2两个卡槽交换：<br/>
+修改modem的相关代码, 请做如下修改, 即可交换SIM1 SIM2 Modem:<br/>
+icc_switchControl_al.c(MOLY\driver\storage\sim\src)<br/>
+kal_bool sim_physicalSlotChanged = KAL_TRUE;<br/><p><br/></p><p><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">转载请注明出处：</span><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">http://blog.csdn.net/cbk861110/article/details/40931835</span><br/></p><br/>
+五、FM<br/>
+1，FM支持哪些音频方式<br/>
+Line in模拟方式和I2S数字方式。<br/>
+硬件工程师要确定原理图上选择的是哪种方式，然后进行如下配置。<br/>
+l  Line in<br/>
+MTK_FM_RX_AUDIO=FM_ANALOG_INPUT<br/>
+MTK_FM_TX_AUDIO=FM_ANALOG_OUTPUT<br/>
+l  I2S<br/>
+MTK_FM_RX_AUDIO=FM_DIGTAL_INPUT<br/>
+MTK_FM_TX_AUDIO=FM_DIGTAL_OUTPUT<br/>
+使用dws配置I2S管脚，可以参考FAQ03803中的配置进行。<br/><br/><br/>
+2.fm如何打开支持50K的feature<br/>
+修改alps/mediatek/config/[Project]/ProjectConfig.mk文件中的MTK_FM_50KHZ_SUPPORT变量。<br/>
+设置MTK_FM_50KHZ_SUPPORT=yespatch<br/><br/><br/>
+3.如何修改6620/6626/6628的FM RSSI门限<br/>
+RSSI: Receive Signal Strength Indicator 接收信号强度指示<br/>
+Rx: Recieived power 接收功率<br/>
+两者意思一样，具体指（前向或者反向）接收机接收到信道带宽上的宽带接收功率。实际上中，前向链路接收机（指手机）接收到的通常用Rx表示，反向链路接收机（指基站侧）通常用反向RSSI表示。<br/><br/><br/>
+4.如何关闭RDS<br/>
+由于没有宏用来切换RDS的开启与关闭，直接修改上层APK上的接口isRDSSupported即可。<br/>
+RDS是数字广播系统,主要在欧洲运用很广泛.它的主要作用是这样的:它有一个优先权的设定特点.你可以设定你喜欢的电台频道,如体育,新闻或军事等,当你的机子收到你所设定的频道信号时,机子正在工作的内容会中止,转而播出这方面的信息.它是数字可字母显示的,没有声音.还有一种功能就是警告中断,当路面有事故发生(如堵车等),电台会播送信号,机子收到就会显示出来,你就可以走别的路了.一般在欧洲的车载电子设备中要求要有这个RDS功能.<br/><br/><br/>
+5.FM调试文档<br/>
+alps\mediatek\config\$Project\ProjectConfig.mk<br/>
+alps\mediatek\config\$Project \autoconfig\kconfig\project<br/>
+这两支文件中和fm相关的变量设置，例如MTK_FM_SUPPORT、MTK_FM_CHIP、<br/>
+CONFIG_MTK_FM（这个变量十分重要，决定FM模块是否编译）。<br/>
+1.1          JNI层编译<br/>
+编译命令：mk $project mm mediatek\external\fmradio\<br/>
+1.1.1     alps\mediatek\external\fmradio\Android.mk负责产生linux文件系统中<br/>
+/system/etc/firmware下的fm的bin文件，目前只针对6628。<br/>
+1.1.2     alps\mediatek\external\fmradio\fmr\Android.mk负责产生libfmjni.so和libfmar1000.so、<br/>
+libfmmt6616.so、libfmmt6620.so、libfmmt6626.so、libfmmt6626.so、libfmmt6628.so。<br/>
+1.1.3     alps\mediatek\external\fmradio\custom\Android.mk负责产生libfmcust.so。<br/>
+1.2          Kernel层编译<br/>
+编译命令：<br/>
+l  MT6620         mk $project n k mediatek\kernel\drivers\combo\drv_fm<br/>
+l  MT6628/6626 mk $project n k mediatek\kernel\drivers\fmradio<br/>
+1.2.1     MT6620<br/>
+1.2.1.1    alps\mediatek\kernel\drivers\combo\Makefile<br/>
+1.2.1.2    alps\mediatek\kernel\drivers\combo\drv_fm\Makefile<br/>
+1.2.1.3    alps\mediatek\kernel\drivers\combo\drv_fm\public\Makefile<br/>
+1.2.1.4    alps\mediatek\kernel\drivers\combo\drv_fm\private\Makefile<br/>
+1.2.2     MT6626+MT6628<br/>
+1.2.2.1    alps\mediatek\kernel\drivers\fmradio\Makefile<br/>
+1.2.2.2    alps\mediatek\kernel\drivers\fmradio\private\Makefile<br/>
+FM加载驱动ko文件导致的问题<br/>
+        正常模式：alps\mediatek\config\$project \ init.project.rc<br/>
+Meta模式：alps\mediatek\config\$project \meta_init.project.rc<br/>
+工厂模式：alps\mediatek\custom\$project \factory\init.rc<br/>
+主要是在相关的init文件中加载FM的文件和编译FM driver产生的ko是否一致。<br/><br/><br/>
+六、Camera<br/>
+1.MT6575上mclk设为 26Mhz时，占空比不是50%<br/>
+MT6575上26Mhz mclk设置后占空比不是50%, 量到为61.7%.<br/><br/><br/>
+2.Camera上电开 power(DVDD, AVDD, IOVDD)之间间隔时间太长<br/><br/><br/>
+3.如何配置 lens<br/>
+首先需要向sensor的vendor了解，使用的sensor是否内嵌lens的driver IC<br/>
+如OV5640和MT9P017就是内嵌lens driver ic的。内嵌lens driver ic，即直接操作sensor的寄存器去推lens。<br/>
+若sensor没有内嵌lens的driver IC，则需要向模组厂了解，模组是否外挂了lens的driver IC，driver IC的型号是什么。我们codebase里的FM50AF下的代码，对应了AD5820的driver ic。如果您的模组包的也是这颗lens driver IC，则直接配置为fm50af即可；如果是其他型号的driver IC，您也可以尝试使用AD5820的驱动（注意把device address改过来）<br/>
+有些sensor自带AF算法。如ov3640是一颗含AF core的sensor，即它自己能够做AF算法。因为YUV+AF要求sensor本身是能自己做AF算法的，所以不是每颗YUV sensor都是支持自动对焦的。如果您使用的sensor含有AF CORE，且您希望使用sensor自己的AF算法来对焦，即可配置为sensordrive，但需要您参照文档<br/>
+ALPS_YUV+AF_customization_and_application_note（请在DMS上搜这篇文档看）对sensor driver做针对AF功能的修改。<br/><br/><br/>
+4.使用 FM50AF 之外的 Lens Driver的修改<br/>
+由于root process &amp; global writeable file已经在非PRC（中华人民共和国）地区被强制要求，因此ALPS.ICS2.MP 版本及之后版本对root权限方面做了要求，这个要求对于Camera的影响就是，如果使用 FM50AF 之外的lens driver，需要在 init.rc 文件中增加对新Lens driver权限和用户方面的修改 <br/>
+例如增加了 XXXAF 这个lens driver 需要修改文件 mediatek\config\mt65XX\init.rc <br/>
+添加下面二行<br/>
+chmod 0660 /dev/XXXAF<br/>
+chown system camera /dev/XXXAF<br/>
+添加后如下<br/>
+#Camera<br/>
+chmod 0666 /dev/camera-sysram<br/>
+chmod 0666 /dev/camera-isp<br/>
+chmod 0660 /dev/camera-eis<br/>
+chmod 0660 /dev/camera-fdvt<br/>
+chmod 0666 /dev/camera-resmgr<br/>
+chmod 0660 /dev/kd_camera_hw<br/>
+chmod 0660 /dev/kd_camera_flashlight<br/>
+chmod 0660 /dev/FM50AF<br/>
+chmod 0660 /dev/XXXAF<br/>
+chown system camera /dev/camera-sysram<br/>
+chown system camera /dev/camera-isp<br/>
+chown system camera /dev/camera-eis<br/>
+chown system camera /dev/camera-fdvt<br/>
+chown system camera /dev/camera-resmgr<br/>
+chown system camera /dev/kd_camera_hw<br/>
+chown system camera /dev/kd_camera_flashlight<br/>
+chown system camera /dev/FM50AF<br/>
+chown system camera /dev/XXXAF<br/><br/><br/>
+5.如何修改I2C speed<br/>
+Mediatek\custom\common\kernel\imgsensor\src\kd_sensorlist.c<br/>
+iWriteReg()中最前面加上g_pstI2Cclient-&gt;timing，表示设置I2C的速度<br/>
+如果不设置，为默认值100K ，<br/>
+比如想将I2C的speed设置为400K，可将g_pstI2Cclient-&gt;timing设置为400K<br/><br/><br/>
+6.如何打开或者关闭闪光 灯<br/>
+打开/关闭闪光灯可以通过如下配置（两种方法） ：<br/>
+1.    在alps/mediatek/config/pjt/ProjectConfig.mk 文件中，按照如下配置<br/>
+CUSTOM_HAL_FLASHLIGHT = constant_flashlight #dummy_flashlight<br/>
+CUSTOM_KERNEL_FLASHLIGHT = constant_flashlight   #dummy_flashlight<br/><br/><br/>
+2.    在feature table中把flash相关的feature 打开/关闭<br/>
+RAW sensor 涉及的文件<br/>
+1）    alps\mediatek\custom\project name\hal\camera\camera 目录下cfg_ftbl_custom_raw_main.h<br/>
+2）    alps\mediatek\custom\common\hal\camera\camera 目录下cfg_ftbl_custom_raw_main.h<br/>
+3）    alps\mediatek\source\external\mhal\src\core\drv\6575\isp目录下cfg_ftbl_raw_sceneindep.h<br/>
+YUV sensor 涉及的文件<br/>
+1）    alps\mediatek\custom\project name\hal\camera\camera 目录下cfg_ftbl_custom_yuv_main.h<br/>
+2）    alps\mediatek\custom\common\hal\camera\camera 目录下cfg_ftbl_custom_yuv_main.h<br/>
+3）    alps\mediatek\custom\common\hal\imgsensor\xxx_yuv目录下cfg_ftbl_xxx_yuv.h<br/>
+规则：优先级，1) &gt; 2) &gt; 3)，即如果project name下相应的的文件，则只需要在相应的文件中打开flash相关的 feature，如果没有，则在2）中的文件打开/关闭：<br/>
+#if 1//0<br/>
+   //  Flash Light<br/>
+   CONFIG_FEATURE(FID_AE_STROBE,<br/>
+       BY_DEFAULT(FLASHLIGHT_FORCE_OFF),<br/>
+       FLASHLIGHT_AUTO, FLASHLIGHT_FORCE_ON, FLASHLIGHT_FORCE_OFF<br/>
+   )<br/>
+#endif<br/><br/><br/>
+7.如何控制mclk的开关<br/>
+由于mclk在sensor上电之前就已经开了，如果不满足sensor spec中上电时序要求，可在开sensor power之前将mclk先 关闭，然后再需要时再打开，如何控制mclk的开关呢？ <br/><br/><br/>
+可调用void mt_isp_mclk_ctrl(int en) API去控制, (mediate\platform\mt6575\kernel\core\mt6575_isp.c)<br/><br/><br/>
+8.如何调整闪光灯在 auto模式下的打闪阈值<br/>
+参考[FAQ03033]<br/>
+修改camera_ae_plinetable_xxx_mt657X.h文件注释为u4StrobeTrigerBV的值，例如下面代码<br/>
+static strAETable g_AE_CaptureTable =（<br/>
+20,    //u4StrobeTrigerBV<br/>
+）；<br/><p>这一行， 这个值越大越容易打闪，越小越不容易打闪。</p><p><br/></p><p><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">转载请注明出处：</span><span style="color: rgb(255, 0, 0); font-family: Arial; font-size: 14px;">http://blog.csdn.net/cbk861110/article/details/40931835</span><br/></p></div><div style="zoom: 1; float: right;"><a href="http://blog.csdn.net/cbk861110/article/details/40931835#" style="color: rgb(51, 51, 51); text-decoration: none; float: left; font-size: 12px; padding-left: 17px; height: 16px; cursor: pointer; margin: 6px 6px 6px 0px; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important; background-position: 0px 0px !important; background-repeat: no-repeat;"></a><a href="http://blog.csdn.net/cbk861110/article/details/40931835#" style="color: rgb(51, 102, 153); text-decoration: none; float: left; font-size: 12px; padding-left: 17px; height: 16px; cursor: pointer; margin: 6px 6px 6px 0px; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=91362611.png); background-position: 0px -52px !important; background-repeat: no-repeat;" title="分享到QQ空间"></a><a href="http://blog.csdn.net/cbk861110/article/details/40931835#" style="color: rgb(51, 102, 153); text-decoration: none; float: left; font-size: 12px; padding-left: 17px; height: 16px; cursor: pointer; margin: 6px 6px 6px 0px; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=91362611.png); background-position: 0px -104px !important; background-repeat: no-repeat;" title="分享到新浪微博"></a><a href="http://blog.csdn.net/cbk861110/article/details/40931835#" style="color: rgb(51, 102, 153); text-decoration: none; float: left; font-size: 12px; padding-left: 17px; height: 16px; cursor: pointer; margin: 6px 6px 6px 0px; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=91362611.png); background-position: 0px -260px !important; background-repeat: no-repeat;" title="分享到腾讯微博"></a><a href="http://blog.csdn.net/cbk861110/article/details/40931835#" style="color: rgb(51, 102, 153); text-decoration: none; float: left; font-size: 12px; padding-left: 17px; height: 16px; cursor: pointer; margin: 6px 6px 6px 0px; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=91362611.png); background-position: 0px -208px !important; background-repeat: no-repeat;" title="分享到人人网"></a><a href="http://blog.csdn.net/cbk861110/article/details/40931835#" style="color: rgb(51, 102, 153); text-decoration: none; float: left; font-size: 12px; padding-left: 17px; height: 16px; cursor: pointer; margin: 6px 6px 6px 0px; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=91362611.png); background-position: 0px -1612px !important; background-repeat: no-repeat;" title="分享到微信"></a></div><ul style="margin: 0px 0px 5px; display: block; color: rgb(102, 102, 102); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; font-family: &apos;Microsoft YaHei&apos;, Arial, Helvetica, sans-serif; clear: both; float: left; padding: 10px 0px 0px;"><li style="list-style-type: none; clear: both; padding: 0px 0px 3px; overflow: hidden;"><span style="display: block; float: left; width: 52px; padding: 0px 0px 0px 27px; height: 26px; color: rgb(255, 255, 255); font-size: 14px; margin-right: 7px; background-image: url(http://static.blog.csdn.net/skin/default/images/blog-page-arr.png); background-color: rgb(153, 153, 153); background-position: 9px 8px; background-repeat: no-repeat;">上一篇</span><a href="http://blog.csdn.net/cbk861110/article/details/40747139" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; font-size: 14px;">linux 中mdelay() 与msleep()的区别</a></li><li style="list-style-type: none; clear: both; padding: 0px 0px 3px; overflow: hidden;"><span style="display: block; float: left; width: 52px; padding: 0px 0px 0px 27px; height: 26px; color: rgb(255, 255, 255); font-size: 14px; margin-right: 7px; background-image: url(http://static.blog.csdn.net/skin/default/images/blog-page-arr.png); background-color: rgb(153, 153, 153); background-position: 9px -22px; background-repeat: no-repeat;">下一篇</span><a href="http://blog.csdn.net/cbk861110/article/details/40949167" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; font-size: 14px;">MTK Android Driver：PMIC</a></li></ul><div style="display: block; clear: both; width: 182px; margin: 0px auto; padding: 30px 0px 15px; text-align: center;"><dl style="display: inline-block; float: left; width: 72px; height: 72px; overflow: hidden; margin: 0px 2px; text-align: center; color: rgb(255, 255, 255); background: rgb(153, 153, 153);"><dt style="margin: 0px; padding: 12px 0px 3px; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 27px; font-family: &apos;Microsoft YaHei&apos;;">顶</dt><dd style="margin: 0px; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial;">2</dd></dl><dl style="display: inline-block; float: left; width: 72px; height: 72px; overflow: hidden; margin: 0px 2px; text-align: center; color: rgb(255, 255, 255); background: rgb(153, 153, 153);"><dt style="margin: 0px; padding: 12px 0px 3px; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 27px; font-family: &apos;Microsoft YaHei&apos;;">踩</dt><dd style="margin: 0px; color: rgb(255, 255, 255); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial;">0</dd></dl></div><div style="overflow: hidden;"><h4 style="margin: 0px; padding: 0px; font-size: 16px; color: rgb(51, 51, 51);">我的同类文章</h4><div style="border: 1px solid rgb(187, 187, 187); margin: 20px 0px 0px;"><div style="border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: rgb(220, 220, 220);"><span style="cursor: pointer;">MTK Android 驱动开发<em style="font-style: normal;">（22）</em></span></div><div style="max-height: 180px; overflow-y: auto; padding: 10px 20px; background: rgb(252, 252, 252);"><ul style="float: left; width: 292.047px; list-style: none; margin: 0px; padding: 0px;"><li><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/17439453" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：audio para">MTK Android Driver ：audio para</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/17556533" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：key">MTK Android Driver ：key</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/8812353" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="模拟电路与数字电路的区别">模拟电路与数字电路的区别</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/17437283" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：camera">MTK Android Driver ：camera</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/9385439" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android 之MT6577驱动笔记">MTK Android 之MT6577驱动笔记</a></li></ul><ul style="float: right; width: 292.047px; list-style: none; margin: 0px; padding: 0px;"><li><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/17438835" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：lcm">MTK Android Driver ：lcm</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/17688197" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：sensor">MTK Android Driver ：sensor</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/19043607" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：add a new key">MTK Android Driver ：add a new key</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/20452957" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：2G RF para">MTK Android Driver ：2G RF para</a><em style="font-style: normal; display: inline-block; vertical-align: middle; margin-right: 10px;">•</em><a href="http://blog.csdn.net/cbk861110/article/details/37054133" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 277.438px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank" title="MTK Android Driver ：sound">MTK Android Driver ：sound</a><a href="http://blog.csdn.net/cbk861110/article/category/1513885" style="color: rgb(51, 51, 51); text-decoration: none; display: inline-block; width: 87.4375px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; vertical-align: middle;" target="_blank">更多</a></li></ul></div></div></div></div><div><dl style="clear: both; overflow: hidden; padding: 25px 20px 10px; margin: 10px 0px 0px; background: rgb(245, 245, 245);"><dt style="float: left; margin: 0px; padding: 0px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; font-family: &apos;Microsoft YaHei&apos;; width: 86px;">主题推荐</dt><dd style="float: left; margin: 0px; padding: 0px;"><a href="http://www.csdn.net/tag/android" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; height: 20px; padding: 0px 14px; border-radius: 10px; margin: 2px 5px 0px; background: rgb(231, 231, 231);" target="_blank">android</a><a href="http://www.csdn.net/tag/color" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; height: 20px; padding: 0px 14px; border-radius: 10px; margin: 2px 5px 0px; background: rgb(231, 231, 231);" target="_blank">color</a><a href="http://www.csdn.net/tag/mtk" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; height: 20px; padding: 0px 14px; border-radius: 10px; margin: 2px 5px 0px; background: rgb(231, 231, 231);" target="_blank">mtk</a><a href="http://www.csdn.net/tag/cpu" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; height: 20px; padding: 0px 14px; border-radius: 10px; margin: 2px 5px 0px; background: rgb(231, 231, 231);" target="_blank">cpu</a><a href="http://www.csdn.net/tag/rgb" style="color: rgb(51, 51, 51); text-decoration: none; display: block; float: left; height: 20px; padding: 0px 14px; border-radius: 10px; margin: 2px 5px 0px; background: rgb(231, 231, 231);" target="_blank">rgb</a></dd></dl></div><dl style="clear: both; overflow: hidden; margin: 0px 0px 10px; padding: 0px 20px 20px; background: rgb(245, 245, 245);"><dt style="clear: both; overflow: visible; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 16px; font-family: &apos;Microsoft YaHei&apos;; padding: 0px; height: 35px; margin: 10px 0px 15px; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: rgb(204, 204, 204);"><span style="display: block; float: left; height: 35px; border-bottom-width: 2px; border-bottom-color: rgb(204, 0, 0); border-bottom-style: solid;">猜你在找</span></dt><dd><div style="width: 297.359px; float: left;"><div><dl><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; white-space: nowrap; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://edu.csdn.net/course/detail/1478" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="Android底层技术：HAL驱动开发">Android底层技术：HAL驱动开发</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; white-space: nowrap; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://edu.csdn.net/course/detail/1480" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="Android底层技术：Java层系统服务(Android Service)">Android底层技术：Java层系统服务(Android Service)</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; white-space: nowrap; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://edu.csdn.net/course/detail/1760" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="Android开发—Nfc">Android开发—Nfc</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; white-space: nowrap; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://edu.csdn.net/course/detail/1479" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="Android底层技术：Linux驱动框架与开发">Android底层技术：Linux驱动框架与开发</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; white-space: nowrap; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://edu.csdn.net/course/detail/1483" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="Android平台技术：JNI开发初步">Android平台技术：JNI开发初步</a></dd></dl></div></div><div style="width: 297.359px; float: left; margin-right: 30px; display: block;"><dl><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://blog.csdn.net/wed110/article/details/41548037" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="MTK Android Driver modem">MTK Android Driver modem</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://blog.csdn.net/zangchaodotcnatgmail/article/details/17955575" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="MTK Android Driver key">MTK Android Driver key</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://blog.csdn.net/zangchaodotcnatgmail/article/details/17957663" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="MTK Android Driver camera">MTK Android Driver camera</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://blog.csdn.net/nihb1/article/details/18140581" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="MTK Android Driver lcm">MTK Android Driver lcm</a></dd><dd style="color: rgb(51, 102, 153); width: 294.375px; float: left; overflow: hidden; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: SimSun; height: 23px; margin: 0px 30px 0px 0px; padding: 0px 0px 0px 10px; background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) 0px 10px no-repeat;"><a href="http://blog.csdn.net/nihb1/article/details/18140527" style="color: rgb(0, 0, 0); text-decoration: none;" target="_blank" title="MTK Android Driver camera">MTK Android Driver camera</a></dd></dl></div></dd></dl><div style="clear: both; height: 30px; padding: 0px 10px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;">查看评论<a name="comments" style="color: rgb(51, 102, 153); text-decoration: none;"></a></div><div><dl style="margin: 2px 10px; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; font-family: Arial, Helvetica, sans-serif;"><dt style="border-radius: 5px; clear: both; color: rgb(136, 136, 136); padding: 1px 4px; background: rgb(241, 241, 241);">1楼 <a href="http://blog.csdn.net/wszhov" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">wszhov</a> 2015-12-14 17:10发表 <a href="http://blog.csdn.net/cbk861110/article/details/40931835#reply" style="color: rgb(51, 102, 153); text-decoration: none; overflow: hidden; display: inline-block; width: 16px; height: 16px; padding: 1px; margin-bottom: -5px; text-indent: -2000px; background-image: url(http://static.blog.csdn.net/images/ico_reply.png); background-position: 0% 0%; background-repeat: no-repeat;" title="回复">[回复]</a></dt><dd style="float: left; margin: 4px;"><a href="http://blog.csdn.net/wszhov" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank"><img height="40" src="http://avatar.csdn.net/5/F/4/3_wszhov.jpg" style="border: none; width: 40px; height: auto;" width="40"></img></a></dd><dd style="margin-left: 50px; padding: 5px; min-height: 35px;">太好了,mtk平台比较通用,很适合入门</dd></dl></div><div style="border: 1px solid rgb(204, 204, 204); margin: 10px; padding: 10px; font-size: 12px; background-color: rgb(245, 245, 245);">您还没有登录,请<a style="color: rgb(51, 102, 153); text-decoration: none;">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fcbk861110%2Farticle%2Fdetails%2F40931835" style="color: rgb(51, 102, 153); text-decoration: none;">[注册]</a></div><div>* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply" style="color: rgb(51, 102, 153); text-decoration: none;"></a><a name="quote" style="color: rgb(51, 102, 153); text-decoration: none;"></a></div><div style="border: 1px solid rgb(215, 203, 193); color: rgb(0, 0, 0); font-size: 12px; list-style: none outside none; margin: 10px 14.9531px 0px 7.46875px; padding: 1px; background: none 0px 0px repeat scroll rgb(255, 255, 255);"><h5 style="color: rgb(71, 56, 28); font-size: 12px; height: 24px; padding: 0px 5px; margin: 0px; background: none 0px 0px repeat scroll rgb(224, 219, 211);"><a href="http://www.csdn.net/tag/" style="color: rgb(71, 56, 28); text-decoration: none;" target="_blank">核心技术类目</a></h5><div style="margin: 10px 0px; padding: 4px 12px 8px;"><a href="http://www.csdn.net/tag" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="全部主题">全部主题</a> <a href="http://g.csdn.net/5272865" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Hadoop">Hadoop</a> <a href="http://g.csdn.net/5272866" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="AWS">AWS</a> <a href="http://g.csdn.net/5272870" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="移动游戏">移动游戏</a> <a href="http://g.csdn.net/5272871" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Java">Java</a> <a href="http://g.csdn.net/5272872" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Android">Android</a> <a href="http://g.csdn.net/5272873" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="iOS">iOS</a> <a href="http://g.csdn.net/5272868" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Swift">Swift</a> <a href="http://g.csdn.net/5272869" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="智能硬件">智能硬件</a> <a href="http://g.csdn.net/5272867" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Docker">Docker</a> <a href="http://g.csdn.net/5272925" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="OpenStack">OpenStack</a><a href="http://www.csdn.net/tag/vpn" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="VPN">VPN</a> <a href="http://g.csdn.net/5272924" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Spark">Spark</a> <a href="http://www.csdn.net/tag/erp" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="ERP">ERP</a> <a href="http://www.csdn.net/tag/ie10" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="IE10">IE10</a> <a href="http://www.csdn.net/tag/eclipse" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Eclipse">Eclipse</a> <a href="http://www.csdn.net/tag/crm" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="CRM">CRM</a> <a href="http://www.csdn.net/tag/javascript" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="JavaScript">JavaScript</a> <a href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="数据库">数据库</a> <a href="http://www.csdn.net/tag/ubuntu" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Ubuntu">Ubuntu</a> <a href="http://www.csdn.net/tag/nfc" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="NFC">NFC</a> <a href="http://www.csdn.net/tag/wap" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="WAP">WAP</a> <a href="http://www.csdn.net/tag/jquery" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="jQuery">jQuery</a><a href="http://www.csdn.net/tag/bi" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="BI">BI</a> <a href="http://www.csdn.net/tag/html5" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="HTML5">HTML5</a> <a href="http://www.csdn.net/tag/spring" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Spring">Spring</a> <a href="http://www.csdn.net/tag/apache" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Apache">Apache</a> <a href="http://www.csdn.net/tag/.net" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title=".NET">.NET</a> <a href="http://www.csdn.net/tag/api" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="API">API</a> <a href="http://www.csdn.net/tag/html" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="HTML">HTML</a> <a href="http://www.csdn.net/tag/sdk" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="SDK">SDK</a> <a href="http://www.csdn.net/tag/iis" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="IIS">IIS</a> <a href="http://www.csdn.net/tag/fedora" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Fedora">Fedora</a> <a href="http://www.csdn.net/tag/xml" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="XML">XML</a> <a href="http://www.csdn.net/tag/lbs" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="LBS">LBS</a> <a href="http://www.csdn.net/tag/unity" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Unity">Unity</a><a href="http://www.csdn.net/tag/splashtop" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Splashtop">Splashtop</a> <a href="http://www.csdn.net/tag/uml" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="UML">UML</a> <a href="http://www.csdn.net/tag/components" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="components">components</a> <a href="http://www.csdn.net/tag/windowsmobile" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Windows Mobile">Windows Mobile</a> <a href="http://www.csdn.net/tag/rails" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Rails">Rails</a> <a href="http://www.csdn.net/tag/qemu" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="QEMU">QEMU</a> <a href="http://www.csdn.net/tag/kde" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="KDE">KDE</a> <a href="http://www.csdn.net/tag/cassandra" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Cassandra">Cassandra</a> <a href="http://www.csdn.net/tag/cloudstack" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="CloudStack">CloudStack</a><a href="http://www.csdn.net/tag/ftc" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="FTC">FTC</a> <a href="http://www.csdn.net/tag/coremail" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="coremail">coremail</a> <a href="http://www.csdn.net/tag/ophone" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="OPhone">OPhone </a><a href="http://www.csdn.net/tag/couchbase" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="CouchBase">CouchBase</a> <a href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="云计算">云计算</a> <a href="http://www.csdn.net/tag/iOS6" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="iOS6">iOS6</a> <a href="http://www.csdn.net/tag/rackspace" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Rackspace">Rackspace </a><a href="http://www.csdn.net/tag/webapp" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Web App">Web App</a> <a href="http://www.csdn.net/tag/springside" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="SpringSide">SpringSide</a> <a href="http://www.csdn.net/tag/maemo" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Maemo">Maemo</a><a href="http://www.csdn.net/tag/compuware" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Compuware">Compuware</a> <a href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="大数据">大数据</a> <a href="http://www.csdn.net/tag/aptech" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="aptech">aptech</a> <a href="http://www.csdn.net/tag/perl" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Perl">Perl</a> <a href="http://www.csdn.net/tag/tornado" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Tornado">Tornado</a> <a href="http://www.csdn.net/tag/ruby" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Ruby">Ruby</a> <a href="http://www.csdn.net/hibernate" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Hibernate">Hibernate</a> <a href="http://www.csdn.net/tag/thinkphp" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="ThinkPHP">ThinkPHP</a> <a href="http://www.csdn.net/tag/hbase" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="HBase">HBase</a> <a href="http://www.csdn.net/tag/pure" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Pure">Pure</a> <a href="http://www.csdn.net/tag/solr" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Solr">Solr</a><a href="http://www.csdn.net/tag/angular" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Angular">Angular</a> <a href="http://www.csdn.net/tag/cloudfoundry" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Cloud Foundry">Cloud Foundry</a> <a href="http://www.csdn.net/tag/redis" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Redis">Redis</a> <a href="http://www.csdn.net/tag/scala" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Scala">Scala</a> <a href="http://www.csdn.net/tag/django" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Django">Django</a> <a href="http://www.csdn.net/tag/bootstrap" style="color: rgb(51, 102, 153); text-decoration: none; margin-right: 20px; white-space: nowrap;" target="_blank" title="Bootstrap">Bootstrap</a></div></div></div></div><div style="float: left; width: 200px; overflow: hidden;"><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li><span style="color: rgb(51, 51, 51);">个人资料</span></li></ul><ul style="margin: 0px; padding: 4px 5px;"><li style="margin: 0px 0px 5px; padding: 10px; text-align: center;"><a href="http://my.csdn.net/cbk861110" style="color: rgb(51, 51, 51); text-decoration: none;" target="_blank"><img src="MTK Android Driver知识大全_files/Image [2].jpg" type="image/jpeg" style="border: 1px solid rgb(221, 221, 221); max-width: 90%; padding: 2px; height: auto;" title="访问我的空间"/> </a><br/><span style="color: rgb(51, 51, 51); display: block; font-weight: bold; text-align: center;"><a href="http://my.csdn.net/cbk861110" style="color: rgb(51, 51, 51); text-decoration: none;" target="_blank">Caobaokang</a></span></li><li style="padding: 0px 0px 15px; text-align: center;"><a style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; width: 59px; height: 20px; overflow: hidden; cursor: pointer; background: url(http://static.blog.csdn.net/images/btn_attent.gif) 0px 0px no-repeat;" title="[加关注]"></a> <a style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; width: 59px; height: 20px; overflow: hidden; cursor: pointer; margin: 0px 10px 0px 0px; background: url(http://static.blog.csdn.net/images/btn_sendletter.gif) 0px 0px no-repeat;" title="[发私信]"></a></li><li style="text-align: center;"><div style="display: block; margin-top: 4px; padding: 14px 4px 4px 0px; border-top-style: dashed; border-top-width: 1px; border-top-color: rgb(204, 204, 204); text-align: left;"><a style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank"><img src="MTK Android Driver知识大全_files/Image.png" type="image/png" alt="2" style="border: none; margin-left: 6px; cursor: pointer; height: auto;"/></a></div></li><li style="list-style: none; display: inline"><ul style="margin: 5px; padding: 0px 0px 5px; display: block; background: url(http://static.blog.csdn.net/skin/default/images/line_1.gif) 50% 100% repeat-x;"><li>访问：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">340861次</span>积分：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">4130</span>等级： <span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51); display: inline-block; z-index: 1;"><img src="MTK Android Driver知识大全_files/Image [1].png" type="image/png" style="border: none; vertical-align: middle; height: auto;"/></span>排名：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">第4025名</span></li></ul><ul style="margin: 0px 5px; padding: 0px; display: block;"><li>原创：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">73篇</span>转载：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">120篇</span>译文：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">0篇</span>评论：<span style="padding-left: 6px; position: relative; color: rgb(51, 51, 51);">43条</span></li></ul></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>文章搜索</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li><a style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank"></a></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>文章分类</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li><a href="http://blog.csdn.net/cbk861110/article/category/5720485" style="color: rgb(51, 102, 153); text-decoration: none;">Automobile Android</a><span style="padding-left: 6px; position: relative;">(1)</span><a href="http://blog.csdn.net/cbk861110/article/category/2919187" style="color: rgb(51, 102, 153); text-decoration: none;">MTK Android 功能开发</a><span style="padding-left: 6px; position: relative;">(7)</span><a href="http://blog.csdn.net/cbk861110/article/category/1513885" style="color: rgb(51, 102, 153); text-decoration: none;">MTK Android 驱动开发</a><span style="padding-left: 6px; position: relative;">(23)</span><a href="http://blog.csdn.net/cbk861110/article/category/1660123" style="color: rgb(51, 102, 153); text-decoration: none;">Mtk Android 进阶之旅</a><span style="padding-left: 6px; position: relative;">(17)</span><a href="http://blog.csdn.net/cbk861110/article/category/1446823" style="color: rgb(51, 102, 153); text-decoration: none;">Linux技术开发</a><span style="padding-left: 6px; position: relative;">(21)</span><a href="http://blog.csdn.net/cbk861110/article/category/2884033" style="color: rgb(51, 102, 153); text-decoration: none;">HTML5</a><span style="padding-left: 6px; position: relative;">(0)</span><a href="http://blog.csdn.net/cbk861110/article/category/1382333" style="color: rgb(51, 102, 153); text-decoration: none;">Java技术开发</a><span style="padding-left: 6px; position: relative;">(9)</span><a href="http://blog.csdn.net/cbk861110/article/category/1914867" style="color: rgb(51, 102, 153); text-decoration: none;">嵌入式驱动原理</a><span style="padding-left: 6px; position: relative;">(6)</span><a href="http://blog.csdn.net/cbk861110/article/category/1439423" style="color: rgb(51, 102, 153); text-decoration: none;">MTK Android 基本语法</a><span style="padding-left: 6px; position: relative;">(25)</span><a href="http://blog.csdn.net/cbk861110/article/category/1206029" style="color: rgb(51, 102, 153); text-decoration: none;">c/c++开发</a><span style="padding-left: 6px; position: relative;">(10)</span><a href="http://blog.csdn.net/cbk861110/article/category/1205908" style="color: rgb(51, 102, 153); text-decoration: none;">Mtk Feature Phone MMI</a><span style="padding-left: 6px; position: relative;">(7)</span><a href="http://blog.csdn.net/cbk861110/article/category/1382324" style="color: rgb(51, 102, 153); text-decoration: none;">Mtk Feature Phone Driver</a><span style="padding-left: 6px; position: relative;">(16)</span><a href="http://blog.csdn.net/cbk861110/article/category/1233362" style="color: rgb(51, 102, 153); text-decoration: none;">网络开发</a><span style="padding-left: 6px; position: relative;">(2)</span><a href="http://blog.csdn.net/cbk861110/article/category/1186673" style="color: rgb(51, 102, 153); text-decoration: none;">MTK Android 预研</a><span style="padding-left: 6px; position: relative;">(15)</span><a href="http://blog.csdn.net/cbk861110/article/category/1492575" style="color: rgb(51, 102, 153); text-decoration: none;">git</a><span style="padding-left: 6px; position: relative;">(9)</span><a href="http://blog.csdn.net/cbk861110/article/category/1233425" style="color: rgb(51, 102, 153); text-decoration: none;">Android转载自学手册</a><span style="padding-left: 6px; position: relative;">(18)</span><a href="http://blog.csdn.net/cbk861110/article/category/1213288" style="color: rgb(51, 102, 153); text-decoration: none;">人生随笔</a><span style="padding-left: 6px; position: relative;">(8)</span><a href="http://blog.csdn.net/cbk861110/article/category/3121195" style="color: rgb(51, 102, 153); text-decoration: none;">工具包</a><span style="padding-left: 6px; position: relative;">(1)</span></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>文章存档</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li style="list-style: none; display: inline"><ul><li><a href="http://blog.csdn.net/cbk861110/article/month/2015/08" style="color: rgb(51, 102, 153); text-decoration: none;">2015年08月</a><span style="padding-left: 6px; position: relative;">(1)</span><a href="http://blog.csdn.net/cbk861110/article/month/2015/05" style="color: rgb(51, 102, 153); text-decoration: none;">2015年05月</a><span style="padding-left: 6px; position: relative;">(1)</span><a href="http://blog.csdn.net/cbk861110/article/month/2015/04" style="color: rgb(51, 102, 153); text-decoration: none;">2015年04月</a><span style="padding-left: 6px; position: relative;">(1)</span><a href="http://blog.csdn.net/cbk861110/article/month/2015/03" style="color: rgb(51, 102, 153); text-decoration: none;">2015年03月</a><span style="padding-left: 6px; position: relative;">(3)</span><a href="http://blog.csdn.net/cbk861110/article/month/2015/02" style="color: rgb(51, 102, 153); text-decoration: none;">2015年02月</a><span style="padding-left: 6px; position: relative;">(1)</span></li><li style="float: right; padding: 0px 0px 0px 12px; color: rgb(102, 102, 102); cursor: pointer; background: url(http://static.blog.csdn.net/images/arrow_down.gif) 0% 50% no-repeat;">展开</li></ul></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>阅读排行</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li><a href="http://blog.csdn.net/cbk861110/article/details/9857351" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="build.prop参数详解和部分修改">build.prop参数详解和部分修改</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(24072)</span><a href="http://blog.csdn.net/cbk861110/article/details/9385439" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android 之MT6577驱动笔记">MTK Android 之MT6577驱动笔记</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(21300)</span><a href="http://blog.csdn.net/cbk861110/article/details/40931835" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android Driver知识大全">MTK Android Driver知识大全</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(14851)</span><a href="http://blog.csdn.net/cbk861110/article/details/25216765" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="Android framework系统默认设置修改">Android framework系统默认设置修改</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(14023)</span><a href="http://blog.csdn.net/cbk861110/article/details/9020761" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android 菜鸟上手之旅">MTK Android 菜鸟上手之旅</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(8437)</span><a href="http://blog.csdn.net/cbk861110/article/details/9111987" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="Java常用的语法错误">Java常用的语法错误</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(7536)</span><a href="http://blog.csdn.net/cbk861110/article/details/8758108" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android 编译命令">MTK Android 编译命令</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(6849)</span><a href="http://blog.csdn.net/cbk861110/article/details/40747139" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="linux 中mdelay() 与msleep()的区别">linux 中mdelay() 与msleep()的区别</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(6195)</span><a href="http://blog.csdn.net/cbk861110/article/details/8837888" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="ANDROID SDK体系介绍">ANDROID SDK体系介绍</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(6060)</span><a href="http://blog.csdn.net/cbk861110/article/details/17687907" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android Driver ：modem">MTK Android Driver ：modem</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(5531)</span></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>评论排行</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li><a href="http://blog.csdn.net/cbk861110/article/details/25216765" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="Android framework系统默认设置修改">Android framework系统默认设置修改</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(7)</span><a href="http://blog.csdn.net/cbk861110/article/details/17438835" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android Driver ：lcm">MTK Android Driver ：lcm</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(4)</span><a href="http://blog.csdn.net/cbk861110/article/details/9020761" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android 菜鸟上手之旅">MTK Android 菜鸟上手之旅</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(3)</span><a href="http://blog.csdn.net/cbk861110/article/details/42461427" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="android串口通信实例">android串口通信实例</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(3)</span><a href="http://blog.csdn.net/cbk861110/article/details/17687907" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android Driver ：modem">MTK Android Driver ：modem</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(3)</span><a href="http://blog.csdn.net/cbk861110/article/details/9385439" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android 之MT6577驱动笔记">MTK Android 之MT6577驱动笔记</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(3)</span><a href="http://blog.csdn.net/cbk861110/article/details/8775985" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="模拟器搭建之二：如何搭建 MTK 6589模拟器">模拟器搭建之二：如何搭建 MTK 6589模拟器</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(3)</span><a href="http://blog.csdn.net/cbk861110/article/details/8789920" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK feature phone LCD开机显示花屏调试">MTK feature phone LCD开机显示花屏调试</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(2)</span><a href="http://blog.csdn.net/cbk861110/article/details/17437283" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="MTK Android Driver ：camera">MTK Android Driver ：camera</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(2)</span><a href="http://blog.csdn.net/cbk861110/article/details/47427081" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 130px; height: 15px; overflow: hidden;" title="Eclipse快捷键及各种设置">Eclipse快捷键及各种设置</a><span style="padding-left: 6px; position: relative; display: inline-block; height: 14px; float: right;">(2)</span></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>推荐文章</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li style="list-style: none; display: inline"><ul style="margin: 0px; padding: 0px;"><li><a href="http://blog.csdn.net/jspandasp/article/details/49339451" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">*App竞品技术分析 （6）热修复</a><a href="http://blog.csdn.net/foruok/article/details/50416725" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">*架构设计：系统间通信（17）——服务治理与Dubbo 中篇（分析）</a><a href="http://blog.csdn.net/crazy__chen/article/details/50338895" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">*你的计划为什么执行不下去？怎么破？</a><a href="http://blog.csdn.net/nomasp/article/details/50349172" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">*图解堆算法、链表、栈与队列（多图预警）</a><a href="http://blog.csdn.net/zjngogo/article/details/50407619" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">*【android】仿360手机卫士的简易设计思路及源码</a><a href="http://blog.csdn.net/oshunz/article/details/50372968" style="color: rgb(51, 102, 153); text-decoration: none;" target="_blank">*Android平台Camera实时滤镜实现方法探讨(九)--磨皮算法探讨(一)</a></li></ul></li></ul></div><div style="margin: 0px 0px 10px; padding: 7px; border: 1px solid rgb(221, 221, 221); border-radius: 5px;"><ul style="clear: both; height: 30px; padding: 0px; border-radius: 4px; color: rgb(51, 51, 51); font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 12px; font-family: Arial; text-indent: 5px; margin: 0px; background: url(http://static.blog.csdn.net/skin/default/images/tit_bg.gif) 50% 0% repeat-x;"><li>最新评论</li></ul><ul style="margin: 0px; padding: 4px 5px;"><li><a href="http://blog.csdn.net/cbk861110/article/details/17438835#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">MTK Android Driver ：lcm</a><a href="http://blog.csdn.net/cbk861110/article/details/40931835#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">MTK Android Driver知识大全</a><a href="http://blog.csdn.net/cbk861110/article/details/9385439#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">MTK Android 之MT6577驱动笔记</a><a href="http://blog.csdn.net/cbk861110/article/details/43085871#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">MTK Android user版本如何打开root权限</a><a href="http://blog.csdn.net/cbk861110/article/details/47427081#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">Eclipse快捷键及各种设置</a><a href="http://blog.csdn.net/cbk861110/article/details/47427081#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">Eclipse快捷键及各种设置</a><a href="http://blog.csdn.net/cbk861110/article/details/42583469#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">MTK Android Driver：UART</a><a href="http://blog.csdn.net/cbk861110/article/details/42461427#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">android串口通信实例</a><a href="http://blog.csdn.net/cbk861110/article/details/42461427#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">MTK Android Driver：UART</a><a href="http://blog.csdn.net/cbk861110/article/details/44102605#comments" style="color: rgb(51, 102, 153); text-decoration: none; display: inline-block; white-space: nowrap; width: 170.516px; height: 15px; overflow: hidden;">Android 来电翻转静音实现源码</a></li><li style="margin: 0px;"><a href="http://blog.csdn.net/qq_19764429" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">qq_19764429</a>: 兄弟问下 我做了一个72的boot 烧到板子上 最上方出现一个白条 整个屏幕向下错位了一块...</li><li style="margin: 0px;"><a href="http://blog.csdn.net/wszhov" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">wszhov</a>: 太好了,mtk平台比较通用,很适合入门</li><li style="margin: 0px;"><a href="http://blog.csdn.net/u013266076" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">轰炸机二代</a>: 不得不赞！</li><li style="margin: 0px;"><a href="http://blog.csdn.net/Evahuangchen" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">小木木go</a>: 抄的这么有味，试问您都试过吗？？？？</li><li style="margin: 0px;"><a href="http://blog.csdn.net/zsj06130675" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">zsj06130675</a>: 大哥 联发科的Android BSP哪里可以搞得 我们愿意购买。。多谢您了</li><li style="margin: 0px;"><a href="http://blog.csdn.net/zsj06130675" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">zsj06130675</a>: 大哥 联发科的BSP哪里可以搞得，我们愿意购买。多谢了</li><li style="margin: 0px;"><a href="http://blog.csdn.net/pirpi" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">pirpi</a>: Hi,I have a mtk tablet. I am using the /dev/ttyMT0...</li><li style="margin: 0px;"><a href="http://blog.csdn.net/LikeSidehu" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">LakeSideHu</a>: 你好，请问底层是怎么主动发送消息给上层的？上层收到了消息后再去读取数据，读取了数据再发送反馈给底层。...</li><li style="margin: 0px;"><a href="http://blog.csdn.net/LikeSidehu" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">LakeSideHu</a>: 正好需要MTK串口通讯知识，拜读了</li><li style="margin: 0px;"><a href="http://blog.csdn.net/qq_21051503" style="color: rgb(51, 102, 153); text-decoration: none; display: inline; white-space: nowrap; width: auto; height: 15px; overflow: hidden;">IT随笔</a>: 大大实打实大大神大神</li></ul></div></div></div><div style="width: 1903px; margin-top: 10px; overflow: hidden; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(240, 240, 240); background-color: rgb(255, 255, 255);"><div style="width: 1170px; overflow: hidden; margin: 0px auto 20px;"><dl style="margin: 0px; padding: 0px;"><dd style="margin: 15px 0px 0px; padding: 0px; width: 1170px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(224, 224, 224); font-size: 14px; overflow: hidden;"><a href="http://www.csdn.net/company/about.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">公司简介</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/company/recruit.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">招贤纳士</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/company/marketing.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">广告服务</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/company/account.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">银行汇款帐号</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/company/contact.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">联系方式</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/company/statement.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">版权声明</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/company/layer.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">法律顾问</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="mailto:webmaster@csdn.net" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;">问题报告</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://www.csdn.net/friendlink.html" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">合作伙伴</a><span style="color: rgb(209, 209, 209); padding: 0px 8px; display: block; float: left; height: 20px; margin-bottom: 10px;">|</span><a href="http://bbs.csdn.net/forums/Service" style="color: rgb(102, 102, 102); text-decoration: none; font-family: &apos;microsoft yahei&apos;; display: block; height: 20px; float: left; margin-bottom: 10px;" target="_blank">论坛反馈</a></dd><dd style="margin: 0px; padding: 0px; font-family: &apos;microsoft yahei&apos;; font-size: 12px; overflow: hidden; width: 1170px;"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2355263776&amp;site=qq&amp;menu=yes" style="color: rgb(102, 102, 102); text-decoration: none; display: block; float: left; height: 35px; padding-left: 20px; margin-right: 9px; background: url(http://csdnimg.cn/pubfooter/images/qq_icon.png) 0% 10px no-repeat;" target="_blank">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" style="color: rgb(102, 102, 102); text-decoration: none; display: block; float: left; height: 35px; padding-left: 20px; margin-right: 9px; background: url(http://csdnimg.cn/pubfooter/images/qq_icon.png) 0% 10px no-repeat;" target="_blank">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" style="color: rgb(102, 102, 102); text-decoration: none; display: block; float: left; height: 35px; padding-left: 23px; margin-right: 9px; background: url(http://csdnimg.cn/pubfooter/images/weibo_icon.png) 0% 10px no-repeat;" target="_blank">微博客服</a><a href="mailto:webmaster@csdn.net" style="color: rgb(102, 102, 102); text-decoration: none; display: block; float: left; height: 35px; padding-left: 20px; margin-right: 9px; background: url(http://csdnimg.cn/pubfooter/images/mail_icon.png) 0% 11px no-repeat;" title="联系邮箱">webmaster@csdn.net</a><span style="display: block; float: left; height: 35px; color: rgb(102, 102, 102); padding-left: 20px; background: url(http://csdnimg.cn/pubfooter/images/phone_icon.png) 0% 11px no-repeat;" title="服务热线">400-600-2320</span><span style="color: rgb(102, 102, 102); padding: 0px 6px; margin: 0px; display: block; float: left; height: 35px;">|</span><span style="display: block; float: left; height: 35px; color: rgb(102, 102, 102);">北京创新乐知信息技术有限公司 版权所有</span><span style="color: rgb(102, 102, 102); padding: 0px 6px; margin: 0px; display: block; float: left; height: 35px;">|</span><span style="display: block; float: left; height: 35px; color: rgb(102, 102, 102);">江苏乐知网络技术有限公司 提供商务支持</span></dd><dd style="margin: 0px; padding: 0px; font-size: 12px; color: rgb(156, 156, 156); font-family: &apos;microsoft yahei&apos;; width: 1170px;"><span style="display: block; float: left; height: 21px;">京 ICP 证 09002463 号</span><span style="color: rgb(209, 209, 209); padding: 0px 6px; margin: 0px; display: block; float: left; height: 21px;">|</span><span style="display: block; float: left; height: 21px;">Copyright © 1999-2014, CSDN.NET, All Rights Reserved </span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" style="color: rgb(51, 102, 153); text-decoration: none; display: block; float: left; height: 21px;" target="_blank"><img src="d41d8cd98f00b204e9800998ecf8427e" type="image/gif" alt="GongshangLogo" style="border: none; height: 21px; padding-left: 10px;"/></a></dd></dl></div></div><img border="0" height="0" src="http://counter.csdn.net/pv.aspx?id=24" style="border: none;" width="0"></img></div><div><br/></div></span>
+</div></body></html> 

@@ -1,0 +1,444 @@
+<html>
+<head>
+  <title>MySQL Tutorial</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1564"/>
+<h1>MySQL Tutorial</h1>
+
+<div>
+<span><div><table style="width:232px;"><tr><td style="width:12.80979827089337%;"><a href="http://arachnoid.com/index.html">Home</a> | </td><td style="width:14.029779058597502%;"><a href="http://arachnoid.com/LibraryDB/index.html">MySQL</a> | </td><td style="width:15.086206896551724%;"></td><td style="width:15.086206896551724%;"><a href="http://arachnoid.com/LibraryDB/index.html"><img src="MySQL Tutorial_files/Image.png" type="image/png" border="0" style="cursor: default;" title="Click for prior page"/></a></td><td style="width:15.086206896551724%;"><a href="http://arachnoid.com/MySQL/views_joins.html"><img src="MySQL Tutorial_files/Image [1].png" type="image/png" border="0" style="cursor: default;" title="Click for next page"/></a></td><td style="width:28.059558117195003%;"> <a href="http://arachnoid.com/administration/submit.php" title="Recommend this page to friends"><img src="MySQL Tutorial_files/Image.gif" type="image/gif" style="cursor: default;"/>  Share This Page</a></td></tr></table><div align="center"><div>MySQL Tutorial 1: Overview, Tables, Queries</div><div><p>Getting to know the MySQL database engine</p><p>— <a href="http://arachnoid.com/administration/index.html" title="Click for biography">P. Lutus</a> — <a href="http://arachnoid.com/messages">Message Page</a> —</p><p>Copyright © 2012, <a href="http://arachnoid.com/administration/index.html" title="Click for biography">P. Lutus</a></p><a href="http://arachnoid.com/MySQL/index.html#Introduction">Introduction</a> | <a href="http://arachnoid.com/MySQL/index.html#First_Steps">First Steps</a> | <a href="http://arachnoid.com/MySQL/index.html#Advanced_Database_Queries_1__People">Advanced Database Queries 1: People</a><br/><a href="http://arachnoid.com/MySQL/index.html#Advanced_Database_Queries_2__ZIP_Codes">Advanced Database Queries 2: ZIP Codes</a> | <a href="http://arachnoid.com/MySQL/index.html#Summary">Summary</a> | <a href="http://arachnoid.com/MySQL/index.html#Topical_Links">Topical Links</a><p>(double-click any word to see its definition)</p></div></div><div><div align="center">— Navigate this multi-page article with the arrows and drop-down lists at the top and bottom of each page —</div><div align="center"><p><b>Note:</b> In this article, footnotes are marked with a light bulb over which one hovers.</p></div><div>Introduction</div><blockquote><p>MySQL is a free, open-source database engine <a href="http://en.wikipedia.org/wiki/MySQL">available for all major platforms</a>. (Technically, MySQL is a <a href="http://en.wikipedia.org/wiki/Relational_database_management_system">relational database management system (RDBMS)</a>.) MySQL represents an excellent introduction to modern database technology, as well as being a reliable mainstream database resource for high-volume applications.</p><p>A modern database is an efficient way to organize, and gain access to, large amounts of data. A <a href="http://en.wikipedia.org/wiki/Relational_database"><i>relational database</i></a> is able to create relationships between individual database elements, to organize data at a higher level than a simple table of records, avoid data redundancy and enforce relationships that define how the database functions.</p><p>These articles will familiarize the reader with basic database concepts, move on to MySQL, and show how to create a useful database, step by step.</p></blockquote><div>First Steps</div><blockquote><p><b>Basic Database Terminology</b></p><ul><li>MySQL creates, configures, and communicates with databases.</li><li>A database is an organized collection of data.</li><li>At its simplest, a database will consist of tables like this:
+<blockquote><table><tbody><tr><th>Name</th><th>Age</th><th>Favorite Color</th></tr><tr><td>Bruce Callow</td><td>13</td><td>I haven't decided yet.</td></tr><tr><td>Frank Wright</td><td>37</td><td>Red .. no, wait ...</td></tr><tr><td>Seymour Hawthorne</td><td>82</td><td>None of your business.</td></tr></tbody></table></blockquote></li><li>Tables contain <i>records</i> (sometimes called <i>rows</i>), and records contain <i>fields</i> (sometimes called <i>columns</i>) :
+<blockquote><table><tbody><tr><td> </td><td>Field 1</td><td>Field 2</td><td>Field 3</td></tr><tr><td>Field Names:</td><th>Name</th><th>Age</th><th>Favorite Color</th></tr><tr><td>Record 1</td><td>Bruce Callow</td><td>13</td><td>I haven't decided yet.</td></tr><tr><td>Record 2</td><td>Frank Wright</td><td>37</td><td>Red .. no, wait ...</td></tr><tr><td>Record 3</td><td>Seymour Hawthorne</td><td>82</td><td>None of your business.</td></tr></tbody></table></blockquote></li></ul><p>The above is the basic premise of a simple database table, even a real one having millions of records. More exotic databases link tables together relationally, so that specific values that might appear in hundreds of tables only need to be defined in one (a topic to be covered later).</p><hr/><p>I've always thought that direct experience is a good way to inspire confidence in one's abilities, so we'll start out by creating a database and a table at the keyboard, by direct interaction with MySQL.</p><p>(Because the procedure for installing MySQL is different on each platform, and because the installation process is nearly automatic in modern times, I've decided not to cover installation issues. At this point I assume the reader has successfully installed MySQL and has logon authority in the system.)</p><p><b>Start the MySQL command-line application</b></p><p>I'll make this one concession to the differences between platforms:</p><ul><li><p>Windows: Start -&gt; All Programs -&gt; MySQL -&gt; MySQL Server (version) -&gt; MySQL (version) Command Prompt</p></li><li><p>Linux, OSX: Open a shell session and type &quot;mysql --user=(username) --password=(password)&quot;</p></li></ul>
+For the above steps, the outcome should be the MySQL command-line prompt, awaiting your entries:
+<blockquote>mysql&gt; |</blockquote><p><b>Make a Database</b></p><p>First, let's make sure we're not creating a database that already exists — we'll do this by listing the names of existing databases (user entries are in green):</p><blockquote>mysql&gt; show databases;</blockquote><p>Type the green text above and press Enter. If your MySQL installation is new, the list should be short:</p><blockquote>mysql&gt; show databases;
+<pre>
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+            
+</pre></blockquote><p>Now enter this:</p><blockquote>mysql&gt; create database tutorial;<br/>
+mysql&gt; show databases;
+<pre>
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
+| tutorial           |
++--------------------+
+            
+</pre></blockquote><p>So we've succeeded in creating a database to hold the content of this tutorial. Now let's try generating an error — what happens if we try to create a database that already exists? Type this:</p><blockquote>mysql&gt; create database tutorial;<br/>
+ERROR 1007 (HY000): Can't create database 'tutorial'; database exists</blockquote><p>I should tell you that's one of the more informative MySQL error messages — most messages require the user to figure out what went wrong.</p><p>Now that we have created our database, let's tell MySQL to use it for subsequent entries:</p><blockquote>mysql&gt; use tutorial;</blockquote><p><b>NOTE:</b> There's an alternative to telling MySQL which database to use — one simply prepends the database name to each table reference, like this: &quot;database_name.table_name&quot;. When dealing with multiple databases, this is often more convenient.</p><p><b>Make a Table</b></p><p>In serious database work, one spends a fair amount of time in advance of table creation deciding what fields each table record should have, and what data types the fields should contain. But for this first effort, we'll limit ourselves to a simple table. <i>In the entry below I have included a common error, to make the reader aware of an issue having to do with spaces.</i> Watch what happens:</p><blockquote>mysql&gt; create table trivia (Name text, Age integer, Favorite Color text);<br/>
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Color text)' at line 1</blockquote><p>Apart from showing the first of the dreaded and uninformative MySQL error messages, what's wrong? Well, think about this — can MySQL figure out which parts of our entry are field names, and which are data types? The first field name is &quot;Name&quot;, and it has the data type &quot;text&quot;. The field name and data type are separated by a space. But the field name &quot;Favorite Color&quot; has a space within it, and MySQL can't decide whether &quot;Color&quot; is part of the name or a data type, and there's no data type called &quot;Color&quot;. So — error message, and no table.</p><p>Here is the solution — enclose problem field names in backticks (`):</p><blockquote>mysql&gt; create table trivia (Name text, Age integer, `Favorite Color` text);<br/>
+mysql&gt; describe trivia;<br/><pre>
++----------------+---------+------+-----+---------+-------+
+| Field          | Type    | Null | Key | Default | Extra |
++----------------+---------+------+-----+---------+-------+
+| Name           | text    | YES  |     | NULL    |       |
+| Age            | int(11) | YES  |     | NULL    |       |
+| Favorite Color | text    | YES  |     | NULL    |       |
++----------------+---------+------+-----+---------+-------+
+            
+</pre></blockquote><p>The result produced by &quot;describe (tablename)&quot; has these fields:</p><ul><li>&quot;Field&quot;: field name</li><li>&quot;Type&quot;: the data type supported by this field</li><li>&quot;Null&quot;: whether this field may be NULL, or undefined.</li><li>&quot;Key&quot;: whether this field represents a table key (see below)</li><li>&quot;Default&quot;: what value this field should have by default</li><li>&quot;Extra&quot;: special properties appear here</li></ul><p>Okay, on examining this description, it seems obvious that our table shouldn't allow blank fields, so let's try again, this time requiring specific values for each field:</p><blockquote>mysql&gt; drop table trivia;<br/>
+mysql&gt; create table trivia (Name text not null, Age integer not null, `Favorite Color` text not null);<br/>
+mysql&gt; describe trivia;<br/><pre>
++----------------+---------+------+-----+---------+-------+
+| Field          | Type    | Null | Key | Default | Extra |
++----------------+---------+------+-----+---------+-------+
+| Name           | text    | NO   |     | NULL    |       |
+| Age            | int(11) | NO   |     | NULL    |       |
+| Favorite Color | text    | NO   |     | NULL    |       |
++----------------+---------+------+-----+---------+-------+
+            
+</pre></blockquote><p><b>NOTE:</b> Do be careful with commands like &quot;drop (tablename)&quot;. This table happens to be empty, but the same command works with a table having a million records — it just goes away with no warning.</p><p>Now we have a table ready to accept records describing people by name, age and favorite color. It's time to insert some real data. <i>Again, I have deliberately introduced an error</i>:</p><blockquote>mysql&gt; insert into trivia values(Bruce Callow,13,I haven't decided yet.);</blockquote><p>The above example is truly pathological in its errors, and I won't try to even list the possible outcomes, depending on what the reader types to try to recover. But here's the correct entry:</p><blockquote>mysql&gt; insert into trivia values('Bruce Callow','13','I haven''t decided yet.');<br/>
+mysql&gt; select * from trivia;<br/><pre>
++--------------+-----+------------------------+
+| Name         | Age | Favorite Color         |
++--------------+-----+------------------------+
+| Bruce Callow |  13 | I haven't decided yet. |
++--------------+-----+------------------------+
+            
+</pre></blockquote><p>Let's take a closer look at the corrected values for this successful entry:</p><ul><li>The name &quot;Bruce Callow&quot; is a string, a sequence of characters, so it must be enclosed in quotes of one kind or another. Examples: 'Bruce Callow', &quot;Bruce Callow&quot;, but not `Bruce Callow` (backticks are reserved for field, table and database names).</li><li>The age &quot;13&quot; is a number, so it doesn't need to be quoted. But quoting a number is not an error, and in some cases, for consistency, all values might be enclosed in quotes.</li><li>The string &quot;I haven't decided yet&quot; contains an apostrophe. Unfortunately the apostrophe is also sometimes used as a quotation mark, which will confuse MySQL about where the string ends. One solution is to use double quotation marks around this specific field: &quot;I haven't decided yet&quot;. Another solution is to &quot;escape&quot; the apostrophe in one of these ways: 'haven''t', 'haven\'t' — either will work.</li></ul><p><b>NOTE:</b> To save time and typing, readers are encouraged to copy the green entries from the example boxes and paste them into your MySQL command-line session:</p><ul><li>In this display, drag your mouse cursor across the phrase you want to capture, highlighting it.</li><li>Press Ctrl+C or select menu item &quot;Edit ... Copy&quot;.</li><li>In the MySQL command-line window, select &quot;Paste&quot; (how to do that unfortunately depends on the platform).</li><li>Press Enter.</li></ul><p>Okay, let's add two more records to our table:</p><blockquote>mysql&gt; insert into trivia values('Frank Wright',37,'Red .. no, wait ...');<br/>
+mysql&gt; insert into trivia values('Seymour Hawthorne',82,'None of your business.');<br/>
+mysql&gt; select * from trivia;<br/><pre>
++-------------------+-----+------------------------+
+| Name              | Age | Favorite Color         |
++-------------------+-----+------------------------+
+| Bruce Callow      |  13 | I haven't decided yet. |
+| Frank Wright      |  37 | Red .. no, wait ...    |
+| Seymour Hawthorne |  82 | None of your business. |
++-------------------+-----+------------------------+
+            
+</pre></blockquote><p><b>NOTE:</b> If something goes wrong and you want to start over entering records into the table, you may want to delete all existing records first. Here's how:</p><blockquote>mysql&gt; delete from trivia;<br/>
+mysql&gt; select * from trivia;<br/>
+Empty set (0.00 sec)</blockquote><p>Again, as with &quot;delete (tablename)&quot;, this is a risky command that requires caution. And please notice that &quot;delete <b>from</b> trivia&quot; (note the bold word) deletes the records and keeps the table, but &quot;delete trivia&quot; deletes the table and its data.</p><p>At this point, let's assume we have successfully entered three records into the table. Now we can perform our first meaningful query:</p><blockquote>mysql&gt; select * from trivia where Age = 13;<br/><pre>
++--------------+-----+------------------------+
+| Name         | Age | Favorite Color         |
++--------------+-----+------------------------+
+| Bruce Callow |  13 | I haven't decided yet. |
++--------------+-----+------------------------+
+            
+</pre></blockquote><p>Now let's try this:</p><blockquote>mysql&gt; select * from trivia where Age &lt; 40;<br/><pre>
++--------------+-----+------------------------+
+| Name         | Age | Favorite Color         |
++--------------+-----+------------------------+
+| Bruce Callow |  13 | I haven't decided yet. |
+| Frank Wright |  37 | Red .. no, wait ...    |
++--------------+-----+------------------------+
+            
+</pre></blockquote><p>Queries can be very specific (note the use of `backticks` around the field name):</p><blockquote>mysql&gt; select `Favorite Color` from trivia where Age &lt; 40;<br/><pre>
++------------------------+
+| Favorite Color         |
++------------------------+
+| I haven't decided yet. |
+| Red .. no, wait ...    |
++------------------------+
+            
+</pre></blockquote><p>Now let's display our table sorted by name:</p><blockquote>mysql&gt; select * from trivia order by name;<br/><pre>
++-------------------+-----+------------------------+
+| Name              | Age | Favorite Color         |
++-------------------+-----+------------------------+
+| Bruce Callow      |  13 | I haven't decided yet. |
+| Frank Wright      |  37 | Red .. no, wait ...    |
+| Seymour Hawthorne |  82 | None of your business. |
++-------------------+-----+------------------------+
+            
+</pre></blockquote><p>That didn't work out so well — Frank Wright should have appeared last. The reason he didn't is because MySQL sorted the names just as we entered them — as a single string composed of first name, then last name. At this point it may occur to the reader that name data should always be entered into separate fields for first and last name. The underlying idea is that one can always combine a first and last name to create a full name, but one cannot easily do the reverse.</p><p><b>Split a Field in Two, Make a New Table</b></p><p>This is slightly more ambitious — we're going to create a new table with separate fields for first and last name, then we're going to transfer all the records from the original table into the new one. The point of this exercise is to show how to do this without having to re-enter the records. Here's the procedure:</p><p>As a first step, before creating a new table, let's see if we can successfully split the &quot;Name&quot; field into first and last names:</p><blockquote>mysql&gt; select substring_index(Name,' ',1) as FirstName, substring_index(Name,' ',-1) as LastName, Age, `Favorite Color` from trivia order by LastName;<br/><pre>
++-----------+-----------+-----+------------------------+
+| FirstName | LastName  | Age | Favorite Color         |
++-----------+-----------+-----+------------------------+
+| Bruce     | Callow    |  13 | I haven't decided yet. |
+| Seymour   | Hawthorne |  82 | None of your business. |
+| Frank     | Wright    |  37 | Red .. no, wait ...    |
++-----------+-----------+-----+------------------------+
+            
+</pre></blockquote><p>It seems the &quot;Name&quot; field was split up correctly, and because we then specified &quot;order by LastName&quot;, the name &quot;Frank Wright&quot; appeared last as it should. Now let's create a new table with the names split in the same way:</p><blockquote>mysql&gt; create table triviab (FirstName text not null, LastName text not null, Age integer not null, `Favorite Color` text not null);<br/>
+mysql&gt; describe triviab;<br/><pre>
++----------------+---------+------+-----+---------+-------+
+| Field          | Type    | Null | Key | Default | Extra |
++----------------+---------+------+-----+---------+-------+
+| FirstName      | text    | NO   |     | NULL    |       |
+| LastName       | text    | NO   |     | NULL    |       |
+| Age            | int(11) | NO   |     | NULL    |       |
+| Favorite Color | text    | NO   |     | NULL    |       |
++----------------+---------+------+-----+---------+-------+
+            
+</pre></blockquote><p>All right — now let's transfer the records from &quot;trivia&quot; to &quot;triviab&quot;, splitting the names as we go:</p><blockquote>mysql&gt; insert into triviab select substring_index(Name,' ',1) as FirstName, substring_index(Name,' ',-1) as LastName, Age, `Favorite Color` from trivia;<br/>
+mysql&gt; select * from triviab;<br/><pre>
++-----------+-----------+-----+------------------------+
+| FirstName | LastName  | Age | Favorite Color         |
++-----------+-----------+-----+------------------------+
+| Bruce     | Callow    |  13 | I haven't decided yet. |
+| Frank     | Wright    |  37 | Red .. no, wait ...    |
+| Seymour   | Hawthorne |  82 | None of your business. |
++-----------+-----------+-----+------------------------+
+            
+</pre></blockquote><p>The above is an example of creating a new table and providing it with records from another table, but split up and arranged differently. This isn't always necessary — in many cases one can write a query for an existing table to get different results without having to create a new table each time. Examples:</p><blockquote>mysql&gt; select * from triviab order by LastName, FirstName;<br/><pre>
++-----------+-----------+-----+------------------------+
+| FirstName | LastName  | Age | Favorite Color         |
++-----------+-----------+-----+------------------------+
+| Bruce     | Callow    |  13 | I haven't decided yet. |
+| Seymour   | Hawthorne |  82 | None of your business. |
+| Frank     | Wright    |  37 | Red .. no, wait ...    |
++-----------+-----------+-----+------------------------+
+            
+</pre>
+mysql&gt; select * from triviab order by Age desc;<br/><pre>
++-----------+-----------+-----+------------------------+
+| FirstName | LastName  | Age | Favorite Color         |
++-----------+-----------+-----+------------------------+
+| Seymour   | Hawthorne |  82 | None of your business. |
+| Frank     | Wright    |  37 | Red .. no, wait ...    |
+| Bruce     | Callow    |  13 | I haven't decided yet. |
++-----------+-----------+-----+------------------------+
+            
+</pre></blockquote><p>The above keyword &quot;desc&quot; means &quot;descending&quot;, in this context meaning sort the records in the reverse of the natural sort order.</p></blockquote><div>Advanced Database Queries 1: People</div><blockquote><p>For more advanced query practice, I decided a table with only three records wasn't adequate, so I've created a much larger table composed of records describing make-believe people. Readers have two ways to get this table into their tutorial database:</p><ul><li>Download and load into your MySQL database the MySQL-formatted table description file <a href="http://arachnoid.com/MySQL/resources/people.sql">people.sql.</a></li><li>Download and run the original Python program <a href="http://arachnoid.com/MySQL/resources/generate_people_table.py">generate_people_table.py</a> I used to create the table, and run it locally.</li></ul><p>The first of the two options above is simpler, and is preferred. Here is how to proceed:</p><ul><li>Right-click here: <a href="http://arachnoid.com/MySQL/resources/people.sql">people.sql</a> and select context menu option &quot;Save link as ...&quot; or &quot;Save Target as ...&quot; (this differs with your browser).</li><li>Download the file to any convenient location.</li><li>Make a copy of the file in a directory that's easily located by the MySQL command-line application.</li><li>From the MySQL application, type this:
+<blockquote>mysql&gt; use tutorial;<br/>
+mysql&gt; source (path)/people.sql;<br/>
+mysql&gt; describe people;<br/><pre>
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| First Name | text          | NO   |     | NULL    |                |
+| Last Name  | text          | NO   |     | NULL    |                |
+| Gender     | enum('M','F') | NO   |     | NULL    |                |
+| Age        | int(11)       | NO   |     | NULL    |                |
+| Music      | text          | NO   |     | NULL    |                |
+| Art        | text          | NO   |     | NULL    |                |
+| pk         | int(11)       | NO   | PRI | NULL    | auto_increment |
++------------+---------------+------+-----+---------+----------------+
+                
+</pre>
+mysql&gt; select count(*) from people;<br/><pre>
++----------+
+| count(*) |
++----------+
+|     1000 |
++----------+
+                
+</pre></blockquote></li></ul><p>The purpose of the last command &quot;select count(*) from people&quot; is to verify that all 1000 records from the &quot;people&quot; table were successfully read.</p><p>In this table's description, we see there's a field named &quot;pk&quot; with a new role we haven't seen before — as a &quot;primary key&quot;. As tables become larger, the presence of a unique primary key becomes more important for a number of reasons. One, MySQL can read from and write to the table more efficiently. Two, it makes each record unique — without a unique key, two records with identical field data would not be distinct (MySQL would not be able to tell them apart).</p><p>There's another, even more important role for table keys in the design of relational databases, a topic we'll be getting into later. But back to our new table — with 1000 records, we can pose some interesting queries. Here are some examples.</p><ul><li>Let's say you're responsible for a company database, and your boss shows up and asks, &quot;How many of our customers are (a) interested in rock music, and (b) age 20 and younger? Being fully versed in modern database technology, you create an answer for him in a matter of seconds:
+<blockquote>mysql&gt; select count(*) from people where Age &lt;= 20 and Music = 'Rock';<br/><pre>
++----------+
+| count(*) |
++----------+
+|       23 |
++----------+
+                
+</pre></blockquote><p><b>NOTE:</b> Because I generated the &quot;people&quot; table using a seeded pseudorandom number generator, the numbers you acquire from your invocation of the &quot;people&quot; table should agree with those here. This also allows you to compare your results with the original ones, as an accuracy check for your query entries.</p></li><li>The boss thinks for a minute and asks, &quot;Can you show me the breakdown by musical preference for that age group?&quot; You reply this way:
+<blockquote>mysql&gt; select count(*),Music from people where Age &lt;= 20 group by Music;<br/><pre>
++----------+-----------+
+| count(*) | Music     |
++----------+-----------+
+|       25 | Baroque   |
+|       23 | C &amp; W     |
+|       28 | Classical |
+|       33 | Jazz      |
+|       23 | Rock      |
++----------+-----------+
+                
+</pre></blockquote></li><li>The boss next asks, &quot;Can you show that breakdown in terms of percentages of the age group as well?&quot; Here's your reply:
+<blockquote>mysql&gt; set @total = (select count(*) from people where Age &lt;= 20);<br/>
+mysql&gt; select count(*),count(*) * 100/@total as '%',Music from people where Age &lt;= 20 group by Music;<br/><pre>
++----------+---------+-----------+
+| count(*) | %       | Music     |
++----------+---------+-----------+
+|       25 | 18.9394 | Baroque   |
+|       23 | 17.4242 | C &amp; W     |
+|       28 | 21.2121 | Classical |
+|       33 | 25.0000 | Jazz      |
+|       23 | 17.4242 | Rock      |
++----------+---------+-----------+
+                
+</pre></blockquote></li><li>The boss, difficult to impress, asks, &quot;Okay, how about the same breakdown for the age range between 20 and 50?&quot; You reply:
+<blockquote>mysql&gt; set @total = (select count(*) from people where Age &gt; 20 and Age &lt;= 50);<br/>
+mysql&gt; select count(*),count(*) * 100/@total as '%',Music from people where Age &gt; 20 and Age &lt;= 50 group by Music;<br/><pre>
++----------+---------+-----------+
+| count(*) | %       | Music     |
++----------+---------+-----------+
+|      103 | 20.5589 | Baroque   |
+|       90 | 17.9641 | C &amp; W     |
+|      117 | 23.3533 | Classical |
+|       87 | 17.3653 | Jazz      |
+|      104 | 20.7585 | Rock      |
++----------+---------+-----------+
+                
+</pre></blockquote></li><li>The boss looks away for an uncomfortably long time, then gets a funny look on his face and says, &quot;Women, over 60, who listen to Country &amp; Western Music — go!&quot; You reply with:
+<blockquote>mysql&gt; select count(*) from people where Gender = 'F' and Age &gt; 60 and Music = 'C &amp; W';<br/><pre>
++----------+
+| count(*) |
++----------+
+|       14 |
++----------+
+                
+</pre></blockquote></li><li>It's now clear that the boss is on some kind of roll — he says, &quot;Breakdown artistic taste for that selection — go!&quot; You reply:
+<blockquote>mysql&gt; select count(*), Art from people where Gender = 'F' and Age &gt; 60 and Music = 'C &amp; W' group by Art;<br/><pre>
++----------+---------------+
+| count(*) | Art           |
++----------+---------------+
+|        2 | Abstract      |
+|        1 | Impressionist |
+|        3 | Modern        |
+|        4 | Realist       |
+|        1 | Romantic      |
+|        3 | Surrealist    |
++----------+---------------+
+                
+</pre></blockquote></li><li>The boss now says, &quot;List the full record for the impressionist fan in that group — go!&quot; Your reply:
+<blockquote>mysql&gt; select * from people where Gender = 'F' and Age &gt; 60 and Music = 'C &amp; W' and Art = 'Impressionist';<br/><pre>
++------------+-----------+--------+-----+-------+---------------+-----+
+| First Name | Last Name | Gender | Age | Music | Art           | pk  |
++------------+-----------+--------+-----+-------+---------------+-----+
+| Patricia   | Brown     | F      |  67 | C &amp; W | Impressionist | 116 |
++------------+-----------+--------+-----+-------+---------------+-----+
+                
+</pre></blockquote></li><li>At this point your boss leans over conspiratorially and says, &quot;Print that out, we never had this conversation, and you're getting a raise.&quot;</li></ul></blockquote><div>Advanced Database Queries 2: ZIP Codes</div><blockquote><p>The above exercise used a fairly large database of 1000 records. But this example uses a much larger U.S. ZIP code database having over 43,000 records. I include this query example because it shows that one can extract many interesting facts from a large table with many fields.</p><p>We will proceed as in the previous example, but with one possible change — this database is so large that users may elect to download a zipped version of the file:</p><ul><li>Download <a href="http://arachnoid.com/MySQL/resources/zipcodes.zip">zipcodes.zip</a>, and uncompress the file using your platform's unzip program. This will yield a file named &quot;zipcodes.sql&quot;.</li><li>(Those with fast Internet connections may prefer to downlaod the original, uncompressed archive <a href="http://arachnoid.com/MySQL/resources/zipcodes.sql">zipcodes.sql</a> .)</li><li>As before, place the file in a location convenient to the MySQL command-line application.</li><li>From the MySQL application, type this (replace &quot;(path)&quot; with the path to the SQL archive file):
+<blockquote>mysql&gt; use tutorial;<br/>
+mysql&gt; source (path)/zipcodes.sql;<br/>
+mysql&gt; describe `zipcodes`;<br/><pre>
++-----------+----------+------+-----+---------+-------+
+| Field     | Type     | Null | Key | Default | Extra |
++-----------+----------+------+-----+---------+-------+
+| zip       | char(5)  | NO   | PRI | NULL    |       |
+| city      | char(20) | NO   |     | NULL    |       |
+| state     | char(4)  | NO   |     | NULL    |       |
+| latitude  | double   | NO   |     | NULL    |       |
+| longitude | double   | NO   |     | NULL    |       |
+| timezone  | int(11)  | NO   |     | NULL    |       |
+| dst       | int(11)  | NO   |     | NULL    |       |
++-----------+----------+------+-----+---------+-------+
+                
+</pre>
+mysql&gt; select count(*) from `zipcodes`;<br/><pre>
++----------+
+| count(*) |
++----------+
+|    43191 |
++----------+
+                
+</pre></blockquote></li></ul><p>Now for some fun. Before I had access to databases, I would ponder questions I knew I would never be able to answer, like &quot;Which U.S. city has the most ZIP codes?&quot; But one quickly discovers that, armed with a ZIP code table, MySQL can answer this question with a single-line query:</p><blockquote>mysql&gt; select `city`,count(*) as `total` from `zipcodes` group by `city` having count(*) &gt; 90 order by `total`;
+<pre>
++-------------+-------+
+| city        | total |
++-------------+-------+
+| San Antonio |    94 |
+| Kansas City |    96 |
+| Los Angeles |   101 |
+| Miami       |   104 |
+| Sacramento  |   108 |
+| Springfield |   111 |
+| Atlanta     |   121 |
+| Dallas      |   132 |
+| El Paso     |   159 |
+| New York    |   167 |
+| Houston     |   191 |
+| Washington  |   306 |
++-------------+-------+
+            
+</pre></blockquote><p>Wow — Washington, D.C. has 306 ZIP codes? But this result doesn't actully mean what it seems. If there is more than one city named &quot;Washington&quot;, this query won't reveal it, instead it groups all cities with the same name and disregards the fact that they might lie in different states (because that's what I told MySQL to do — as they say, <i>garbage in, garbage out</i>). Let's write a more specific query:</p><blockquote>mysql&gt; select `city`,`state`,count(*) as `total` from `zipcodes` group by `city`,`state` having count(*) &gt; 80 order by `total`;
+<pre>
++--------------+-------+-------+
+| city         | state | total |
++--------------+-------+-------+
+| Kansas City  | MO    |    81 |
+| San Diego    | CA    |    81 |
+| Austin       | TX    |    83 |
+| Philadelphia | PA    |    84 |
+| Chicago      | IL    |    85 |
+| San Antonio  | TX    |    90 |
+| Miami        | FL    |    96 |
+| Los Angeles  | CA    |   101 |
+| Sacramento   | CA    |   105 |
+| Atlanta      | GA    |   111 |
+| Dallas       | TX    |   122 |
+| El Paso      | TX    |   156 |
+| New York     | NY    |   166 |
+| Houston      | TX    |   182 |
+| Washington   | DC    |   276 |
++--------------+-------+-------+
+            
+</pre></blockquote><p>Okay, this time Washington's total is 276, not 306. That means there are 30 &quot;Washington&quot; ZIP codes elsewhere. Can we find them? Well, in a word, yes:</p><blockquote>mysql&gt; select `city`,`state`,count(*) as `total` from `zipcodes` where city = 'Washington' group by `city`,`state` order by `total`;
+<pre>
++------------+-------+-------+
+| city       | state | total |
++------------+-------+-------+
+| Washington | AR    |     1 |
+| Washington | VA    |     1 |
+| Washington | NH    |     1 |
+| Washington | OK    |     1 |
+| Washington | IA    |     1 |
+| Washington | WV    |     1 |
+| Washington | ME    |     1 |
+| Washington | TX    |     1 |
+| Washington | IL    |     1 |
+| Washington | NC    |     1 |
+| Washington | VT    |     1 |
+| Washington | UT    |     1 |
+| Washington | GA    |     1 |
+| Washington | CT    |     1 |
+| Washington | CA    |     1 |
+| Washington | KS    |     1 |
+| Washington | MS    |     1 |
+| Washington | NJ    |     1 |
+| Washington | NE    |     1 |
+| Washington | KY    |     1 |
+| Washington | PA    |     1 |
+| Washington | LA    |     1 |
+| Washington | MI    |     2 |
+| Washington | MO    |     2 |
+| Washington | IN    |     4 |
+| Washington | DC    |   276 |
++------------+-------+-------+
+            
+</pre></blockquote><p>Okay, wow. &quot;Washington&quot; seems to be a very popular city/town name (remembering that the totals are not for distinct towns but ZIP codes). In fact, if we count total ZIP codes as a measure of popularity, it's the most popular town name in the U.S.</p><p>I once wanted to know how many other towns had my town name (which at the time was Ashland). Here's the result:</p><blockquote>mysql&gt; SELECT `city`,`state`,count(*) as `total` FROM `zipcodes` WHERE `city` = &quot;ashland&quot; group by `state` order by `total`,`state`;
+<pre>
++---------+-------+-------+
+| city    | state | total |
++---------+-------+-------+
+| Ashland | AL    |     1 |
+| Ashland | IL    |     1 |
+| Ashland | KS    |     1 |
+| Ashland | LA    |     1 |
+| Ashland | MA    |     1 |
+| Ashland | MO    |     1 |
+| Ashland | MS    |     1 |
+| Ashland | NE    |     1 |
+| Ashland | NH    |     1 |
+| Ashland | NY    |     1 |
+| Ashland | OH    |     1 |
+| Ashland | OR    |     1 |
+| Ashland | PA    |     1 |
+| Ashland | VA    |     1 |
+| Ashland | WI    |     1 |
+| Ashland | ME    |     2 |
+| Ashland | MT    |     2 |
+| Ashland | KY    |     4 |
++---------+-------+-------+
+            
+</pre></blockquote><p>Again, these are totals of ZIP codes, not towns. I suspect that there aren't four towns named &quot;Ashland&quot; in Kentucky, but one town with four ZIP codes.</p><p>Let's try something else. Let's see if we can collect all of Colorado's ZIP codes, not by the obvious approach of querying on the state's name, but on somethting more esoteric — the state's geographical dimensions. Here are the locations of Colorado's four corners, in decimal degrees (which I just got from <a href="http://www.google.com/earth/index.html">Google Earth</a>, a first-rate program):</p><ul><li><p>Colorado:</p><table><tbody><tr><th>Name</th><th>Latitude</th><th>Longitude</th></tr><tr><td>NW corner</td><td>41.000497</td><td>-109.050149</td></tr><tr><td>NE corner</td><td>41.002380</td><td>-102.051881</td></tr><tr><td>SE corner</td><td>36.993237</td><td>-102.041959</td></tr><tr><td>SW corner</td><td>36.999037</td><td>-109.045220</td></tr></tbody></table></li></ul><p>Now, just to (a) do something I've always wanted to try, and (b) show a more complex query, here's one that uses the above geographical information to search within a rectangular region:</p><blockquote>mysql&gt; SELECT `city`,`state`,count(*) as `total` FROM `zipcodes` WHERE ( `latitude` &gt;= 37 AND `latitude` &lt;= 41 ) AND ( `longitude` &gt;= -109 AND `longitude` &lt;= -102 ) group by `state` order by `total`,`state`;
+<pre>
++----------+-------+-------+
+| city     | state | total |
++----------+-------+-------+
+| Kanorado | KS    |     2 |
+| Aurora   | CO    |   679 |
++----------+-------+-------+
+            
+</pre></blockquote><p>&quot;Kanorado?&quot; All right — my acute intellectual powers tell me this town is located right on the border between Kansas and Colorado, and that rounding off the query's geographical coordinates to integers might have been a mistake. Let's see where Kanorado is located ... <a href="https://maps.google.com/maps?q=kanorado&amp;hl=en&amp;ll=39.33609,-102.035952&amp;spn=0.041159,0.062828&amp;sll=47.272986,-120.882277&amp;sspn=4.62198,8.041992&amp;t=h&amp;hnear=Kanorado,+Sherman,+Kansas&amp;z=14">Map</a> ... yes, it's right next to the border (the vertical line at the left on the linked map). Now let's see if we can eliminate this interloper and perfect our result:</p><blockquote>mysql&gt; SELECT `city`,`state`,count(*) as `total` FROM `zipcodes` WHERE ( `latitude` &gt;= 37 AND `latitude` &lt;= 41 ) AND ( `longitude` &gt;= -109 AND `longitude` &lt;= -102.1 ) group by `state` order by `total`,`state`;
+<pre>
++--------+-------+-------+
+| city   | state | total |
++--------+-------+-------+
+| Aurora | CO    |   679 |
++--------+-------+-------+
+            
+</pre></blockquote><p>Okay, adjusting Colorado's eastern border seems to have solved that problem. Now I want to make sure I haven't missed ay ZIP codes that belong to Colorado:</p><blockquote>mysql&gt; SELECT `state`,count(*) as total from `zipcodes` where `state` = 'CO';
+<pre>
++-------+-------+
+| state | total |
++-------+-------+
+| CO    |   680 |
++-------+-------+
+            
+</pre></blockquote><p>Wups. It seems that, with my chosen geographical coordinates, I managed to miss one of Colorado's 680 ZIP codes. Let's discover which one:</p><blockquote>mysql&gt; select `city`,`state`,`zip`,`latitude`,`longitude` from `zipcodes` where `state` = 'CO' and `zip` not in (SELECT `zip` FROM `zipcodes` WHERE ( `latitude` &gt;= 37 AND `latitude` &lt;= 41 ) AND ( `longitude` &gt;= -109 AND `longitude` &lt;= -102.1 ));
+<pre>
++---------+-------+-------+-----------+------------+
+| city    | state | zip   | latitude  | longitude  |
++---------+-------+-------+-----------+------------+
+| Gateway | CO    | 81522 | 38.715101 | -109.01087 |
++---------+-------+-------+-----------+------------+
+            
+</pre></blockquote><p>Ah — that explains it. The ZIP code database has an incorrect position for Gateway, CO, which is actually located at West longitude 108.97519, not 109.01087 <a href="https://maps.google.com/maps?q=81522&amp;hl=en&amp;ll=38.681155,-108.975191&amp;spn=0.041542,0.062828&amp;sll=38.681155,-108.978581&amp;sspn=0.020771,0.031414&amp;t=h&amp;hnear=Gateway,+Colorado+81522&amp;z=14">(map of Gateway)</a>. What this means is that, as written, even with integer latitudes and longitudes (with the single &quot;Kanorado&quot; exception above), my query would have produced an exclusive list of Colorado ZIP codes. It also serves to prove the old adage &quot;the map is not the territory.&quot;</p><p>But back to the topic of MySQL queries. Notice about the above query that I actually wrote two queries (one of them is called a &quot;subquery&quot;), and used one as a filter against the other. The above rather complex query in essence says:</p><blockquote><span style="color: rgb(0, 0, 192);">Give me results that meet specification A but don't meet specification B.</span></blockquote><p>Let's write one more query — let's turn the above query around and write it so it produces all ZIP codes <i>except</i> those from Colorado. Fist let's adjust the query to accommodate the wrong Gateway position and give 680 ZIP codes:</p><blockquote>mysql&gt; SELECT `state`,count(*) FROM `zipcodes` WHERE ( `latitude` &gt; 37 AND `latitude` &lt; 41 ) AND ( `longitude` &gt; -109.1 AND `longitude` &lt; -102.1 ) group by `state`;
+<pre>
++-------+----------+
+| state | count(*) |
++-------+----------+
+| CO    |      680 |
++-------+----------+
+            
+</pre></blockquote><p>Now we want to write the <i>logically opposite</i> query, one that will produce all ZIP codes <i>except</i> those from Colorado. Earlier we found that the ZIP code database has 43,191 records, so our result should produce 43,191 - 680 = 42,511 ZIP codes. Let's see:</p><blockquote>mysql&gt; SELECT count(*) FROM `zipcodes` WHERE ( `latitude` &lt;= 37 OR `latitude` &gt;= 41 ) OR ( `longitude` &lt;= -109.1 OR `longitude` &gt;= -102.1 );
+<pre>
++----------+
+| count(*) |
++----------+
+|    42511 |
++----------+
+            
+</pre></blockquote><p>Success. But notice how this query differs from the first. A comparison:</p><ul><li>To select only Colorado, we said, &quot;choose all locations with latitudes ( &gt; 37 <b>and</b> &lt; 41 ) <b>and</b> longitudes ( &gt; -109 <b>and</b> &lt; -102 )&quot;. Our query defined an <i>inclusive</i> rectangle.</li><li>To select <i>everything except</i> Colorado, we said, &quot;choose all locations with latitudes ( &lt;= 37 <b>or</b> &gt;= 41 ) <b>or</b> longitudes ( &lt;= -109 <b>or</b> &gt;= -102 )&quot;. This time we defined an <i>exclusive</i> rectangle.</li><li>In the descriptions above, pay particular attention to the use of the words &quot;<b>and</b>&quot; and &quot;<b>or</b>&quot;, and how their use differs between the examples. Think about how the logic plays out. Notice also how parentheses are used to group logical tests and clarify the meaning of logical expressions.</li></ul></blockquote><div>Summary</div><blockquote><p>Feel free to experiment with more query designs using the &quot;people&quot; and &quot;zipcodes&quot; tables. You can't hurt anything -- the tables can be recreated by simply recreating the MySQL content files using the MySQL command-line program as was done above.</p><p>At this point the reader should have acquired a basic grounding in database operations, from table design up through relatively advanced query design. In the next page of this article we'll look a ways to store queries in views, and automate certain kinds of actions that can be triggered by table updates.</p></blockquote><div>Topical Links</div><ul><li><a href="http://en.wikipedia.org/wiki/MySQL">MySQL (Wikipedia)</a> — overview, history</li><li><a href="http://en.wikipedia.org/wiki/MySQL_Workbench">MySQL Workbench (Wikipedia)</a> — a graphical database design tool and front end for MySQL</li><li><a href="http://arachnoid.com/JDBClient/index.html">JDBClient</a> — a free, powerful, Java-based database client program</li></ul><div align="center">— Navigate this multi-page article with the arrows and drop-down lists at the top and bottom of each page —</div></div><table><tbody><tr><td><a href="http://arachnoid.com/index.html">Home</a> | </td><td><a href="http://arachnoid.com/LibraryDB/index.html">MySQL</a> | </td><td></td><td><a href="http://arachnoid.com/LibraryDB/index.html"><img src="MySQL Tutorial_files/Image [2].png" type="image/png" border="0" style="cursor: default;" title="Click for prior page"/></a></td><td><a href="http://arachnoid.com/MySQL/views_joins.html"><img src="MySQL Tutorial_files/Image [3].png" type="image/png" border="0" style="cursor: default;" title="Click for next page"/></a></td><td> <a href="http://arachnoid.com/administration/submit.php" title="Recommend this page to friends"><img src="MySQL Tutorial_files/Image [1].gif" type="image/gif" style="cursor: default;"/>  Share This Page</a></td></tr></tbody></table></div></span>
+</div></body></html> 

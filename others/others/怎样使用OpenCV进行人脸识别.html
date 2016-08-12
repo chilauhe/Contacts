@@ -1,0 +1,2667 @@
+<html>
+<head>
+  <title>怎样使用OpenCV进行人脸识别</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="592"/>
+<h1>怎样使用OpenCV进行人脸识别</h1>
+
+<div>
+<span><a name="top" shape="rect"></a> 
+<div align="center"><div><a href="http://www.cnblogs.com/guoming0000/" shape="rect"><span style="color: rgb(0, 102, 204);">箫鸣</span></a></div><div><a href="http://www.cnblogs.com/" shape="rect"><span style="color: rgb(0, 102, 204);">博客园</span></a>    <a href="http://www.cnblogs.com/guoming0000/" shape="rect"><span style="color: rgb(0, 102, 204);">首页</span></a>    <a href="http://i.cnblogs.com/EditPosts.aspx?opt=1" rel="nofollow" shape="rect"><span style="color: rgb(0, 102, 204);">新随笔</span></a>    <a href="http://www.cnblogs.com/EnterMyBlog.aspx?NewArticle=1" shape="rect"><span style="color: rgb(0, 102, 204);">新文章</span></a>    <a accesskey="9" href="http://msg.cnblogs.com/send/%E7%AE%AB%E9%B8%A3" rel="nofollow" shape="rect"><span style="color: rgb(0, 102, 204);">联系</span></a>    <a href="http://www.cnblogs.com/guoming0000/rss" shape="rect"><span style="color: rgb(0, 102, 204);">订阅</span></a><a href="http://www.cnblogs.com/guoming0000/rss" shape="rect"><span style="color: rgb(0, 102, 204);"><img src="怎样使用OpenCV进行人脸识别_files/Image.gif" type="image/gif" alt="订阅" style="height: auto;"/></span></a>    <a href="http://i.cnblogs.com/" rel="nofollow" shape="rect"><span style="color: rgb(0, 102, 204);">管理</span></a></div><div>posts - 6,  comments - 19,  trackbacks - 0</div><div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html" shape="rect"><span style="color: rgb(0, 102, 204);">怎样使用OpenCV进行人脸识别</span></a></div><div><p align="center"><span style="font-size: 18px;">不断维护的地址：<a href="http://plzcoding.com/face-recognition-with-opencv/" shape="rect"><span style="color: rgb(0, 102, 204);">http://plzcoding.com/face-recognition-with-opencv/</span></a></span></p><p align="center">怎样使用OpenCV进行人脸识别</p><p>         本文大部分来自OpenCV官网上的Face Reconition with OpenCV这节内容(<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html" shape="rect"><span style="color: rgb(0, 102, 204);">http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html</span></a>)，小弟我尝试翻译一些重要内容。这部分内容是Philipp Wagner写的，他的github：<a href="https://github.com/bytefish" shape="rect"><span style="color: rgb(0, 102, 204);">https://github.com/bytefish</span></a>，他的网站<a href="http://www.bytefish.de/" shape="rect"><span style="color: rgb(0, 102, 204);">http://www.bytefish.de/</span></a>，应该是个德国人。下面应该是他的照片。</p><p><img src="怎样使用OpenCV进行人脸识别_files/Image.png" type="image/png" alt="1" style="height: auto;"/></p><p>         友情提示，要看懂代码前，你得先知道OpenCV的安装和配置，会用C++，用过一些OpenCV函数。基本的图像处理和矩阵知识也是需要的。[gm:我是箫鸣的注释]由于我仅仅是翻译，对于六级才过的我，肯定有一些翻译错的或者不当的地方，所以请大家纠错。</p><div><h2>1.1.介绍<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id28" shape="rect"><span style="color: rgb(0, 102, 204);">Introduction</span></a></h2></div><p>从OpenCV2.4开始，加入了新的类FaceRecognizer，我们可以使用它便捷地进行人脸识别实验。本文既介绍代码使用，又介绍算法原理。(他写的源代码，我们可以在OpenCV的opencv\modules\contrib\doc\facerec\src下找到，当然也可以在他的github中找到，如果你想研究源码，自然可以去看看，不复杂)</p><p> </p><p>目前支持的算法有</p><p>        Eigenfaces特征脸<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_api.html#Ptr&lt;FaceRecognizer&gt; createEigenFaceRecognizer(int num_components , double threshold)" shape="rect" title="Ptr&lt;FaceRecognizer&gt; createEigenFaceRecognizer(int num_components , double threshold)"><span style="color: rgb(0, 102, 204);">createEigenFaceRecognizer()</span></a></p><p>         Fisherfaces  <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_api.html#Ptr&lt;FaceRecognizer&gt; createFisherFaceRecognizer(int num_components , double threshold)" shape="rect" title="Ptr&lt;FaceRecognizer&gt; createFisherFaceRecognizer(int num_components , double threshold)"><span style="color: rgb(0, 102, 204);">createFisherFaceRecognizer()</span></a></p><p>         LocalBinary Patterns Histograms局部二值直方图 <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_api.html#Ptr&lt;FaceRecognizer&gt; createLBPHFaceRecognizer(int radius, int neighbors, int grid_x, int grid_y, double threshold)" shape="rect" title="Ptr&lt;FaceRecognizer&gt; createLBPHFaceRecognizer(int radius, int neighbors, int grid_x, int grid_y, double threshold)"><span style="color: rgb(0, 102, 204);">createLBPHFaceRecognizer()</span></a></p><p>下面所有的例子中的代码在OpenCV安装目录下的samples/cpp下面都能找到，所有的代码商用或者学习都是免费的。</p><p> </p><div><h2>1.2.人脸识别<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id29" shape="rect"><span style="color: rgb(0, 102, 204);">Face Recognition</span></a></h2></div><p>对人类来说，人脸识别很容易。文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#tu06" shape="rect"><span style="color: rgb(0, 102, 204);">[Tu06]</span></a>告诉我们，仅仅是才三天的婴儿已经可以区分周围熟悉的人脸了。那么对于计算机来说，到底有多难？其实，迄今为止，我们对于人类自己为何可以区分不同的人所知甚少。是人脸内部特征(眼睛、鼻子、嘴巴)还是外部特征(头型、发际线)对于人类识别更有效?我们怎么分析一张图像，大脑是如何对它编码的？<a href="http://en.wikipedia.org/wiki/David_H._Hubel" shape="rect"><span style="color: rgb(0, 102, 204);">David Hubel</span></a>和<a href="http://en.wikipedia.org/wiki/Torsten_Wiesel" shape="rect"><span style="color: rgb(0, 102, 204);">TorstenWiesel</span></a>向我们展示，我们的大脑针对不同的场景，如线、边、角或者运动这些局部特征有专门的神经细胞作出反应。显然我们没有把世界看成零散的块块，我们的视觉皮层必须以某种方式把不同的信息来源转化成有用的模式。自动人脸识别就是如何从一幅图像中提取有意义的特征，把它们放入一种有用的表示方式，然后对他们进行一些分类。基于几何特征的人脸的人脸识别可能是最直观的方法来识别人脸。第一个自动人脸识别系统在<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#kanade73" shape="rect"><span style="color: rgb(0, 102, 204);">[Kanade73]</span></a>中又描述：标记点(眼睛、耳朵、鼻子等的位置)用来构造一个特征向量(点与点之间的距离、角度等)。通过计算测试和训练图像的特征向量的欧氏距离来进行识别。这样的方法对于光照变化很稳健，但也有巨大的缺点：标记点的确定是很复杂的，即使是使用最先进的算法。一些几何特征人脸识别近期工作在文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#bru92" shape="rect"><span style="color: rgb(0, 102, 204);">[Bru92]</span></a>中有描述。一个22维的特征向量被用在一个大数据库上，单靠几何特征不能提供足够的信息用于人脸识别。</p><p> </p><p>特征脸方法在文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#tp91" shape="rect"><span style="color: rgb(0, 102, 204);">[TP91]</span></a>中有描述，他描述了一个全面的方法来识别人脸：面部图像是一个点，这个点是从高维图像空间找到它在低维空间的表示，这样分类变得很简单。低维子空间低维是使用主元分析(Principal Component Analysis,PCA)找到的，它可以找拥有最大方差的那个轴。虽然这样的转换是从最佳重建角度考虑的，但是他没有把标签问题考虑进去。[gm:读懂这段需要一些机器学习知识]。想象一个情况，如果变化是基于外部来源，比如光照。轴的最大方差不一定包含任何有鉴别性的信息，因此此时的分类是不可能的。因此，一个使用线性鉴别(Linear Discriminant Analysis,LDA)的特定类投影方法被提出来解决人脸识别问题<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#bhk97" shape="rect"><span style="color: rgb(0, 102, 204);">[BHK97]</span></a>。其中一个基本的想法就是，使类内方差最小的同时，使类外方差最大。</p><p>近年来，各种局部特征提取方法出现。为了避免输入的图像的高维数据，仅仅使用的局部特征描述图像的方法被提出，提取的特征(很有希望的)对于局部遮挡、光照变化、小样本等情况更强健。有关局部特征提取的方法有盖伯小波(Gabor Waelets)(<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#wiskott97" shape="rect"><span style="color: rgb(0, 102, 204);">[Wiskott97]</span></a>)，离散傅立叶变换(DiscreteCosinus Transform,DCT)(<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#messer06" shape="rect"><span style="color: rgb(0, 102, 204);">[Messer06]</span></a>)，局部二值模式(LocalBinary Patterns,LBP)(<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#ahp04" shape="rect"><span style="color: rgb(0, 102, 204);">[AHP04]</span></a>)。使用什么方法来提取时域空间的局部特征依旧是一个开放性的研究问题，因为空间信息是潜在有用的信息。</p><div><h2>1.3.人脸库<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id30" shape="rect"><span style="color: rgb(0, 102, 204);">Face Database</span></a></h2></div><p>我们先获取一些数据来进行实验吧。我不想在这里做一个幼稚的例子。我们在研究人脸识别，所以我们需要一个真的人脸图像！你可以自己创建自己的数据集，也可以从这里(<a href="http://face-rec.org/databases" shape="rect"><span style="color: rgb(0, 102, 204);">http://face-rec.org/databases/</span></a>)下载一个。</p><p><a href="http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html" shape="rect"><span style="color: rgb(0, 102, 204);">AT&amp;TFacedatabase</span></a>又称ORL人脸数据库，40个人，每人10张照片。照片在不同时间、不同光照、不同表情(睁眼闭眼、笑或者不笑)、不同人脸细节(戴眼镜或者不戴眼镜)下采集。所有的图像都在一个黑暗均匀的背景下采集的，正面竖直人脸(有些有有轻微旋转)。</p><p> </p><p><a href="http://cvc.yale.edu/projects/yalefaces/yalefaces.html" shape="rect"><span style="color: rgb(0, 102, 204);">YaleFacedatabase A</span></a> ORL数据库对于初始化测试比较适合，但它是一个简单的数据库，特征脸已经可以达到97%的识别率，所以你使用其他方法很难得到更好的提升。Yale人脸数据库是一个对于初始实验更好的数据库，因为识别问题更复杂。这个数据库包括15个人(14个男人,1个女人)，每一个都有11个灰度图像，大小是320*243像素。数据库中有光照变化(中心光照、左侧光照、右侧光照)、表情变化(开心、正常、悲伤、瞌睡、惊讶、眨眼)、眼镜(戴眼镜或者没戴)。</p><p>         坏消息是它不可以公开下载，可能因为原来的服务器坏了。但我们可以找到一些镜像(比如<a href="http://vismod.media.mit.edu/vismod/classes/mas622-00/datasets/" shape="rect"><span style="color: rgb(0, 102, 204);"> theMIT</span></a>)但我不能保证它的完整性。如果你需要自己剪裁和校准图像，可以阅读我的笔记(<a href="http://bytefish.de/blog/fisherfaces" shape="rect"><span style="color: rgb(0, 102, 204);">bytefish.de/blog/fisherfaces</span></a>)。</p><p> </p><p><a href="http://vision.ucsd.edu/~leekc/ExtYaleDatabase/ExtYaleB.html" shape="rect"><span style="color: rgb(0, 102, 204);">ExtendedYale Facedatabase B</span></a> 此数据库包含38个人的2414张图片，并且是剪裁好的。这个数据库重点是测试特征提取是否对光照变化强健，因为图像的表情、遮挡等都没变化。我认为这个数据库太大，不适合这篇文章的实验，我建议使用ORL数据库。</p><div><h3>1.3.1. <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id31" shape="rect"><span style="color: rgb(0, 102, 204);">准备数据</span></a></h3></div><p>我们从网上下了数据，下了我们需要在程序中读取它，我决定使用CSV文件读取它。一个CSV文件包含文件名，紧跟一个标签。</p><div><p>/path/to/image.ext;0</p></div><p>         假设/path/to/image.ext是图像，就像你在windows下的c:/faces/person0/image0.jpg。最后我们给它一个标签0。这个标签类似代表这个人的名字，所以同一个人的照片的标签都一样。我们对下载的ORL数据库进行标识，可以获取到如下结果：</p><div><pre>
+./at/s1/1.pgm;0
+</pre><pre>
+./at/s1/2.pgm;0
+</pre><pre>
+...
+</pre><pre>
+./at/s2/1.pgm;1
+</pre><pre>
+./at/s2/2.pgm;1
+</pre><pre>
+...
+</pre><pre>
+./at/s40/1.pgm;39
+</pre><pre>
+./at/s40/2.pgm;39
+</pre></div><p>想象我已经把图像解压缩在D:/data/at下面，而CSV文件在D:/data/at.txt。下面你根据自己的情况修改替换即可。一旦你成功建立CSV文件，就可以像这样运行示例程序：</p><div><pre>
+facerec_demo.exe D:/data/at.txt
+</pre></div><div><h4>1.3.2 Creating the CSV File</h4></div><p>你不需要手工来创建一个CSV文件，我已经写了一个Python程序来做这事。</p><p>[gm:说一个我实现的方法</p><p>如果你会cmd命令，或者称DOS命令，那么你打开命令控制台。假设我们的图片放在J:下的Faces文件夹下，可以输入如下语句：</p><div><pre>
+J:\Faces\ORL&gt;dir /b/s *.bmp &gt; at.txt
+</pre></div><p>然后你打开at.txt文件可能看到如下内容(后面的0，1..标签是自己加的)：</p><div><pre>
+。。。。
+</pre><pre>
+J:\Faces\ORL\s1\1.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\10.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\2.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\3.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\4.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\5.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\6.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\7.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\8.bmp;0
+</pre><pre>
+J:\Faces\ORL\s1\9.bmp;0
+</pre><pre>
+J:\Faces\ORL\s10\1.bmp;1
+</pre><pre>
+J:\Faces\ORL\s10\10.bmp;1
+</pre><pre>
+J:\Faces\ORL\s10\2.bmp;1
+</pre><pre>
+J:\Faces\ORL\s10\3.bmp;1
+</pre><pre>
+J:\Faces\ORL\s10\4.bmp;1
+</pre><pre>
+J:\Faces\ORL\s10\5.bmp;1
+</pre><pre>
+J:\Faces\ORL\s10\6.bmp;1
+</pre><pre>
+。。。。
+</pre></div><p>自然还有c++编程等方法可以做得更好，看这篇文章反响，如果很多人需要，我就把这部分的代码写出来。(遍历多个文件夹，标上标签)</p><p>]</p><div><h2><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id32" shape="rect"><span style="color: rgb(0, 102, 204);">特征脸</span></a>Eigenfaces</h2></div><p>         我们讲过，图像表示的问题是他的高维问题。二维灰度图像p*q大小，是一个m=qp维的向量空间，所以一个100*100像素大小的图像就是10，000维的图像空间。问题是，是不是所有的维数空间对我们来说都有用？我们可以做一个决定，如果数据有任何差异，我们可以通过寻找主元来知道主要信息。主成分分析(Principal Component Analysis,PCA)是<a href="http://en.wikipedia.org/wiki/Karl_Pearson" shape="rect"><span style="color: rgb(0, 102, 204);">KarlPearson</span></a> (1901)独立发表的，而 <a href="http://en.wikipedia.org/wiki/Harold_Hotelling" shape="rect"><span style="color: rgb(0, 102, 204);">Harold Hotelling</span></a> (1933)把一些可能相关的变量转换成一个更小的不相关的子集。想法是，一个高维数据集经常被相关变量表示，因此只有一些的维上数据才是有意义的，包含最多的信息。PCA方法寻找数据中拥有最大方差的方向，被称为主成分。</p><div><h3>算法描述<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id33" shape="rect"><span style="color: rgb(0, 102, 204);">Algorithmic Description</span></a></h3></div><p>令 <img src="怎样使用OpenCV进行人脸识别_files/Image [1].png" type="image/png" alt="2" style="height: auto;"/>  表示一个随机特征，其中 <img src="怎样使用OpenCV进行人脸识别_files/Image [2].png" type="image/png" alt="3" style="height: auto;"/> .</p><ol start="1" type="1"><li>计算均值向量 <img src="怎样使用OpenCV进行人脸识别_files/Image [3].png" type="image/png" alt="4" style="height: auto;"/></li></ol><div>                             <img src="怎样使用OpenCV进行人脸识别_files/Image [4].png" type="image/png" alt="5" style="height: auto;"/></div><p align="center"> </p><ol start="2" type="1"><li>计算协方差矩阵 S</li></ol><div>                                <img src="怎样使用OpenCV进行人脸识别_files/Image [5].png" type="image/png" alt="6" style="height: auto;"/></div><p align="center"> </p><ol start="3" type="1"><li>计算 的特征值<img src="怎样使用OpenCV进行人脸识别_files/Image [6].png" type="image/png" alt="7" style="height: auto;"/>    和对应的特征向量   <img src="怎样使用OpenCV进行人脸识别_files/Image [7].png" type="image/png" alt="8" style="height: auto;"/>              <img src="怎样使用OpenCV进行人脸识别_files/Image [8].png" type="image/png" alt="9" style="height: auto;"/></li></ol><p align="center"> </p><ol start="4" type="1"><li>对特征值进行递减排序，特征向量和它顺序一致. K个主成分也就是k个最大的特征值对应的特征向量。</li></ol><p>x的K个主成份:</p><p>        <img src="怎样使用OpenCV进行人脸识别_files/Image [9].png" type="image/png" alt="10" style="height: auto;"/></p><p align="center"> </p><p>其中<img src="怎样使用OpenCV进行人脸识别_files/Image [10].png" type="image/png" alt="11" style="height: auto;"/>  .</p><p>PCA基的重构:</p><p>                  <img src="怎样使用OpenCV进行人脸识别_files/Image [11].png" type="image/png" alt="12" style="height: auto;"/></p><p align="center"> </p><p>其中 <img src="怎样使用OpenCV进行人脸识别_files/Image [12].png" type="image/png" alt="13" style="height: auto;"/> .</p><p>然后特征脸通过下面的方式进行人脸识别：</p><p>A．  把所有的训练数据投影到PCA子空间</p><p>B．  把待识别图像投影到PCA子空间</p><p>C．  找到训练数据投影后的向量和待识别图像投影后的向量最近的那个。</p><p>还有一个问题有待解决。比如我们有400张图片，每张100*100像素大小，那么PCA需要解决协方差矩阵 <img src="怎样使用OpenCV进行人脸识别_files/Image [13].png" type="image/png" alt="14" style="height: auto;"/>的求解，而X的大小是10000*400，那么我们会得到10000*10000大小的矩阵，这需要大概0.8GB的内存。解决这个问题不容易，所以我们需要另一个计策。就是转置一下再求，特征向量不变化。文献 <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#duda01" shape="rect"><span style="color: rgb(0, 102, 204);">[Duda01]</span></a>中有描述。</p><p>[gm:这个PCA还是自己搜着看吧，这里的讲的不清楚，不适合初学者看]</p><p> </p><div><h3>OpenCV中使用特征脸<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id34" shape="rect"><span style="color: rgb(0, 102, 204);">Eigenfaces in OpenCV</span></a></h3></div><p>给出示例程序源代码</p><div><pre>
+#include &quot;opencv2/core/core.hpp&quot;
+</pre><pre>
+#include &quot;opencv2/contrib/contrib.hpp&quot;
+</pre><pre>
+#include &quot;opencv2/highgui/highgui.hpp&quot;
+</pre><pre>
+ 
+</pre><pre>
+#include &lt;iostream&gt;
+</pre><pre>
+#include &lt;fstream&gt;
+</pre><pre>
+#include &lt;sstream&gt;
+</pre><pre>
+ 
+</pre><pre>
+usingnamespace cv;
+</pre><pre>
+usingnamespace std;
+</pre><pre>
+ 
+</pre><pre>
+static Mat norm_0_255(InputArray _src) {
+</pre><pre>
+    Mat src = _src.getMat();
+</pre><pre>
+    // 创建和返回一个归一化后的图像矩阵:
+</pre><pre>
+    Mat dst;
+</pre><pre>
+    switch(src.channels()) {
+</pre><pre>
+    case1:
+</pre><pre>
+        cv::normalize(_src, dst, 0,255, NORM_MINMAX, CV_8UC1);
+</pre><pre>
+        break;
+</pre><pre>
+    case3:
+</pre><pre>
+        cv::normalize(_src, dst, 0,255, NORM_MINMAX, CV_8UC3);
+</pre><pre>
+        break;
+</pre><pre>
+    default:
+</pre><pre>
+        src.copyTo(dst);
+</pre><pre>
+        break;
+</pre><pre>
+    }
+</pre><pre>
+    return dst;
+</pre><pre>
+}
+</pre><pre>
+//使用CSV文件去读图像和标签，主要使用stringstream和getline方法
+</pre><pre>
+staticvoid read_csv(const string&amp; filename, vector&lt;Mat&gt;&amp; images, vector&lt;int&gt;&amp; labels, char separator =';') {
+</pre><pre>
+    std::ifstream file(filename.c_str(), ifstream::in);
+</pre><pre>
+    if (!file) {
+</pre><pre>
+        string error_message =&quot;No valid input file was given, please check the given filename.&quot;;
+</pre><pre>
+        CV_Error(CV_StsBadArg, error_message);
+</pre><pre>
+    }
+</pre><pre>
+    string line, path, classlabel;
+</pre><pre>
+    while (getline(file, line)) {
+</pre><pre>
+        stringstream liness(line);
+</pre><pre>
+        getline(liness, path, separator);
+</pre><pre>
+        getline(liness, classlabel);
+</pre><pre>
+        if(!path.empty()&amp;&amp;!classlabel.empty()) {
+</pre><pre>
+            images.push_back(imread(path, 0));
+</pre><pre>
+            labels.push_back(atoi(classlabel.c_str()));
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+}
+</pre><pre>
+ 
+</pre><pre>
+int main(int argc, constchar*argv[]) {
+</pre><pre>
+    // 检测合法的命令，显示用法
+</pre><pre>
+    // 如果没有参数输入则退出！.
+</pre><pre>
+    if (argc &lt;2) {
+</pre><pre>
+        cout &lt;&lt;&quot;usage: &quot;&lt;&lt; argv[0]&lt;&lt;&quot; &lt;csv.ext&gt; &lt;output_folder&gt; &quot;&lt;&lt; endl;
+</pre><pre>
+        exit(1);
+</pre><pre>
+    }
+</pre><pre>
+    string output_folder;
+</pre><pre>
+    if (argc ==3) {
+</pre><pre>
+        output_folder = string(argv[2]);
+</pre><pre>
+    }
+</pre><pre>
+    //读取你的CSV文件路径.
+</pre><pre>
+    string fn_csv = string(argv[1]);
+</pre><pre>
+    // 2个容器来存放图像数据和对应的标签
+</pre><pre>
+    vector&lt;Mat&gt; images;
+</pre><pre>
+    vector&lt;int&gt; labels;
+</pre><pre>
+    // 读取数据. 如果文件不合法就会出错
+</pre><pre>
+    // 输入的文件名已经有了.
+</pre><pre>
+    try {
+</pre><pre>
+        read_csv(fn_csv, images, labels);
+</pre><pre>
+    } catch (cv::Exception&amp; e) {
+</pre><pre>
+        cerr &lt;&lt;&quot;Error opening file \&quot;&quot;&lt;&lt; fn_csv &lt;&lt;&quot;\&quot;. Reason: &quot;&lt;&lt; e.msg &lt;&lt; endl;
+</pre><pre>
+        // 文件有问题，我们啥也做不了了，退出了
+</pre><pre>
+        exit(1);
+</pre><pre>
+    }
+</pre><pre>
+    // 如果没有读取到足够图片，我们也得退出.
+</pre><pre>
+    if(images.size()&lt;=1) {
+</pre><pre>
+        string error_message =&quot;This demo needs at least 2 images to work. Please add more images to your data set!&quot;;
+</pre><pre>
+        CV_Error(CV_StsError, error_message);
+</pre><pre>
+    }
+</pre><pre>
+    // 得到第一张照片的高度. 在下面对图像
+</pre><pre>
+    // 变形到他们原始大小时需要
+</pre><pre>
+    int height = images[0].rows;
+</pre><pre>
+    // 下面的几行代码仅仅是从你的数据集中移除最后一张图片
+</pre><pre>
+    //[gm:自然这里需要根据自己的需要修改，他这里简化了很多问题]
+</pre><pre>
+    Mat testSample = images[images.size() -1];
+</pre><pre>
+    int testLabel = labels[labels.size() -1];
+</pre><pre>
+    images.pop_back();
+</pre><pre>
+    labels.pop_back();
+</pre><pre>
+    // 下面几行创建了一个特征脸模型用于人脸识别，
+</pre><pre>
+    // 通过CSV文件读取的图像和标签训练它。
+</pre><pre>
+    // T这里是一个完整的PCA变换
+</pre><pre>
+    //如果你只想保留10个主成分，使用如下代码
+</pre><pre>
+    //      cv::createEigenFaceRecognizer(10);
+</pre><pre>
+    //
+</pre><pre>
+    // 如果你还希望使用置信度阈值来初始化，使用以下语句：
+</pre><pre>
+    //      cv::createEigenFaceRecognizer(10, 123.0);
+</pre><pre>
+    //
+</pre><pre>
+    // 如果你使用所有特征并且使用一个阈值，使用以下语句：
+</pre><pre>
+    //      cv::createEigenFaceRecognizer(0, 123.0);
+</pre><pre>
+    //
+</pre><pre>
+    Ptr&lt;FaceRecognizer&gt; model = createEigenFaceRecognizer();
+</pre><pre>
+    model-&gt;train(images, labels);
+</pre><pre>
+    // 下面对测试图像进行预测，predictedLabel是预测标签结果
+</pre><pre>
+    int predictedLabel = model-&gt;predict(testSample);
+</pre><pre>
+    //
+</pre><pre>
+    // 还有一种调用方式，可以获取结果同时得到阈值:
+</pre><pre>
+    //      int predictedLabel = -1;
+</pre><pre>
+    //      double confidence = 0.0;
+</pre><pre>
+    //      model-&gt;predict(testSample, predictedLabel, confidence);
+</pre><pre>
+    //
+</pre><pre>
+    string result_message = format(&quot;Predicted class = %d / Actual class = %d.&quot;, predictedLabel, testLabel);
+</pre><pre>
+    cout &lt;&lt; result_message &lt;&lt; endl;
+</pre><pre>
+    // 这里是如何获取特征脸模型的特征值的例子，使用了getMat方法:
+</pre><pre>
+    Mat eigenvalues = model-&gt;getMat(&quot;eigenvalues&quot;);
+</pre><pre>
+    // 同样可以获取特征向量:
+</pre><pre>
+    Mat W = model-&gt;getMat(&quot;eigenvectors&quot;);
+</pre><pre>
+    // 得到训练图像的均值向量
+</pre><pre>
+    Mat mean = model-&gt;getMat(&quot;mean&quot;);
+</pre><pre>
+    // 现实还是保存:
+</pre><pre>
+    if(argc==2) {
+</pre><pre>
+        imshow(&quot;mean&quot;, norm_0_255(mean.reshape(1, images[0].rows)));
+</pre><pre>
+    } else {
+</pre><pre>
+        imwrite(format(&quot;%s/mean.png&quot;, output_folder.c_str()), norm_0_255(mean.reshape(1, images[0].rows)));
+</pre><pre>
+    }
+</pre><pre>
+    // 现实还是保存特征脸:
+</pre><pre>
+    for (int i =0; i &lt; min(10, W.cols); i++) {
+</pre><pre>
+        string msg = format(&quot;Eigenvalue #%d = %.5f&quot;, i, eigenvalues.at&lt;double&gt;(i));
+</pre><pre>
+        cout &lt;&lt; msg &lt;&lt; endl;
+</pre><pre>
+        // 得到第 #i个特征
+</pre><pre>
+        Mat ev = W.col(i).clone();
+</pre><pre>
+        //把它变成原始大小，为了把数据显示归一化到0~255.
+</pre><pre>
+        Mat grayscale = norm_0_255(ev.reshape(1, height));
+</pre><pre>
+        // 使用伪彩色来显示结果，为了更好的感受.
+</pre><pre>
+        Mat cgrayscale;
+</pre><pre>
+        applyColorMap(grayscale, cgrayscale, COLORMAP_JET);
+</pre><pre>
+        // 显示或者保存:
+</pre><pre>
+        if(argc==2) {
+</pre><pre>
+            imshow(format(&quot;eigenface_%d&quot;, i), cgrayscale);
+</pre><pre>
+        } else {
+</pre><pre>
+            imwrite(format(&quot;%s/eigenface_%d.png&quot;, output_folder.c_str(), i), norm_0_255(cgrayscale));
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+    // 在一些预测过程中，显示还是保存重建后的图像:
+</pre><pre>
+    for(int num_components =10; num_components &lt;300; num_components+=15) {
+</pre><pre>
+        // 从模型中的特征向量截取一部分
+</pre><pre>
+        Mat evs = Mat(W, Range::all(), Range(0, num_components));
+</pre><pre>
+        Mat projection = subspaceProject(evs, mean, images[0].reshape(1,1));
+</pre><pre>
+        Mat reconstruction = subspaceReconstruct(evs, mean, projection);
+</pre><pre>
+        // 归一化结果，为了显示:
+</pre><pre>
+        reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
+</pre><pre>
+        // 显示或者保存:
+</pre><pre>
+        if(argc==2) {
+</pre><pre>
+            imshow(format(&quot;eigenface_reconstruction_%d&quot;, num_components), reconstruction);
+</pre><pre>
+        } else {
+</pre><pre>
+            imwrite(format(&quot;%s/eigenface_reconstruction_%d.png&quot;, output_folder.c_str(), num_components), reconstruction);
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+    // 如果我们不是存放到文件中，就显示他，这里使用了暂定等待键盘输入:
+</pre><pre>
+    if(argc==2) {
+</pre><pre>
+        waitKey(0);
+</pre><pre>
+    }
+</pre><pre>
+    return0;
+</pre><pre>
+}
+</pre></div><p>         我使用了伪彩色图像，所以你可以看到在特征脸中灰度值是如何分布的。你可以看到特征脸不但对人脸特征进行编码，还对这些图像中的光照进行编码。(看第四张图像是左侧的光照，而第五张是右侧的光照)[gm:PCA对光照变化图像识别效果很差，自然有一些改进方法，有后再谈]</p><p> </p><p><img src="怎样使用OpenCV进行人脸识别_files/Image [14].png" type="image/png" alt="15" style="height: auto;"/></p><p>我们已经看到了，我们可以利用低维近似来重构人脸，我们看看对于一个好的重构，需要多少特征脸。我将依次画出10，30，。。310张特征脸时的效果。</p><div><pre>
+for(int num_components =10; num_components &lt;300; num_components+=15) {
+</pre><pre>
+    Mat evs = Mat(W, Range::all(), Range(0, num_components));
+</pre><pre>
+    Mat projection = subspaceProject(evs, mean, images[0].reshape(1,1));
+</pre><pre>
+    Mat reconstruction = subspaceReconstruct(evs, mean, projection);
+</pre><pre>
+    reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
+</pre><pre>
+    if(argc==2) {
+</pre><pre>
+        imshow(format(&quot;eigenface_reconstruction_%d&quot;, num_components), reconstruction);
+</pre><pre>
+    } else {
+</pre><pre>
+        imwrite(format(&quot;%s/eigenface_reconstruction_%d.png&quot;, output_folder.c_str(), num_components), reconstruction);
+</pre><pre>
+    }
+</pre><pre>
+}
+</pre></div><p> </p><p>显然10个特征向量[gm:1个特征向量可以变形成一个特征脸，这里特征向量和特征脸概念有些近似]是不够的，50个特征向量可以有效的编码出重要的人脸特征。在ORL数据库中，当使用300个特征向量时，你将获取一个比较好的和重构结果。有定理指出重构需要选择多少特征脸才合适，但它严重依赖于人脸数据库。[gm:也就是没啥讨论意义，针对现实情况做出考虑吧]。文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#zhao03" shape="rect"><span style="color: rgb(0, 102, 204);">[Zhao03]</span></a>是一个好的开始研究起点。</p><p> </p><p> <img src="怎样使用OpenCV进行人脸识别_files/Image [15].png" type="image/png" alt="16" style="height: auto;"/></p><div><h2><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id35" shape="rect"><span style="color: rgb(0, 102, 204);">Fisherfaces</span></a></h2></div><p>         主成分分析是一种基于特征脸的方法，找到使数据中最大方差的特征线性组合。这是一个表现数据的强大方法，但它没有考虑类别信息，并且在扔掉主元时，同时许多有鉴别的信息都被扔掉。假设你数据库中的变化主要是光照变化，那么PCA此时几乎失效了。[gm:把光照情况类似的照片认为一样，而不管人脸其他细节]可以看去<a href="http://www.bytefish.de/wiki/pca_lda_with_gnu_octave" shape="rect"><span style="color: rgb(0, 102, 204);">http://www.bytefish.de/wiki/pca_lda_with_gnu_octave</span></a> 看下例子。</p><p>         线性鉴别分析在降维的同时考虑类别信息，由统计学家 <a href="http://en.wikipedia.org/wiki/Ronald_Fisher" shape="rect"><span style="color: rgb(0, 102, 204);">Sir R. A. Fisher</span></a>发明。在他1936年的文献中，他成功对花进行了分类：The useof multiple measurements in taxonomic problems <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#fisher36" shape="rect"><span style="color: rgb(0, 102, 204);">[Fisher36]</span></a>。为了找到一种特征组合方式，达到最大的类间离散度和最小的类内离散度。这个想法很简单：在低维表示下，相同的类应该紧紧的聚在一起，而不同的类别尽量距离越远。 这也被<a href="http://www.cs.columbia.edu/~belhumeur/" shape="rect"><span style="color: rgb(0, 102, 204);">Belhumeur</span></a>, <a href="http://www.ece.ucsb.edu/~hespanha/" shape="rect"><span style="color: rgb(0, 102, 204);">Hespanha</span></a> 和 <a href="http://cseweb.ucsd.edu/~kriegman/" shape="rect"><span style="color: rgb(0, 102, 204);">Kriegman</span></a>所认同，所以他们把鉴别分析引入到人脸识别问题中<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#bhk97" shape="rect"><span style="color: rgb(0, 102, 204);">[BHK97]</span></a>。</p><div><h3>算法描述<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id36" shape="rect"><span style="color: rgb(0, 102, 204);">Algorithmic Description</span></a></h3></div><p>令x是一个来自c个类中的随机向量，</p><p>                    <img src="怎样使用OpenCV进行人脸识别_files/Image [16].png" type="image/png" alt="17" style="height: auto;"/></p><p align="center"> </p><p>散度矩阵  <img src="怎样使用OpenCV进行人脸识别_files/Image [17].png" type="image/png" alt="18" style="height: auto;"/> 和<cite>S_{W}</cite>如下计算:</p><p>                   <img src="怎样使用OpenCV进行人脸识别_files/Image [18].png" type="image/png" alt="19" style="height: auto;"/></p><p align="center"> </p><p>, 其中 <img src="怎样使用OpenCV进行人脸识别_files/Image [19].png" type="image/png" alt="20" style="height: auto;"/>  是全部数据的均值     <img src="怎样使用OpenCV进行人脸识别_files/Image [20].png" type="image/png" alt="21" style="height: auto;"/>:</p><p>               </p><p align="center"> </p><p>而<img src="怎样使用OpenCV进行人脸识别_files/Image [21].png" type="image/png" alt="22" style="height: auto;"/>  是某个类的均值<img src="怎样使用OpenCV进行人脸识别_files/Image [22].png" type="image/png" alt="23" style="height: auto;"/>  :</p><p>                              <img src="怎样使用OpenCV进行人脸识别_files/Image [23].png" type="image/png" alt="24" style="height: auto;"/></p><p align="center"> </p><p>Fisher的分类算法可以看出一个投影矩阵<img src="怎样使用OpenCV进行人脸识别_files/Image [24].png" type="image/png" alt="25" style="height: auto;"/>  , 使得类的可分性最大:</p><p>                   <img src="怎样使用OpenCV进行人脸识别_files/Image [25].png" type="image/png" alt="26" style="height: auto;"/></p><p align="center"> </p><p>接下来 <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#bhk97" shape="rect"><span style="color: rgb(0, 102, 204);">[BHK97]</span></a>, 一个解决这个普通特征值优化问题的方法被提出:</p><p>                    <img src="怎样使用OpenCV进行人脸识别_files/Image [26].png" type="image/png" alt="27" style="height: auto;"/></p><p align="center"> </p><p>         还有一个问题未解决， Sw的排列最多只有 （N-c）,  N 个样本和c个类别。在模式识别中，样本数据个数N的大小一般小于输入数据的维数。 [gm:比如说之前的图片，N=400，而10000就是数据维数]那么，散度矩阵Sw就是奇异的(可以看文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#rj91" shape="rect"><span style="color: rgb(0, 102, 204);">[RJ91]</span></a>)。在文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#bhk97" shape="rect"><span style="color: rgb(0, 102, 204);">[BHK97]</span></a>中，使用PCA把数据投影到(N-c)维的子空间，然后再使用线性鉴别分析，因为Sw不是奇异矩阵了(可逆矩阵)。</p><p>然后优化问题可以写成：</p><p>          <img src="怎样使用OpenCV进行人脸识别_files/Image [27].png" type="image/png" alt="28" style="height: auto;"/></p><p> </p><p>投影矩阵W，可以把样本投影到(c-1)维的空间上，可以表示为</p><p>                 <img src="怎样使用OpenCV进行人脸识别_files/Image [28].png" type="image/png" alt="29" style="height: auto;"/></p><p> </p><div><h3><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id37" shape="rect"><span style="color: rgb(0, 102, 204);">Fisherfaces in OpenCV</span></a></h3></div><div><pre>
+#include &quot;opencv2/core/core.hpp&quot;
+</pre><pre>
+#include &quot;opencv2/contrib/contrib.hpp&quot;
+</pre><pre>
+#include &quot;opencv2/highgui/highgui.hpp&quot;
+</pre><pre>
+ 
+</pre><pre>
+#include &lt;iostream&gt;
+</pre><pre>
+#include &lt;fstream&gt;
+</pre><pre>
+#include &lt;sstream&gt;
+</pre><pre>
+ 
+</pre><pre>
+usingnamespace cv;
+</pre><pre>
+usingnamespace std;
+</pre><pre>
+ 
+</pre><pre>
+static Mat norm_0_255(InputArray _src) {
+</pre><pre>
+    Mat src = _src.getMat();
+</pre><pre>
+    // 创建和返回归一化的图像:
+</pre><pre>
+    Mat dst;
+</pre><pre>
+    switch(src.channels()) {
+</pre><pre>
+    case1:
+</pre><pre>
+        cv::normalize(_src, dst, 0,255, NORM_MINMAX, CV_8UC1);
+</pre><pre>
+        break;
+</pre><pre>
+    case3:
+</pre><pre>
+        cv::normalize(_src, dst, 0,255, NORM_MINMAX, CV_8UC3);
+</pre><pre>
+        break;
+</pre><pre>
+    default:
+</pre><pre>
+        src.copyTo(dst);
+</pre><pre>
+        break;
+</pre><pre>
+    }
+</pre><pre>
+    return dst;
+</pre><pre>
+}
+</pre><pre>
+ 
+</pre><pre>
+staticvoid read_csv(const string&amp; filename, vector&lt;Mat&gt;&amp; images, vector&lt;int&gt;&amp; labels, char separator =';') {
+</pre><pre>
+    std::ifstream file(filename.c_str(), ifstream::in);
+</pre><pre>
+    if (!file) {
+</pre><pre>
+        string error_message =&quot;No valid input file was given, please check the given filename.&quot;;
+</pre><pre>
+        CV_Error(CV_StsBadArg, error_message);
+</pre><pre>
+    }
+</pre><pre>
+    string line, path, classlabel;
+</pre><pre>
+    while (getline(file, line)) {
+</pre><pre>
+        stringstream liness(line);
+</pre><pre>
+        getline(liness, path, separator);
+</pre><pre>
+        getline(liness, classlabel);
+</pre><pre>
+        if(!path.empty()&amp;&amp;!classlabel.empty()) {
+</pre><pre>
+            images.push_back(imread(path, 0));
+</pre><pre>
+            labels.push_back(atoi(classlabel.c_str()));
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+}
+</pre><pre>
+ 
+</pre><pre>
+int main(int argc, constchar*argv[]) {
+</pre><pre>
+    // 判断输入命令是否有效，输出用法
+</pre><pre>
+    // 如果没有输入参数.
+</pre><pre>
+    if (argc &lt;2) {
+</pre><pre>
+        cout &lt;&lt;&quot;usage: &quot;&lt;&lt; argv[0]&lt;&lt;&quot; &lt;csv.ext&gt; &lt;output_folder&gt; &quot;&lt;&lt; endl;
+</pre><pre>
+        exit(1);
+</pre><pre>
+    }
+</pre><pre>
+    string output_folder;
+</pre><pre>
+    if (argc ==3) {
+</pre><pre>
+        output_folder = string(argv[2]);
+</pre><pre>
+    }
+</pre><pre>
+    // 获取CSV文件的路径.
+</pre><pre>
+    string fn_csv = string(argv[1]);
+</pre><pre>
+    // 这些容器存放图片和标签.
+</pre><pre>
+    vector&lt;Mat&gt; images;
+</pre><pre>
+    vector&lt;int&gt; labels;
+</pre><pre>
+    // 载入数据.如果不合理，会出错
+</pre><pre>
+    // 输入文件名fn_csv已经有了.
+</pre><pre>
+    try {
+</pre><pre>
+        read_csv(fn_csv, images, labels);
+</pre><pre>
+    } catch (cv::Exception&amp; e) {
+</pre><pre>
+        cerr &lt;&lt;&quot;Error opening file \&quot;&quot;&lt;&lt; fn_csv &lt;&lt;&quot;\&quot;. Reason: &quot;&lt;&lt; e.msg &lt;&lt; endl;
+</pre><pre>
+        // 什么也不能做了
+</pre><pre>
+        exit(1);
+</pre><pre>
+    }
+</pre><pre>
+    // 如果没有足够图像就退出掉.
+</pre><pre>
+    if(images.size()&lt;=1) {
+</pre><pre>
+        string error_message =&quot;This demo needs at least 2 images to work. Please add more images to your data set!&quot;;
+</pre><pre>
+        CV_Error(CV_StsError, error_message);
+</pre><pre>
+    }
+</pre><pre>
+    int height = images[0].rows;
+</pre><pre>
+ 
+</pre><pre>
+    Mat testSample = images[images.size() -1];
+</pre><pre>
+    int testLabel = labels[labels.size() -1];
+</pre><pre>
+    images.pop_back();
+</pre><pre>
+    labels.pop_back();
+</pre><pre>
+    // 如果想保存10个fisherfaces
+</pre><pre>
+    //      cv::createFisherFaceRecognizer(10);
+</pre><pre>
+    //
+</pre><pre>
+    // 如果要以123.0作为置信阈值
+</pre><pre>
+    //      cv::createFisherFaceRecognizer(0, 123.0);
+</pre><pre>
+    //
+</pre><pre>
+    Ptr&lt;FaceRecognizer&gt; model = createFisherFaceRecognizer();
+</pre><pre>
+    model-&gt;train(images, labels);
+</pre><pre>
+    int predictedLabel = model-&gt;predict(testSample);
+</pre><pre>
+    //
+</pre><pre>
+    //      model-&gt;predict(testSample, predictedLabel, confidence);
+</pre><pre>
+    //
+</pre><pre>
+    string result_message = format(&quot;Predicted class = %d / Actual class = %d.&quot;, predictedLabel, testLabel);
+</pre><pre>
+    cout &lt;&lt; result_message &lt;&lt; endl;
+</pre><pre>
+    Mat eigenvalues = model-&gt;getMat(&quot;eigenvalues&quot;);
+</pre><pre>
+    Mat W = model-&gt;getMat(&quot;eigenvectors&quot;);
+</pre><pre>
+    Mat mean = model-&gt;getMat(&quot;mean&quot;);
+</pre><pre>
+    if(argc==2) {
+</pre><pre>
+        imshow(&quot;mean&quot;, norm_0_255(mean.reshape(1, images[0].rows)));
+</pre><pre>
+    } else {
+</pre><pre>
+        imwrite(format(&quot;%s/mean.png&quot;, output_folder.c_str()), norm_0_255(mean.reshape(1, images[0].rows)));
+</pre><pre>
+    }
+</pre><pre>
+    //显示还是保存, 最多16 Fisherfaces:
+</pre><pre>
+    for (int i =0; i &lt; min(16, W.cols); i++) {
+</pre><pre>
+        string msg = format(&quot;Eigenvalue #%d = %.5f&quot;, i, eigenvalues.at&lt;double&gt;(i));
+</pre><pre>
+        cout &lt;&lt; msg &lt;&lt; endl;
+</pre><pre>
+        Mat ev = W.col(i).clone();
+</pre><pre>
+        Mat grayscale = norm_0_255(ev.reshape(1, height));
+</pre><pre>
+        // 使用Bone伪彩色图像来显示.
+</pre><pre>
+        Mat cgrayscale;
+</pre><pre>
+        applyColorMap(grayscale, cgrayscale, COLORMAP_BONE);
+</pre><pre>
+        if(argc==2) {
+</pre><pre>
+            imshow(format(&quot;fisherface_%d&quot;, i), cgrayscale);
+</pre><pre>
+        } else {
+</pre><pre>
+            imwrite(format(&quot;%s/fisherface_%d.png&quot;, output_folder.c_str(), i), norm_0_255(cgrayscale));
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+    for(int num_component =0; num_component &lt; min(16, W.cols); num_component++) {
+</pre><pre>
+        Mat ev = W.col(num_component);
+</pre><pre>
+        Mat projection = subspaceProject(ev, mean, images[0].reshape(1,1));
+</pre><pre>
+        Mat reconstruction = subspaceReconstruct(ev, mean, projection);
+</pre><pre>
+        reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
+</pre><pre>
+        if(argc==2) {
+</pre><pre>
+            imshow(format(&quot;fisherface_reconstruction_%d&quot;, num_component), reconstruction);
+</pre><pre>
+        } else {
+</pre><pre>
+            imwrite(format(&quot;%s/fisherface_reconstruction_%d.png&quot;, output_folder.c_str(), num_component), reconstruction);
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+    if(argc==2) {
+</pre><pre>
+        waitKey(0);
+</pre><pre>
+    }
+</pre><pre>
+    return0;
+</pre><pre>
+}
+</pre></div><p>在这个例子中，我使用YaleA人脸数据库，仅仅因为显示更好些。每一个Fisherface都和原始图像有同样长度，因此它可以被显示成图像。下面显示了16张Fisherfaces图像。</p><p><img src="怎样使用OpenCV进行人脸识别_files/Image [29].png" type="image/png" alt="30" style="height: auto;"/></p><p>         Fisherfaces方法学习一个正对标签的转换矩阵，所依它不会如特征脸那样那么注重光照。鉴别分析是寻找可以区分人的面部特征。需要说明的是，Fisherfaces的性能也很依赖于输入数据。实际上，如果你对光照好的图片上学习Fisherfaces，而想对不好的光照图片进行识别，那么他可能会找到错误的主元，因为在不好光照图片上，这些特征不优越。这似乎是符合逻辑的，因为这个方法没有机会去学习光照。[gm:那么采集图像时就要考虑光照变化，训练时考虑所有光照情况，数据库multi-pie就考虑很多种光照]</p><p>         Fisherfaces允许对投影图像进行重建，就行特征脸一样。但是由于我们仅仅使用这些特征来区分不同的类别，因此你无法期待对原图像有一个好的重建效果。[gm:也就是特征脸把每个图片看成一个个体，重建时效果也有保证，而Fisherfaces把一个人的照片看成一个整体，那么重建时重建的效果则不是很好]。对于Fisherfaces方法我们将把样本图像逐个投影到Fisherfaces上。因此你可以获得一个好的可视效果，每个Fisherfaces特征可以被描述为</p><div><pre>
+for(int num_component =0; num_component &lt; min(16, W.cols); num_component++) {
+</pre><pre>
+    Mat ev = W.col(num_component);
+</pre><pre>
+    Mat projection = subspaceProject(ev, mean, images[0].reshape(1,1));
+</pre><pre>
+    Mat reconstruction = subspaceReconstruct(ev, mean, projection);
+</pre><pre>
+    reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
+</pre><pre>
+    if(argc==2) {
+</pre><pre>
+        imshow(format(&quot;fisherface_reconstruction_%d&quot;, num_component), reconstruction);
+</pre><pre>
+    } else {
+</pre><pre>
+        imwrite(format(&quot;%s/fisherface_reconstruction_%d.png&quot;, output_folder.c_str(), num_component), reconstruction);
+</pre><pre>
+    }
+</pre><pre>
+}
+</pre></div><p>对于人类眼睛来说，差异比较微妙，但你还是可以看到一些差异的。</p><p><img src="怎样使用OpenCV进行人脸识别_files/Image [30].png" type="image/png" alt="31" style="height: auto;"/></p><div><h2>局部二值模式直方图<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id38" shape="rect"><span style="color: rgb(0, 102, 204);">Local Binary Patterns Histograms</span></a></h2></div><p>         Eigenfaces和Fisherfaces使用整体方法来进行人脸识别[gm:直接使用所有的像素]。你把你的数据当作图像空间的高维向量。我们都知道高维数据是糟糕的，所以一个低维子空间被确定，对于信息保存可能很好。Eigenfaces是最大化总的散度，这样可能导致，当方差由外部条件产生时，最大方差的主成分不适合用来分类。所以为使用一些鉴别分析，我们使用了LDA方法来优化。Fisherfaces方法可以很好的运作，至少在我们假设的模型的有限情况下。</p><p>         现实生活是不完美的。你无法保证在你的图像中光照条件是完美的，或者说1个人的10张照片。所以，如果每人仅仅只有一张照片呢？我们的子空间的协方差估计方法可能完全错误，所以识别也可能错误。是否记得Eigenfaces在AT&amp;T数据库上达到了96%的识别率？对于这样有效的估计，我们需要多少张训练图像呢？下图是Eigenfaces和Fisherfaces方法在AT&amp;T数据库上的首选识别率，这是一个简单的数据库：</p><p><img src="怎样使用OpenCV进行人脸识别_files/Image [31].png" type="image/png" alt="32" style="height: auto;"/></p><p> </p><p>         因此，若你想得到好的识别率，你大约需要每个人有8(7~9)张图像，而Fisherfaces在这里并没有好的帮助。以上的实验是10个图像的交叉验证结果，使用了facerec框架： <a href="https://github.com/bytefish/facerec" shape="rect"><span style="color: rgb(0, 102, 204);">https://github.com/bytefish/facerec</span></a>。这不是一个刊物，所以我不会用高深的数学分析来证明这个图像。 当遇到小的训练数据集时，可以看一下文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#km01" shape="rect"><span style="color: rgb(0, 102, 204);">[KM01]</span></a>，了解二种方法的细节分析。</p><p>         一些研究专注于图像局部特征的提取。主意是我们不把整个图像看成一个高维向量，仅仅用局部特征来描述一个物体。通过这种方式提取特征，你将获得一个低维隐式。一个好主意！但是你很快发现这种图像表示方法不仅仅遭受光照变化。你想想图像中的尺度变化、形变、旋转—我们的局部表示方式起码对这些情况比较稳健。正如<a href="http://docs.opencv.org/modules/nonfree/doc/feature_detection.html#SIFT : public Feature2D" shape="rect" title="class SIFT : public Feature2D"><span style="color: rgb(0, 102, 204);">SIFT</span></a>，LBP方法在2D纹理分析中举足轻重。LBP的基本思想是对图像的像素和它局部周围像素进行对比后的结果进行求和。把这个像素作为中心，对相邻像素进行阈值比较。如果中心像素的亮度大于等于他的相邻像素，把他标记为1，否则标记为0。你会用二进制数字来表示每个像素，比如11001111。因此，由于周围相邻8个像素，你最终可能获取2^8个可能组合，被称为局部二值模式，有时被称为LBP码。第一个在文献中描述的LBP算子实际使用的是3*3的邻域。</p><p><img src="怎样使用OpenCV进行人脸识别_files/Image [32].png" type="image/png" alt="33" style="height: auto;"/></p><div><h3>算法描述<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id39" shape="rect"><span style="color: rgb(0, 102, 204);">Algorithmic Description</span></a></h3></div><p>         一个更加正式的LBP操作可以被定义为</p><p>                     <img src="怎样使用OpenCV进行人脸识别_files/Image [33].png" type="image/png" alt="34" style="height: auto;"/></p><p> </p><p>其中<img src="怎样使用OpenCV进行人脸识别_files/Image [34].png" type="image/png" alt="35" style="height: auto;"/> 是中心像素，亮度是<img src="怎样使用OpenCV进行人脸识别_files/Image [35].png" type="image/png" alt="36" style="height: auto;"/> ；而 <img src="怎样使用OpenCV进行人脸识别_files/Image [36].png" type="image/png" alt="37" style="height: auto;"/>则是相邻像素的亮度。s是一个符号函数：</p><p> </p><p>        <img src="怎样使用OpenCV进行人脸识别_files/Image [37].png" type="image/png" alt="38" style="height: auto;"/></p><p>这种描述方法使得你可以很好的捕捉到图像中的细节。实际上，研究者们可以用它在纹理分类上得到最先进的水平。正如刚才描述的方法被提出后，固定的近邻区域对于尺度变化的编码失效。所以，使用一个变量的扩展方法，在文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#ahp04" shape="rect"><span style="color: rgb(0, 102, 204);">[AHP04]</span></a>中有描述。主意是使用可变半径的圆对近邻像素进行编码，这样可以捕捉到如下的近邻：</p><p>            <img src="怎样使用OpenCV进行人脸识别_files/Image [38].png" type="image/png" alt="39" style="height: auto;"/></p><p>对一个给定的点<img src="怎样使用OpenCV进行人脸识别_files/Image [39].png" type="image/png" alt="40" style="height: auto;"/>   ，他的近邻点 <img src="怎样使用OpenCV进行人脸识别_files/Image [40].png" type="image/png" alt="41" style="height: auto;"/> 可以由如下计算：</p><p>        <img src="怎样使用OpenCV进行人脸识别_files/Image [41].png" type="image/png" alt="42" style="height: auto;"/></p><p>其中，R是圆的半径，而P是样本点的个数。</p><p>这个操作是对原始LBP算子的扩展，所以有时被称为扩展LBP(又称为圆形LBP)。如果一个在圆上的点不在图像坐标上，我们使用他的内插点。计算机科学有一堆聪明的插值方法，而OpenCV使用双线性插值。</p><p>         <img src="怎样使用OpenCV进行人脸识别_files/Image [42].png" type="image/png" alt="43" style="height: auto;"/></p><p>LBP算子，对于灰度的单调变化很稳健。我们可以看到手工改变后的图像的LBP图像(你可以看到LBP图像是什么样子的！)</p><p>            <img src="怎样使用OpenCV进行人脸识别_files/Image [43].png" type="image/png" alt="44" style="height: auto;"/></p><p> </p><p>         那么剩下来的就是如何合并空间信息用于人脸识别模型。Ahonenet. Al在文献 <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#ahp04" shape="rect"><span style="color: rgb(0, 102, 204);">[AHP04]</span></a>中提出表示方法，对LBP图像成m个块，每个块提取直方图。通过连接局部特直方图(而不是合并)然后就能得到空间增强的特征向量。这些直方图被称为局部二值模式直方图。</p><div><h3>OpenCV中的局部二值模式直方图<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id40" shape="rect"><span style="color: rgb(0, 102, 204);">Local Binary Patterns Histograms inOpenCV</span></a></h3></div><div><pre>
+#include &quot;opencv2/core/core.hpp&quot;
+</pre><pre>
+#include &quot;opencv2/contrib/contrib.hpp&quot;
+</pre><pre>
+#include &quot;opencv2/highgui/highgui.hpp&quot;
+</pre><pre>
+ 
+</pre><pre>
+#include &lt;iostream&gt;
+</pre><pre>
+#include &lt;fstream&gt;
+</pre><pre>
+#include &lt;sstream&gt;
+</pre><pre>
+ 
+</pre><pre>
+usingnamespace cv;
+</pre><pre>
+usingnamespace std;
+</pre><pre>
+ 
+</pre><pre>
+staticvoid read_csv(const string&amp; filename, vector&lt;Mat&gt;&amp; images, vector&lt;int&gt;&amp; labels, char separator =';') {
+</pre><pre>
+    std::ifstream file(filename.c_str(), ifstream::in);
+</pre><pre>
+    if (!file) {
+</pre><pre>
+        string error_message =&quot;No valid input file was given, please check the given filename.&quot;;
+</pre><pre>
+        CV_Error(CV_StsBadArg, error_message);
+</pre><pre>
+    }
+</pre><pre>
+    string line, path, classlabel;
+</pre><pre>
+    while (getline(file, line)) {
+</pre><pre>
+        stringstream liness(line);
+</pre><pre>
+        getline(liness, path, separator);
+</pre><pre>
+        getline(liness, classlabel);
+</pre><pre>
+        if(!path.empty()&amp;&amp;!classlabel.empty()) {
+</pre><pre>
+            images.push_back(imread(path, 0));
+</pre><pre>
+            labels.push_back(atoi(classlabel.c_str()));
+</pre><pre>
+        }
+</pre><pre>
+    }
+</pre><pre>
+}
+</pre><pre>
+ 
+</pre><pre>
+int main(int argc, constchar*argv[]) {
+</pre><pre>
+    if (argc !=2) {
+</pre><pre>
+        cout &lt;&lt;&quot;usage: &quot;&lt;&lt; argv[0]&lt;&lt;&quot; &lt;csv.ext&gt;&quot;&lt;&lt; endl;
+</pre><pre>
+        exit(1);
+</pre><pre>
+    }
+</pre><pre>
+    string fn_csv = string(argv[1]);
+</pre><pre>
+    vector&lt;Mat&gt; images;
+</pre><pre>
+    vector&lt;int&gt; labels;
+</pre><pre>
+    try {
+</pre><pre>
+        read_csv(fn_csv, images, labels);
+</pre><pre>
+    } catch (cv::Exception&amp; e) {
+</pre><pre>
+        cerr &lt;&lt;&quot;Error opening file \&quot;&quot;&lt;&lt; fn_csv &lt;&lt;&quot;\&quot;. Reason: &quot;&lt;&lt; e.msg &lt;&lt; endl;
+</pre><pre>
+        // nothing more we can do
+</pre><pre>
+        exit(1);
+</pre><pre>
+    }
+</pre><pre>
+    if(images.size()&lt;=1) {
+</pre><pre>
+        string error_message =&quot;This demo needs at least 2 images to work. Please add more images to your data set!&quot;;
+</pre><pre>
+        CV_Error(CV_StsError, error_message);
+</pre><pre>
+    }
+</pre><pre>
+    int height = images[0].rows;
+</pre><pre>
+    Mat testSample = images[images.size() -1];
+</pre><pre>
+    int testLabel = labels[labels.size() -1];
+</pre><pre>
+    images.pop_back();
+</pre><pre>
+    labels.pop_back();
+</pre><pre>
+    // TLBPHFaceRecognizer 使用了扩展的LBP
+</pre><pre>
+    // 在其他的算子中他可能很容易被扩展
+</pre><pre>
+    // 下面是默认参数
+</pre><pre>
+    //      radius = 1
+</pre><pre>
+    //      neighbors = 8
+</pre><pre>
+    //      grid_x = 8
+</pre><pre>
+    //      grid_y = 8
+</pre><pre>
+    //
+</pre><pre>
+    // 如果你要创建 LBPH FaceRecognizer 半径是2，16个邻域
+</pre><pre>
+    //      cv::createLBPHFaceRecognizer(2, 16);
+</pre><pre>
+    //
+</pre><pre>
+    // 如果你需要一个阈值，并且使用默认参数:
+</pre><pre>
+    //      cv::createLBPHFaceRecognizer(1,8,8,8,123.0)
+</pre><pre>
+    //
+</pre><pre>
+    Ptr&lt;FaceRecognizer&gt; model = createLBPHFaceRecognizer();
+</pre><pre>
+    model-&gt;train(images, labels);
+</pre><pre>
+    int predictedLabel = model-&gt;predict(testSample);
+</pre><pre>
+    //      int predictedLabel = -1;
+</pre><pre>
+    //      double confidence = 0.0;
+</pre><pre>
+    //      model-&gt;predict(testSample, predictedLabel, confidence);
+</pre><pre>
+    //
+</pre><pre>
+    string result_message = format(&quot;Predicted class = %d / Actual class = %d.&quot;, predictedLabel, testLabel);
+</pre><pre>
+    cout &lt;&lt; result_message &lt;&lt; endl;
+</pre><pre>
+    // 有时你需要设置或者获取内部数据模型,
+</pre><pre>
+    // 他不能被暴露在 cv::FaceRecognizer类中.
+</pre><pre>
+    //
+</pre><pre>
+    // 首先我们对FaceRecognizer的阈值设置到0.0，而不是重写训练模型
+</pre><pre>
+    // 当你重新估计模型时很重要 
+</pre><pre>
+    //
+</pre><pre>
+    model-&gt;set(&quot;threshold&quot;,0.0);
+</pre><pre>
+    predictedLabel = model-&gt;predict(testSample);
+</pre><pre>
+    cout &lt;&lt;&quot;Predicted class = &quot;&lt;&lt; predictedLabel &lt;&lt; endl;
+</pre><pre>
+    // 由于确保高效率，LBP图没有被存储在模型里面。D
+</pre><pre>
+    cout &lt;&lt;&quot;Model Information:&quot;&lt;&lt; endl;
+</pre><pre>
+    string model_info = format(&quot;\tLBPH(radius=%i, neighbors=%i, grid_x=%i, grid_y=%i, threshold=%.2f)&quot;,
+</pre><pre>
+            model-&gt;getInt(&quot;radius&quot;),
+</pre><pre>
+            model-&gt;getInt(&quot;neighbors&quot;),
+</pre><pre>
+            model-&gt;getInt(&quot;grid_x&quot;),
+</pre><pre>
+            model-&gt;getInt(&quot;grid_y&quot;),
+</pre><pre>
+            model-&gt;getDouble(&quot;threshold&quot;));
+</pre><pre>
+    cout &lt;&lt; model_info &lt;&lt; endl;
+</pre><pre>
+    // 我们可以获取样本的直方图:
+</pre><pre>
+    vector&lt;Mat&gt; histograms = model-&gt;getMatVector(&quot;histograms&quot;);
+</pre><pre>
+    // 我需要现实它吗? 或许它的长度才是我们感兴趣的:
+</pre><pre>
+    cout &lt;&lt;&quot;Size of the histograms: &quot;&lt;&lt; histograms[0].total()&lt;&lt; endl;
+</pre><pre>
+    return0;
+</pre><pre>
+}
+</pre></div><div><h2>总结<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id41" shape="rect"><span style="color: rgb(0, 102, 204);">Conclusion</span></a></h2></div><p>你已经学会如何在真实应用下，使用新的<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_api.html#FaceRecognizer" shape="rect" title="class FaceRecognizer"><span style="color: rgb(0, 102, 204);">FaceRecognizer</span></a>类。读完算法，可能到你进行实验的时候了，使用它们，改进它们，让OpenCV社区参与其中！</p><p> </p><div><h2>文献<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id46" shape="rect"><span style="color: rgb(0, 102, 204);">Literature</span></a></h2></div><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p>[AHP04]</p></td><td colspan="1" rowspan="1"><p>(<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id8" shape="rect"><span style="color: rgb(0, 102, 204);">1</span></a>, <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id23" shape="rect"><span style="color: rgb(0, 102, 204);">2</span></a>, <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id24" shape="rect"><span style="color: rgb(0, 102, 204);">3</span></a>) Ahonen, T., Hadid, A., and Pietikainen, M. Face Recognition with Local Binary Patterns. Computer Vision - ECCV 2004 (2004), 469–481.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p>[BHK97]</p></td><td colspan="1" rowspan="1"><p>(<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id5" shape="rect"><span style="color: rgb(0, 102, 204);">1</span></a>, <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id10" shape="rect"><span style="color: rgb(0, 102, 204);">2</span></a>, <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id15" shape="rect"><span style="color: rgb(0, 102, 204);">3</span></a>, <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id17" shape="rect"><span style="color: rgb(0, 102, 204);">4</span></a>, <a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id19" shape="rect"><span style="color: rgb(0, 102, 204);">5</span></a>) Belhumeur, P. N., Hespanha, J., and Kriegman, D. Eigenfaces vs. Fisherfaces: Recognition Using Class Specific Linear Projection. IEEE Transactions on Pattern Analysis and Machine Intelligence 19, 7 (1997), 711–720.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id3" shape="rect"><span style="color: rgb(0, 102, 204);">[Bru92]</span></a></p></td><td colspan="1" rowspan="1"><p>Brunelli, R., Poggio, T. Face Recognition through Geometrical Features. European Conference on Computer Vision (ECCV) 1992, S. 792–800.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id12" shape="rect"><span style="color: rgb(0, 102, 204);">[Duda01]</span></a></p></td><td colspan="1" rowspan="1"><p>Duda, Richard O. and Hart, Peter E. and Stork, David G., Pattern Classification (2nd Edition) 2001.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id14" shape="rect"><span style="color: rgb(0, 102, 204);">[Fisher36]</span></a></p></td><td colspan="1" rowspan="1"><p>Fisher, R. A. The use of multiple measurements in taxonomic problems. Annals Eugen. 7 (1936), 179–188.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p>[GBK01]</p></td><td colspan="1" rowspan="1"><p>Georghiades, A.S. and Belhumeur, P.N. and Kriegman, D.J., From Few to Many: Illumination Cone Models for Face Recognition under Variable Lighting and Pose IEEE Transactions on Pattern Analysis and Machine Intelligence 23, 6 (2001), 643-660.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id2" shape="rect"><span style="color: rgb(0, 102, 204);">[Kanade73]</span></a></p></td><td colspan="1" rowspan="1"><p>Kanade, T. Picture processing system by computer complex and recognition of human faces. PhD thesis, Kyoto University, November 1973</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id21" shape="rect"><span style="color: rgb(0, 102, 204);">[KM01]</span></a></p></td><td colspan="1" rowspan="1"><p>Martinez, A and Kak, A. PCA versus LDA IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. 23, No.2, pp. 228-233, 2001.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id11" shape="rect"><span style="color: rgb(0, 102, 204);">[Lee05]</span></a></p></td><td colspan="1" rowspan="1"><p>Lee, K., Ho, J., Kriegman, D. Acquiring Linear Subspaces for Face Recognition under Variable Lighting. In: IEEE Transactions on Pattern Analysis and Machine Intelligence (PAMI) 27 (2005), Nr. 5</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id7" shape="rect"><span style="color: rgb(0, 102, 204);">[Messer06]</span></a></p></td><td colspan="1" rowspan="1"><p>Messer, K. et al. Performance Characterisation of Face Recognition Algorithms and Their Sensitivity to Severe Illumination Changes. In: In: ICB, 2006, S. 1–11.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id18" shape="rect"><span style="color: rgb(0, 102, 204);">[RJ91]</span></a></p></td><td colspan="1" rowspan="1"><ol start="19" type="A"><li>Raudys and A.K. Jain. Small sample size effects in statistical pattern recognition: Recommendations for practitioneers. - IEEE Transactions on Pattern Analysis and Machine Intelligence 13, 3 (1991), 252-264.</li></ol></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p>[Tan10]</p></td><td colspan="1" rowspan="1"><p>Tan, X., and Triggs, B. Enhanced local texture feature sets for face recognition under difficult lighting conditions. IEEE Transactions on Image Processing 19 (2010), 1635–650.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id4" shape="rect"><span style="color: rgb(0, 102, 204);">[TP91]</span></a></p></td><td colspan="1" rowspan="1"><p>Turk, M., and Pentland, A. Eigenfaces for recognition. Journal of Cognitive Neuroscience 3 (1991), 71–86.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id1" shape="rect"><span style="color: rgb(0, 102, 204);">[Tu06]</span></a></p></td><td colspan="1" rowspan="1"><p>Chiara Turati, Viola Macchi Cassia, F. S., and Leo, I. Newborns face recognition: Role of inner and outer facial features. Child Development 77, 2 (2006), 297–311.</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id6" shape="rect"><span style="color: rgb(0, 102, 204);">[Wiskott97]</span></a></p></td><td colspan="1" rowspan="1"><p>Wiskott, L., Fellous, J., Krüger, N., Malsburg, C. Face Recognition By Elastic Bunch Graph Matching.IEEE Transactions on Pattern Analysis and Machine Intelligence 19 (1997), S. 775–779</p></td></tr></tbody></table><p> </p><table border="1" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><p><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id13" shape="rect"><span style="color: rgb(0, 102, 204);">[Zhao03]</span></a></p></td><td colspan="1" rowspan="1"><p>Zhao, W., Chellappa, R., Phillips, P., and Rosenfeld, A. Face recognition: A literature survey. ACM Computing Surveys (CSUR) 35, 4 (2003), 399–458.</p></td></tr></tbody></table><div><h3>人脸对齐<a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id49" shape="rect"><span style="color: rgb(0, 102, 204);">Aligning Face Images</span></a></h3></div><p>         对于图像数据的对其很重要，特别遇到情感检测这类任务，你需要越多的细节越好。相信我，你不会要自己动手做吧。我给你提供了一个Python代码。</p><div><pre>
+#  CropFace(image, eye_left, eye_right, offset_pct, dest_sz)
+</pre><pre>
+# eye_left is the position of the left eye
+</pre><pre>
+# eye_right is the position of the right eye
+</pre><pre>
+# offset_pct is the percent of the image you want to keep next to the eyes (horizontal, vertical direction)
+</pre><pre>
+# dest_sz is the size of the output image
+</pre><pre>
+#
+</pre><pre>
+importsys,math,Image
+</pre><pre>
+ 
+</pre><pre>
+defDistance(p1,p2):
+</pre><pre>
+  dx = p2[0]- p1[0]
+</pre><pre>
+  dy = p2[1]- p1[1]
+</pre><pre>
+  return math.sqrt(dx*dx+dy*dy)
+</pre><pre>
+ 
+</pre><pre>
+defScaleRotateTranslate(image, angle, center =None, new_center =None, scale =None, resample=Image.BICUBIC):
+</pre><pre>
+  if (scale isNone)and (center isNone):
+</pre><pre>
+    return image.rotate(angle=angle, resample=resample)
+</pre><pre>
+  nx,ny = x,y = center
+</pre><pre>
+  sx=sy=1.0
+</pre><pre>
+  if new_center:
+</pre><pre>
+    (nx,ny) = new_center
+</pre><pre>
+  if scale:
+</pre><pre>
+    (sx,sy) = (scale, scale)
+</pre><pre>
+  cosine = math.cos(angle)
+</pre><pre>
+  sine = math.sin(angle)
+</pre><pre>
+  a = cosine/sx
+</pre><pre>
+  b = sine/sx
+</pre><pre>
+  c = x-nx*a-ny*b
+</pre><pre>
+  d =-sine/sy
+</pre><pre>
+  e = cosine/sy
+</pre><pre>
+  f = y-nx*d-ny*e
+</pre><pre>
+  return image.transform(image.size, Image.AFFINE, (a,b,c,d,e,f), resample=resample)
+</pre><pre>
+ 
+</pre><pre>
+defCropFace(image, eye_left=(0,0), eye_right=(0,0), offset_pct=(0.2,0.2), dest_sz = (70,70)):
+</pre><pre>
+  # calculate offsets in original image
+</pre><pre>
+  offset_h = math.floor(float(offset_pct[0])*dest_sz[0])
+</pre><pre>
+  offset_v = math.floor(float(offset_pct[1])*dest_sz[1])
+</pre><pre>
+  # get the direction
+</pre><pre>
+  eye_direction = (eye_right[0]- eye_left[0], eye_right[1]- eye_left[1])
+</pre><pre>
+  # calc rotation angle in radians
+</pre><pre>
+  rotation =-math.atan2(float(eye_direction[1]),float(eye_direction[0]))
+</pre><pre>
+  # distance between them
+</pre><pre>
+  dist = Distance(eye_left, eye_right)
+</pre><pre>
+  # calculate the reference eye-width
+</pre><pre>
+  reference = dest_sz[0]-2.0*offset_h
+</pre><pre>
+  # scale factor
+</pre><pre>
+  scale =float(dist)/float(reference)
+</pre><pre>
+  # rotate original around the left eye
+</pre><pre>
+  image = ScaleRotateTranslate(image, center=eye_left, angle=rotation)
+</pre><pre>
+  # crop the rotated image
+</pre><pre>
+  crop_xy = (eye_left[0]- scale*offset_h, eye_left[1]- scale*offset_v)
+</pre><pre>
+  crop_size = (dest_sz[0]*scale, dest_sz[1]*scale)
+</pre><pre>
+  image = image.crop((int(crop_xy[0]),int(crop_xy[1]),int(crop_xy[0]+crop_size[0]),int(crop_xy[1]+crop_size[1])))
+</pre><pre>
+  # resize it
+</pre><pre>
+  image = image.resize(dest_sz, Image.ANTIALIAS)
+</pre><pre>
+  return image
+</pre><pre>
+  
+</pre><pre>
+if __name__ ==&quot;__main__&quot;:
+</pre><pre>
+  image =  Image.open(&quot;arnie.jpg&quot;)
+</pre><pre>
+  CropFace(image, eye_left=(252,364), eye_right=(420,366), offset_pct=(0.1,0.1), dest_sz=(200,200)).save(&quot;arnie_10_10_200_200.jpg&quot;)
+</pre><pre>
+  CropFace(image, eye_left=(252,364), eye_right=(420,366), offset_pct=(0.2,0.2), dest_sz=(200,200)).save(&quot;arnie_20_20_200_200.jpg&quot;)
+</pre><pre>
+  CropFace(image, eye_left=(252,364), eye_right=(420,366), offset_pct=(0.3,0.3), dest_sz=(200,200)).save(&quot;arnie_30_30_200_200.jpg&quot;)
+</pre><pre>
+  CropFace(image, eye_left=(252,364), eye_right=(420,366), offset_pct=(0.2,0.2)).save(&quot;arnie_20_20_70_70.jpg&quot;)
+</pre></div><p>设想我们有一张施瓦辛格的照片 <a href="http://en.wikipedia.org/wiki/File:Arnold_Schwarzenegger_edit%28ws%29.jpg" shape="rect"><span style="color: rgb(0, 102, 204);">thisphoto of Arnold Schwarzenegger</span></a>，人眼坐标是(252,364)和(420,366)。参数是水平偏移、垂直偏移和你缩放后的图像大小。[gm:我建议使用最小的那张图片]</p><p> </p><table border="1" cellpadding="0" cellspacing="0"><thead><tr><td colspan="1" rowspan="1"><p>Configuration</p></td><td colspan="1" rowspan="1"><p>Cropped, Scaled, Rotated Face</p></td></tr></thead><tbody><tr><td colspan="1" rowspan="1"><p>0.1 (10%), 0.1 (10%), (200,200)</p></td><td colspan="1" rowspan="1"><p><img src="怎样使用OpenCV进行人脸识别_files/Image [44].png" type="image/png" alt="45" style="height: auto;"/></p></td></tr><tr><td colspan="1" rowspan="1"><p>0.2 (20%), 0.2 (20%), (200,200)</p></td><td colspan="1" rowspan="1"><p><img src="怎样使用OpenCV进行人脸识别_files/Image [45].png" type="image/png" alt="46" style="height: auto;"/></p></td></tr><tr><td colspan="1" rowspan="1"><p>0.3 (30%), 0.3 (30%), (200,200)</p></td><td colspan="1" rowspan="1"><p><img src="怎样使用OpenCV进行人脸识别_files/Image [46].png" type="image/png" alt="47" style="height: auto;"/></p></td></tr><tr><td colspan="1" rowspan="1"><p>0.2 (20%), 0.2 (20%), (70,70)</p></td><td colspan="1" rowspan="1"><p><img src="怎样使用OpenCV进行人脸识别_files/Image [47].png" type="image/png" alt="48" style="height: auto;"/></p></td></tr></tbody></table><p> </p><p> </p><p> </p><p> </p><div><h3><a href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html#id50" shape="rect"><span style="color: rgb(0, 102, 204);">CSV for the AT&amp;T Facedatabase</span></a></h3></div><table border="0" cellpadding="0"><tbody><tr><td colspan="1" rowspan="1"><div><pre>
+  1
+</pre><pre>
+  2
+</pre><pre>
+  3
+</pre><pre>
+  4
+</pre><pre>
+  5
+</pre><pre>
+  6
+</pre><pre>
+  7
+</pre><pre>
+  8
+</pre><pre>
+  9
+</pre><pre>
+ 10
+</pre><pre>
+ 11
+</pre><pre>
+ 12
+</pre><pre>
+ 13
+</pre><pre>
+ 14
+</pre><pre>
+ 15
+</pre><pre>
+ 16
+</pre><pre>
+ 17
+</pre><pre>
+ 18
+</pre><pre>
+ 19
+</pre><pre>
+ 20
+</pre><pre>
+ 21
+</pre><pre>
+ 22
+</pre><pre>
+ 23
+</pre><pre>
+ 24
+</pre><pre>
+ 25
+</pre><pre>
+ 26
+</pre><pre>
+ 27
+</pre><pre>
+ 28
+</pre><pre>
+ 29
+</pre><pre>
+ 30
+</pre><pre>
+ 31
+</pre><pre>
+ 32
+</pre><pre>
+ 33
+</pre><pre>
+ 34
+</pre><pre>
+ 35
+</pre><pre>
+ 36
+</pre><pre>
+ 37
+</pre><pre>
+ 38
+</pre><pre>
+ 39
+</pre><pre>
+ 40
+</pre><pre>
+ 41
+</pre><pre>
+ 42
+</pre><pre>
+ 43
+</pre><pre>
+ 44
+</pre><pre>
+ 45
+</pre><pre>
+ 46
+</pre><pre>
+ 47
+</pre><pre>
+ 48
+</pre><pre>
+ 49
+</pre><pre>
+ 50
+</pre><pre>
+ 51
+</pre><pre>
+ 52
+</pre><pre>
+ 53
+</pre><pre>
+ 54
+</pre><pre>
+ 55
+</pre><pre>
+ 56
+</pre><pre>
+ 57
+</pre><pre>
+ 58
+</pre><pre>
+ 59
+</pre><pre>
+ 60
+</pre><pre>
+ 61
+</pre><pre>
+ 62
+</pre><pre>
+ 63
+</pre><pre>
+ 64
+</pre><pre>
+ 65
+</pre><pre>
+ 66
+</pre><pre>
+ 67
+</pre><pre>
+ 68
+</pre><pre>
+ 69
+</pre><pre>
+ 70
+</pre><pre>
+ 71
+</pre><pre>
+ 72
+</pre><pre>
+ 73
+</pre><pre>
+ 74
+</pre><pre>
+ 75
+</pre><pre>
+ 76
+</pre><pre>
+ 77
+</pre><pre>
+ 78
+</pre><pre>
+ 79
+</pre><pre>
+ 80
+</pre><pre>
+ 81
+</pre><pre>
+ 82
+</pre><pre>
+ 83
+</pre><pre>
+ 84
+</pre><pre>
+ 85
+</pre><pre>
+ 86
+</pre><pre>
+ 87
+</pre><pre>
+ 88
+</pre><pre>
+ 89
+</pre><pre>
+ 90
+</pre><pre>
+ 91
+</pre><pre>
+ 92
+</pre><pre>
+ 93
+</pre><pre>
+ 94
+</pre><pre>
+ 95
+</pre><pre>
+ 96
+</pre><pre>
+ 97
+</pre><pre>
+ 98
+</pre><pre>
+ 99
+</pre><pre>
+100
+</pre><pre>
+101
+</pre><pre>
+102
+</pre><pre>
+103
+</pre><pre>
+104
+</pre><pre>
+105
+</pre><pre>
+106
+</pre><pre>
+107
+</pre><pre>
+108
+</pre><pre>
+109
+</pre><pre>
+110
+</pre><pre>
+111
+</pre><pre>
+112
+</pre><pre>
+113
+</pre><pre>
+114
+</pre><pre>
+115
+</pre><pre>
+116
+</pre><pre>
+117
+</pre><pre>
+118
+</pre><pre>
+119
+</pre><pre>
+120
+</pre><pre>
+121
+</pre><pre>
+122
+</pre><pre>
+123
+</pre><pre>
+124
+</pre><pre>
+125
+</pre><pre>
+126
+</pre><pre>
+127
+</pre><pre>
+128
+</pre><pre>
+129
+</pre><pre>
+130
+</pre><pre>
+131
+</pre><pre>
+132
+</pre><pre>
+133
+</pre><pre>
+134
+</pre><pre>
+135
+</pre><pre>
+136
+</pre><pre>
+137
+</pre><pre>
+138
+</pre><pre>
+139
+</pre><pre>
+140
+</pre><pre>
+141
+</pre><pre>
+142
+</pre><pre>
+143
+</pre><pre>
+144
+</pre><pre>
+145
+</pre><pre>
+146
+</pre><pre>
+147
+</pre><pre>
+148
+</pre><pre>
+149
+</pre><pre>
+150
+</pre><pre>
+151
+</pre><pre>
+152
+</pre><pre>
+153
+</pre><pre>
+154
+</pre><pre>
+155
+</pre><pre>
+156
+</pre><pre>
+157
+</pre><pre>
+158
+</pre><pre>
+159
+</pre><pre>
+160
+</pre><pre>
+161
+</pre><pre>
+162
+</pre><pre>
+163
+</pre><pre>
+164
+</pre><pre>
+165
+</pre><pre>
+166
+</pre><pre>
+167
+</pre><pre>
+168
+</pre><pre>
+169
+</pre><pre>
+170
+</pre><pre>
+171
+</pre><pre>
+172
+</pre><pre>
+173
+</pre><pre>
+174
+</pre><pre>
+175
+</pre><pre>
+176
+</pre><pre>
+177
+</pre><pre>
+178
+</pre><pre>
+179
+</pre><pre>
+180
+</pre><pre>
+181
+</pre><pre>
+182
+</pre><pre>
+183
+</pre><pre>
+184
+</pre><pre>
+185
+</pre><pre>
+186
+</pre><pre>
+187
+</pre><pre>
+188
+</pre><pre>
+189
+</pre><pre>
+190
+</pre><pre>
+191
+</pre><pre>
+192
+</pre><pre>
+193
+</pre><pre>
+194
+</pre><pre>
+195
+</pre><pre>
+196
+</pre><pre>
+197
+</pre><pre>
+198
+</pre><pre>
+199
+</pre><pre>
+200
+</pre><pre>
+201
+</pre><pre>
+202
+</pre><pre>
+203
+</pre><pre>
+204
+</pre><pre>
+205
+</pre><pre>
+206
+</pre><pre>
+207
+</pre><pre>
+208
+</pre><pre>
+209
+</pre><pre>
+210
+</pre><pre>
+211
+</pre><pre>
+212
+</pre><pre>
+213
+</pre><pre>
+214
+</pre><pre>
+215
+</pre><pre>
+216
+</pre><pre>
+217
+</pre><pre>
+218
+</pre><pre>
+219
+</pre><pre>
+220
+</pre><pre>
+221
+</pre><pre>
+222
+</pre><pre>
+223
+</pre><pre>
+224
+</pre><pre>
+225
+</pre><pre>
+226
+</pre><pre>
+227
+</pre><pre>
+228
+</pre><pre>
+229
+</pre><pre>
+230
+</pre><pre>
+231
+</pre><pre>
+232
+</pre><pre>
+233
+</pre><pre>
+234
+</pre><pre>
+235
+</pre><pre>
+236
+</pre><pre>
+237
+</pre><pre>
+238
+</pre><pre>
+239
+</pre><pre>
+240
+</pre><pre>
+241
+</pre><pre>
+242
+</pre><pre>
+243
+</pre><pre>
+244
+</pre><pre>
+245
+</pre><pre>
+246
+</pre><pre>
+247
+</pre><pre>
+248
+</pre><pre>
+249
+</pre><pre>
+250
+</pre><pre>
+251
+</pre><pre>
+252
+</pre><pre>
+253
+</pre><pre>
+254
+</pre><pre>
+255
+</pre><pre>
+256
+</pre><pre>
+257
+</pre><pre>
+258
+</pre><pre>
+259
+</pre><pre>
+260
+</pre><pre>
+261
+</pre><pre>
+262
+</pre><pre>
+263
+</pre><pre>
+264
+</pre><pre>
+265
+</pre><pre>
+266
+</pre><pre>
+267
+</pre><pre>
+268
+</pre><pre>
+269
+</pre><pre>
+270
+</pre><pre>
+271
+</pre><pre>
+272
+</pre><pre>
+273
+</pre><pre>
+274
+</pre><pre>
+275
+</pre><pre>
+276
+</pre><pre>
+277
+</pre><pre>
+278
+</pre><pre>
+279
+</pre><pre>
+280
+</pre><pre>
+281
+</pre><pre>
+282
+</pre><pre>
+283
+</pre><pre>
+284
+</pre><pre>
+285
+</pre><pre>
+286
+</pre><pre>
+287
+</pre><pre>
+288
+</pre><pre>
+289
+</pre><pre>
+290
+</pre><pre>
+291
+</pre><pre>
+292
+</pre><pre>
+293
+</pre><pre>
+294
+</pre><pre>
+295
+</pre><pre>
+296
+</pre><pre>
+297
+</pre><pre>
+298
+</pre><pre>
+299
+</pre><pre>
+300
+</pre><pre>
+301
+</pre><pre>
+302
+</pre><pre>
+303
+</pre><pre>
+304
+</pre><pre>
+305
+</pre><pre>
+306
+</pre><pre>
+307
+</pre><pre>
+308
+</pre><pre>
+309
+</pre><pre>
+310
+</pre><pre>
+311
+</pre><pre>
+312
+</pre><pre>
+313
+</pre><pre>
+314
+</pre><pre>
+315
+</pre><pre>
+316
+</pre><pre>
+317
+</pre><pre>
+318
+</pre><pre>
+319
+</pre><pre>
+320
+</pre><pre>
+321
+</pre><pre>
+322
+</pre><pre>
+323
+</pre><pre>
+324
+</pre><pre>
+325
+</pre><pre>
+326
+</pre><pre>
+327
+</pre><pre>
+328
+</pre><pre>
+329
+</pre><pre>
+330
+</pre><pre>
+331
+</pre><pre>
+332
+</pre><pre>
+333
+</pre><pre>
+334
+</pre><pre>
+335
+</pre><pre>
+336
+</pre><pre>
+337
+</pre><pre>
+338
+</pre><pre>
+339
+</pre><pre>
+340
+</pre><pre>
+341
+</pre><pre>
+342
+</pre><pre>
+343
+</pre><pre>
+344
+</pre><pre>
+345
+</pre><pre>
+346
+</pre><pre>
+347
+</pre><pre>
+348
+</pre><pre>
+349
+</pre><pre>
+350
+</pre><pre>
+351
+</pre><pre>
+352
+</pre><pre>
+353
+</pre><pre>
+354
+</pre><pre>
+355
+</pre><pre>
+356
+</pre><pre>
+357
+</pre><pre>
+358
+</pre><pre>
+359
+</pre><pre>
+360
+</pre><pre>
+361
+</pre><pre>
+362
+</pre><pre>
+363
+</pre><pre>
+364
+</pre><pre>
+365
+</pre><pre>
+366
+</pre><pre>
+367
+</pre><pre>
+368
+</pre><pre>
+369
+</pre><pre>
+370
+</pre><pre>
+371
+</pre><pre>
+372
+</pre><pre>
+373
+</pre><pre>
+374
+</pre><pre>
+375
+</pre><pre>
+376
+</pre><pre>
+377
+</pre><pre>
+378
+</pre><pre>
+379
+</pre><pre>
+380
+</pre><pre>
+381
+</pre><pre>
+382
+</pre><pre>
+383
+</pre><pre>
+384
+</pre><pre>
+385
+</pre><pre>
+386
+</pre><pre>
+387
+</pre><pre>
+388
+</pre><pre>
+389
+</pre><pre>
+390
+</pre><pre>
+391
+</pre><pre>
+392
+</pre><pre>
+393
+</pre><pre>
+394
+</pre><pre>
+395
+</pre><pre>
+396
+</pre><pre>
+397
+</pre><pre>
+398
+</pre><pre>
+399
+</pre><pre>
+400
+</pre></div></td><td colspan="1" rowspan="1"><div><pre>
+/home/philipp/facerec/data/at/s13/2.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/7.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/6.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/9.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/5.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/3.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/4.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/10.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/8.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s13/1.pgm;12
+</pre><pre>
+/home/philipp/facerec/data/at/s17/2.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/7.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/6.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/9.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/5.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/3.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/4.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/10.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/8.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s17/1.pgm;16
+</pre><pre>
+/home/philipp/facerec/data/at/s32/2.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/7.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/6.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/9.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/5.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/3.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/4.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/10.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/8.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s32/1.pgm;31
+</pre><pre>
+/home/philipp/facerec/data/at/s10/2.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/7.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/6.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/9.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/5.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/3.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/4.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/10.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/8.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s10/1.pgm;9
+</pre><pre>
+/home/philipp/facerec/data/at/s27/2.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/7.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/6.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/9.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/5.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/3.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/4.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/10.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/8.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s27/1.pgm;26
+</pre><pre>
+/home/philipp/facerec/data/at/s5/2.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/7.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/6.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/9.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/5.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/3.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/4.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/10.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/8.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s5/1.pgm;4
+</pre><pre>
+/home/philipp/facerec/data/at/s20/2.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/7.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/6.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/9.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/5.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/3.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/4.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/10.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/8.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s20/1.pgm;19
+</pre><pre>
+/home/philipp/facerec/data/at/s30/2.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/7.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/6.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/9.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/5.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/3.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/4.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/10.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/8.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s30/1.pgm;29
+</pre><pre>
+/home/philipp/facerec/data/at/s39/2.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/7.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/6.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/9.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/5.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/3.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/4.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/10.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/8.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s39/1.pgm;38
+</pre><pre>
+/home/philipp/facerec/data/at/s35/2.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/7.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/6.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/9.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/5.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/3.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/4.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/10.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/8.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s35/1.pgm;34
+</pre><pre>
+/home/philipp/facerec/data/at/s23/2.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/7.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/6.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/9.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/5.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/3.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/4.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/10.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/8.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s23/1.pgm;22
+</pre><pre>
+/home/philipp/facerec/data/at/s4/2.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/7.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/6.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/9.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/5.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/3.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/4.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/10.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/8.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s4/1.pgm;3
+</pre><pre>
+/home/philipp/facerec/data/at/s9/2.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/7.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/6.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/9.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/5.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/3.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/4.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/10.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/8.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s9/1.pgm;8
+</pre><pre>
+/home/philipp/facerec/data/at/s37/2.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/7.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/6.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/9.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/5.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/3.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/4.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/10.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/8.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s37/1.pgm;36
+</pre><pre>
+/home/philipp/facerec/data/at/s24/2.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/7.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/6.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/9.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/5.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/3.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/4.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/10.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/8.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s24/1.pgm;23
+</pre><pre>
+/home/philipp/facerec/data/at/s19/2.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/7.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/6.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/9.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/5.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/3.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/4.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/10.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/8.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s19/1.pgm;18
+</pre><pre>
+/home/philipp/facerec/data/at/s8/2.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/7.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/6.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/9.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/5.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/3.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/4.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/10.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/8.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s8/1.pgm;7
+</pre><pre>
+/home/philipp/facerec/data/at/s21/2.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/7.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/6.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/9.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/5.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/3.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/4.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/10.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/8.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s21/1.pgm;20
+</pre><pre>
+/home/philipp/facerec/data/at/s1/2.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/7.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/6.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/9.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/5.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/3.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/4.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/10.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/8.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s1/1.pgm;0
+</pre><pre>
+/home/philipp/facerec/data/at/s7/2.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/7.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/6.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/9.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/5.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/3.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/4.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/10.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/8.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s7/1.pgm;6
+</pre><pre>
+/home/philipp/facerec/data/at/s16/2.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/7.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/6.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/9.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/5.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/3.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/4.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/10.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/8.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s16/1.pgm;15
+</pre><pre>
+/home/philipp/facerec/data/at/s36/2.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/7.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/6.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/9.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/5.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/3.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/4.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/10.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/8.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s36/1.pgm;35
+</pre><pre>
+/home/philipp/facerec/data/at/s25/2.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/7.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/6.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/9.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/5.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/3.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/4.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/10.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/8.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s25/1.pgm;24
+</pre><pre>
+/home/philipp/facerec/data/at/s14/2.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/7.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/6.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/9.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/5.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/3.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/4.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/10.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/8.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s14/1.pgm;13
+</pre><pre>
+/home/philipp/facerec/data/at/s34/2.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/7.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/6.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/9.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/5.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/3.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/4.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/10.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/8.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s34/1.pgm;33
+</pre><pre>
+/home/philipp/facerec/data/at/s11/2.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/7.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/6.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/9.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/5.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/3.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/4.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/10.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/8.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s11/1.pgm;10
+</pre><pre>
+/home/philipp/facerec/data/at/s26/2.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/7.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/6.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/9.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/5.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/3.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/4.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/10.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/8.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s26/1.pgm;25
+</pre><pre>
+/home/philipp/facerec/data/at/s18/2.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/7.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/6.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/9.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/5.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/3.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/4.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/10.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/8.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s18/1.pgm;17
+</pre><pre>
+/home/philipp/facerec/data/at/s29/2.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/7.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/6.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/9.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/5.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/3.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/4.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/10.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/8.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s29/1.pgm;28
+</pre><pre>
+/home/philipp/facerec/data/at/s33/2.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/7.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/6.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/9.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/5.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/3.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/4.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/10.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/8.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s33/1.pgm;32
+</pre><pre>
+/home/philipp/facerec/data/at/s12/2.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/7.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/6.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/9.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/5.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/3.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/4.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/10.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/8.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s12/1.pgm;11
+</pre><pre>
+/home/philipp/facerec/data/at/s6/2.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/7.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/6.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/9.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/5.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/3.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/4.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/10.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/8.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s6/1.pgm;5
+</pre><pre>
+/home/philipp/facerec/data/at/s22/2.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/7.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/6.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/9.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/5.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/3.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/4.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/10.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/8.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s22/1.pgm;21
+</pre><pre>
+/home/philipp/facerec/data/at/s15/2.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/7.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/6.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/9.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/5.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/3.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/4.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/10.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/8.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s15/1.pgm;14
+</pre><pre>
+/home/philipp/facerec/data/at/s2/2.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/7.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/6.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/9.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/5.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/3.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/4.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/10.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/8.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s2/1.pgm;1
+</pre><pre>
+/home/philipp/facerec/data/at/s31/2.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/7.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/6.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/9.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/5.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/3.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/4.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/10.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/8.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s31/1.pgm;30
+</pre><pre>
+/home/philipp/facerec/data/at/s28/2.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/7.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/6.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/9.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/5.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/3.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/4.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/10.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/8.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s28/1.pgm;27
+</pre><pre>
+/home/philipp/facerec/data/at/s40/2.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/7.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/6.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/9.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/5.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/3.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/4.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/10.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/8.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s40/1.pgm;39
+</pre><pre>
+/home/philipp/facerec/data/at/s3/2.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/7.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/6.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/9.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/5.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/3.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/4.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/10.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/8.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s3/1.pgm;2
+</pre><pre>
+/home/philipp/facerec/data/at/s38/2.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/7.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/6.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/9.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/5.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/3.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/4.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/10.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/8.pgm;37
+</pre><pre>
+/home/philipp/facerec/data/at/s38/1.pgm;37
+</pre></div></td></tr></tbody></table><p> </p><p>C#版的人脸识别（只实现了特征脸）EMGU Multiple Face Recognition using PCA and Parallel Optimisatioin：</p><p> <a href="http://www.codeproject.com/Articles/261550/EMGU-Multiple-Face-Recognition-using-PCA-and-Paral?msg=4377858" shape="rect"><span style="color: rgb(0, 102, 204);">http://www.codeproject.com/Articles/261550/EMGU-Multiple-Face-Recognition-using-PCA-and-Paral?msg=4377858</span></a></p></div><div>标签: <a href="http://www.cnblogs.com/guoming0000/tag/OpenCV/" shape="rect"><span style="color: rgb(0, 102, 204);">OpenCV</span></a>, <a href="http://www.cnblogs.com/guoming0000/tag/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" shape="rect"><span style="color: rgb(0, 102, 204);">人脸识别</span></a></div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">好文要顶</span></a> <a shape="rect"><span style="color: rgb(0, 102, 204);">关注我</span></a> <a shape="rect"><span style="color: rgb(0, 102, 204);">收藏该文</span></a><a href="http://msg.cnblogs.com/send/%E7%AE%AB%E9%B8%A3" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">联系我</span></a> <a shape="rect" title="分享至新浪微博"><img src="怎样使用OpenCV进行人脸识别_files/Image [48].png" type="image/png" style="height: auto;"/></a> <a shape="rect" title="分享至微信"><img src="怎样使用OpenCV进行人脸识别_files/Image [49].png" type="image/png" style="height: auto;"/></a></div><div><a href="http://home.cnblogs.com/u/guoming0000/" shape="rect" target="_blank"><img src="怎样使用OpenCV进行人脸识别_files/Image [1].gif" type="image/gif" style="height: auto;"/></a><div><a href="http://home.cnblogs.com/u/guoming0000/" shape="rect"><span style="color: rgb(0, 102, 204);">箫鸣</span></a><br clear="none"/><a href="http://home.cnblogs.com/u/guoming0000/followees" shape="rect"><span style="color: rgb(0, 102, 204);">关注 - 7</span></a><br clear="none"/><a href="http://home.cnblogs.com/u/guoming0000/followers" shape="rect"><span style="color: rgb(0, 102, 204);">粉丝 - 21</span></a></div></div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">+加关注</span></a></div><div>5</div><div>0</div><div>(请您对文章做出评价)</div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/06/13/2548350.html" shape="rect"><span style="color: rgb(0, 102, 204);">«</span></a> 上一篇：<a href="http://www.cnblogs.com/guoming0000/archive/2012/06/13/2548350.html" shape="rect" title="发布于2012-06-13 18:47"><span style="color: rgb(0, 102, 204);">VS2010安装Python</span></a><br clear="none"/><a href="http://www.cnblogs.com/guoming0000/archive/2013/05/12/3074590.html" shape="rect"><span style="color: rgb(0, 102, 204);">»</span></a> 下一篇：<a href="http://www.cnblogs.com/guoming0000/archive/2013/05/12/3074590.html" shape="rect" title="发布于2013-05-12 21:55"><span style="color: rgb(0, 102, 204);">本博客不再维护，欢迎访问http://52coding.com/</span></a><br clear="none"/></div><div>posted on 2012-09-27 17:23 <a href="http://www.cnblogs.com/guoming0000/" shape="rect"><span style="color: rgb(0, 102, 204);">箫鸣</span></a> 阅读(54306) 评论(10) <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2706019" rel="nofollow" shape="rect"><span style="color: rgb(0, 102, 204);">编辑</span></a> <a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#" shape="rect"><span style="color: rgb(0, 102, 204);">收藏</span></a></div><a name="!comments" shape="rect"></a><div><br clear="none"/><div>FeedBack:</div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678821" shape="rect"><span style="color: rgb(0, 102, 204);">#1楼</span></a><a name="2678821" shape="rect"></a></div><div>2013-05-12 21:30 | <a href="http://home.cnblogs.com/u/527715/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">天微亮</span></a> <a href="http://msg.cnblogs.com/send/%E5%A4%A9%E5%BE%AE%E4%BA%AE" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div>很重要的博客，正好在学习这方面的知识</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div>
+  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678833" shape="rect"><span style="color: rgb(0, 102, 204);">#2楼</span></a><a name="2678833" shape="rect"></a>[楼主]</div><div>2013-05-12 21:53 | <a href="http://www.cnblogs.com/guoming0000/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">箫鸣</span></a> <a href="http://msg.cnblogs.com/send/%E7%AE%AB%E9%B8%A3" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678821" shape="rect" title="查看所回复的评论"><span style="color: rgb(0, 102, 204);">@</span></a> 天微亮<br clear="none"/>
+嗯，建议去<a href="http://plzcoding.com/face-recognition-with-opencv/看" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">http://plzcoding.com/face-recognition-with-opencv/看</span></a>，此博客不维护了</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(1)</span></a></div>
+  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678860" shape="rect"><span style="color: rgb(0, 102, 204);">#3楼</span></a><a name="2678860" shape="rect"></a></div><div>2013-05-12 22:48 | <a href="http://home.cnblogs.com/u/527715/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">天微亮</span></a> <a href="http://msg.cnblogs.com/send/%E5%A4%A9%E5%BE%AE%E4%BA%AE" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678833" shape="rect" title="查看所回复的评论"><span style="color: rgb(0, 102, 204);">@</span></a> 箫鸣<br clear="none"/>
+多谢版主，很热心，又给我引了一大步路。。</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div>
+  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678863" shape="rect"><span style="color: rgb(0, 102, 204);">#4楼</span></a><a name="2678863" shape="rect"></a>[楼主]</div><div>2013-05-12 22:49 | <a href="http://www.cnblogs.com/guoming0000/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">箫鸣</span></a> <a href="http://msg.cnblogs.com/send/%E7%AE%AB%E9%B8%A3" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2678860" shape="rect" title="查看所回复的评论"><span style="color: rgb(0, 102, 204);">@</span></a> 天微亮<br clear="none"/>
+没啥么，吸引人气，哈哈~如果有什么心得，可以发邮件给我，这样我更新更多的人脸识别知识~</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div>
+  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2924857" shape="rect"><span style="color: rgb(0, 102, 204);">#5楼</span></a><a name="2924857" shape="rect"></a></div><div>2014-04-24 21:24 | <a href="http://www.cnblogs.com/BasilLee/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">Basil_Lee</span></a> <a href="http://msg.cnblogs.com/send/Basil_Lee" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div>博主OpenCV中使用特征脸Eigenfaces in OpenCV<br clear="none"/>
+给出的示例程序源代码argv[0]参数应该输入什么啊？谢谢了</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div><span style="display: none;">http://pic.cnblogs.com/face/620754/20150827134924.png</span>  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2924877" shape="rect"><span style="color: rgb(0, 102, 204);">#6楼</span></a><a name="2924877" shape="rect"></a>[楼主]</div><div>2014-04-24 21:57 | <a href="http://www.cnblogs.com/guoming0000/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">箫鸣</span></a> <a href="http://msg.cnblogs.com/send/%E7%AE%AB%E9%B8%A3" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2924857" shape="rect" title="查看所回复的评论"><span style="color: rgb(0, 102, 204);">@</span></a> Basil_Lee<br clear="none"/>
+请去网站查看最新的代码（不用输入参数的代码。关于人脸识别的问题，不再解答），<a href="http://52coding.com/face-recognition-with-opencv/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">http://52coding.com/face-recognition-with-opencv/</span></a></div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div>
+  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3001115" shape="rect"><span style="color: rgb(0, 102, 204);">#7楼</span></a><a name="3001115" shape="rect"></a></div><div>2014-08-05 16:46 | <a href="http://www.cnblogs.com/junling/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">山在岭就在</span></a> <a href="http://msg.cnblogs.com/send/%E5%B1%B1%E5%9C%A8%E5%B2%AD%E5%B0%B1%E5%9C%A8" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div>博主威武，好好学习学习</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div><span style="display: none;">http://pic.cnblogs.com/face/589850/20140410071730.png</span>  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3004585" shape="rect"><span style="color: rgb(0, 102, 204);">#8楼</span></a><a name="3004585" shape="rect"></a></div><div>2014-08-10 15:57 | <a href="http://www.cnblogs.com/junling/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">山在岭就在</span></a> <a href="http://msg.cnblogs.com/send/%E5%B1%B1%E5%9C%A8%E5%B2%AD%E5%B0%B1%E5%9C%A8" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div>有一个小问题，就是函数norm_0_255(InputArray _src)和函数read_csv（）问什么要声明成static形式的呢？求教</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div><span style="display: none;">http://pic.cnblogs.com/face/589850/20140410071730.png</span>  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3150336" shape="rect"><span style="color: rgb(0, 102, 204);">#9楼</span></a><a name="3150336" shape="rect"></a></div><div>2015-03-27 14:36 | <a href="http://home.cnblogs.com/u/736761/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">纸鸢spring</span></a> <a href="http://msg.cnblogs.com/send/%E7%BA%B8%E9%B8%A2spring" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div>楼主，你好，你这个资料太有用了，可是我刚刚看了开头就有个疑问，希望你能不吝赐教！对于人脸数据库，它们大小都是一样的，但假如我现在手头的数据库中人脸图像大小不同，该怎么处理呢？训练是需要把它们统一大小吗？谢谢</div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div>
+  </div></div><div><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3368583" shape="rect"><span style="color: rgb(0, 102, 204);">#10楼</span></a><a name="3368583" shape="rect"></a><span style="display: none;">3368583</span><span style="display: none;">2016/2/29 13:22:28</span></div><div>2016-02-29 13:22 | <a href="http://home.cnblogs.com/u/892847/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">bvjnn37629</span></a> <a href="http://msg.cnblogs.com/send/bvjnn37629" shape="rect" title="发送站内短消息"><span style="color: rgb(0, 102, 204);"> </span></a><br clear="none"/><div align="left"><div>OpenCV人脸识别源码<a href="http://sourcecode.itdadao.com/forum-opencv-1.html" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">http://sourcecode.itdadao.com/forum-opencv-1.html</span></a></div><div><a shape="rect"><span style="color: rgb(0, 102, 204);">支持(0)</span></a><a shape="rect"><span style="color: rgb(0, 102, 204);">反对(0)</span></a></div>
+  </div></div></div><div><a name="commentform" shape="rect"></a><div><a shape="rect"><span style="color: rgb(0, 102, 204);">刷新评论</span></a><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#" shape="rect"><span style="color: rgb(0, 102, 204);">刷新页面</span></a><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#top" shape="rect"><span style="color: rgb(0, 102, 204);">返回顶部</span></a></div><div>注册用户登录后才能发表评论，请 <a rel="nofollow" shape="rect"><span style="color: rgb(0, 102, 204);">登录</span></a> 或 <a rel="nofollow" shape="rect"><span style="color: rgb(0, 102, 204);">注册</span></a>，<a href="http://www.cnblogs.com/" shape="rect"><span style="color: rgb(0, 102, 204);">访问</span></a>网站首页。</div><div><a href="http://www.ucancode.com/index.htm" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</span></a><br clear="none"/><a href="http://www.rongcloud.cn/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">【推荐】融云即时通讯云－豆果美食、Faceu等亿级APP都在用</span></a><br clear="none"/><a href="http://www.gcpowertools.com.cn/products/spreadjs/?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=SpreadJS&amp;utm_campaign=community" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">【推荐】怎样将“在线Excel“嵌入你的开发系统中？</span></a><br clear="none"/><a href="http://click.aliyun.com/m/3037/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">【推荐】阿里云高性能云服务器+SSD云盘，让业务响应0延迟</span></a><br clear="none"/></div><div><a href="https://www.wilddog.com/?utm_source=cnblogs&amp;utm_medium=banner&amp;utm_campaign=orangemarch" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);"><img src="怎样使用OpenCV进行人脸识别_files/Image.jpg" type="image/jpeg" height="250" style="height: auto;" width="300"/></span></a></div><div><b>最新IT新闻</b>:<br clear="none"/>
+· <a href="http://news.cnblogs.com/n/544648/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">中国好老婆杜鹃：等老公出来要给他一个更好的国美</span></a><br clear="none"/>
+· <a href="http://news.cnblogs.com/n/544647/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">360搜索表态：今起放弃一切消费者医疗商业推广业务</span></a><br clear="none"/>
+· <a href="http://news.cnblogs.com/n/544646/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">美国顶尖设计大学开设虚拟现实课程</span></a><br clear="none"/>
+· <a href="http://news.cnblogs.com/n/544645/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">微软欲打造Surface Phone成“全球最安全手机”</span></a><br clear="none"/>
+· <a href="http://news.cnblogs.com/n/544644/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">NASA“新视野号”发回最完整冥王星地图</span></a><br clear="none"/>
+» <a href="http://news.cnblogs.com/" shape="rect" target="_blank" title="IT新闻"><span style="color: rgb(0, 102, 204);">更多新闻...</span></a></div><div><a href="https://www.jpush.cn/?from=cnblogs01" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);"><img src="怎样使用OpenCV进行人脸识别_files/Image [1].jpg" type="image/jpeg" height="60" style="height: auto;" width="468"/></span></a></div><div><b>最新知识库文章</b>:<br clear="none"/><div>· <a href="http://kb.cnblogs.com/page/543110/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">架构漫谈（九）：理清技术、业务和架构的关系</span></a><br clear="none"/>
+· <a href="http://kb.cnblogs.com/page/542725/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">架构漫谈（八）：从架构的角度看如何写好代码</span></a><br clear="none"/>
+· <a href="http://kb.cnblogs.com/page/542257/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">架构漫谈（七）：不要空设架构师这个职位，给他实权</span></a><br clear="none"/>
+· <a href="http://kb.cnblogs.com/page/541740/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">架构漫谈（六）：软件架构到底是要解决什么问题？</span></a><br clear="none"/>
+· <a href="http://kb.cnblogs.com/page/541188/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">架构漫谈（五）：什么是软件</span></a><br clear="none"/></div>
+» <a href="http://kb.cnblogs.com/" shape="rect" target="_blank"><span style="color: rgb(0, 102, 204);">更多知识库文章...</span></a></div></div><div>Copyright ©2016 箫鸣 Powered by: <a href="http://www.cnblogs.com/" shape="rect"><span style="color: rgb(0, 102, 204);">博客园</span></a> 模板提供：<a href="http://blog.hjenglish.com/" shape="rect"><span style="color: rgb(0, 102, 204);">沪江博客</span></a><br clear="none"/></div></div><div><div><table cellpadding="0" cellspacing="0" title="Calendar"><tbody><tr><td colspan="7" rowspan="1"><table cellspacing="0"><tbody><tr><td colspan="1" rowspan="1"><a shape="rect"><span style="color: rgb(0, 102, 204);">&lt;</span></a></td><td align="center" colspan="1" rowspan="1">2012年9月</td><td align="right" colspan="1" rowspan="1"><a shape="rect"><span style="color: rgb(0, 102, 204);">&gt;</span></a></td></tr></tbody></table></td></tr><tr><th abbr="日" align="center" colspan="1" rowspan="1">日</th><th abbr="一" align="center" colspan="1" rowspan="1">一</th><th abbr="二" align="center" colspan="1" rowspan="1">二</th><th abbr="三" align="center" colspan="1" rowspan="1">三</th><th abbr="四" align="center" colspan="1" rowspan="1">四</th><th abbr="五" align="center" colspan="1" rowspan="1">五</th><th abbr="六" align="center" colspan="1" rowspan="1">六</th></tr><tr><td align="center" colspan="1" rowspan="1">26</td><td align="center" colspan="1" rowspan="1">27</td><td align="center" colspan="1" rowspan="1">28</td><td align="center" colspan="1" rowspan="1">29</td><td align="center" colspan="1" rowspan="1">30</td><td align="center" colspan="1" rowspan="1">31</td><td align="center" colspan="1" rowspan="1">1</td></tr><tr><td align="center" colspan="1" rowspan="1">2</td><td align="center" colspan="1" rowspan="1">3</td><td align="center" colspan="1" rowspan="1">4</td><td align="center" colspan="1" rowspan="1">5</td><td align="center" colspan="1" rowspan="1">6</td><td align="center" colspan="1" rowspan="1">7</td><td align="center" colspan="1" rowspan="1">8</td></tr><tr><td align="center" colspan="1" rowspan="1">9</td><td align="center" colspan="1" rowspan="1">10</td><td align="center" colspan="1" rowspan="1">11</td><td align="center" colspan="1" rowspan="1">12</td><td align="center" colspan="1" rowspan="1">13</td><td align="center" colspan="1" rowspan="1">14</td><td align="center" colspan="1" rowspan="1">15</td></tr><tr><td align="center" colspan="1" rowspan="1">16</td><td align="center" colspan="1" rowspan="1">17</td><td align="center" colspan="1" rowspan="1">18</td><td align="center" colspan="1" rowspan="1">19</td><td align="center" colspan="1" rowspan="1">20</td><td align="center" colspan="1" rowspan="1">21</td><td align="center" colspan="1" rowspan="1">22</td></tr><tr><td align="center" colspan="1" rowspan="1">23</td><td align="center" colspan="1" rowspan="1">24</td><td align="center" colspan="1" rowspan="1">25</td><td align="center" colspan="1" rowspan="1">26</td><td align="center" colspan="1" rowspan="1"><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27.html" shape="rect"><span style="text-decoration: underline;"><span style="color: rgb(0, 102, 204);">27</span></span></a></td><td align="center" colspan="1" rowspan="1">28</td><td align="center" colspan="1" rowspan="1">29</td></tr><tr><td align="center" colspan="1" rowspan="1">30</td><td align="center" colspan="1" rowspan="1">1</td><td align="center" colspan="1" rowspan="1">2</td><td align="center" colspan="1" rowspan="1">3</td><td align="center" colspan="1" rowspan="1">4</td><td align="center" colspan="1" rowspan="1">5</td><td align="center" colspan="1" rowspan="1">6</td></tr></tbody></table></div><br clear="none"/><div>昵称：<a href="http://home.cnblogs.com/u/guoming0000/" shape="rect"><span style="color: rgb(0, 102, 204);">箫鸣</span></a><br clear="none"/>
+园龄：<a href="http://home.cnblogs.com/u/guoming0000/" shape="rect" title="入园时间：2011-12-05"><span style="color: rgb(0, 102, 204);">4年4个月</span></a><br clear="none"/>
+粉丝：<a href="http://home.cnblogs.com/u/guoming0000/followers/" shape="rect"><span style="color: rgb(0, 102, 204);">21</span></a><br clear="none"/>
+关注：<a href="http://home.cnblogs.com/u/guoming0000/followees/" shape="rect"><span style="color: rgb(0, 102, 204);">7</span></a><div><a shape="rect"><span style="color: rgb(0, 102, 204);">+加关注</span></a></div></div><div><h3>搜索</h3><div> </div><div> </div></div><div><h3>常用链接</h3><ul><li><a href="http://www.cnblogs.com/guoming0000/p/" shape="rect" title="我的博客的随笔列表"><span style="color: rgb(0, 102, 204);">我的随笔</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/MyComments.html" shape="rect" title="我发表过的评论列表"><span style="color: rgb(0, 102, 204);">我的评论</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/OtherPosts.html" shape="rect" title="我评论过的随笔列表"><span style="color: rgb(0, 102, 204);">我的参与</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/RecentComments.html" shape="rect" title="我的博客的评论列表"><span style="color: rgb(0, 102, 204);">最新评论</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/tag/" shape="rect" title="我的博客的标签列表"><span style="color: rgb(0, 102, 204);">我的标签</span></a></li></ul></div><div><h3>我的标签</h3><div><ul><li><a href="http://www.cnblogs.com/guoming0000/tag/OpenCV/" shape="rect"><span style="color: rgb(0, 102, 204);">OpenCV</span></a>(2)</li><li><a href="http://www.cnblogs.com/guoming0000/tag/Python/" shape="rect"><span style="color: rgb(0, 102, 204);">Python</span></a>(1)</li><li><a href="http://www.cnblogs.com/guoming0000/tag/VS2010/" shape="rect"><span style="color: rgb(0, 102, 204);">VS2010</span></a>(1)</li><li><a href="http://www.cnblogs.com/guoming0000/tag/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" shape="rect"><span style="color: rgb(0, 102, 204);">人脸识别</span></a>(1)</li><li><a href="http://www.cnblogs.com/guoming0000/tag/C%2B%2B/" shape="rect"><span style="color: rgb(0, 102, 204);">C++</span></a>(1)</li><li><a href="http://www.cnblogs.com/guoming0000/tag/Kinect/" shape="rect"><span style="color: rgb(0, 102, 204);">Kinect</span></a>(1)</li><li><a href="http://www.cnblogs.com/guoming0000/tag/Kinect%20SDK1%2F5/" shape="rect"><span style="color: rgb(0, 102, 204);">Kinect SDK1/5</span></a>(1)</li></ul></div></div><div><h1>随笔档案</h1><ul><li><a href="http://www.cnblogs.com/guoming0000/archive/2013/05.html" shape="rect"><span style="color: rgb(0, 102, 204);">2013年5月 (1)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09.html" shape="rect"><span style="color: rgb(0, 102, 204);">2012年9月 (1)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/06.html" shape="rect"><span style="color: rgb(0, 102, 204);">2012年6月 (1)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/05.html" shape="rect"><span style="color: rgb(0, 102, 204);">2012年5月 (1)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/04.html" shape="rect"><span style="color: rgb(0, 102, 204);">2012年4月 (2)</span></a></li></ul></div><div><h3>最新评论</h3><div><ul><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3368583" shape="rect"><span style="color: rgb(0, 102, 204);">1. Re:怎样使用OpenCV进行人脸识别</span></a></li><li>OpenCV人脸识别源码<a shape="rect" target="_blank"></a></li><li>--bvjnn37629</li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3150336" shape="rect"><span style="color: rgb(0, 102, 204);">2. Re:怎样使用OpenCV进行人脸识别</span></a></li><li>楼主，你好，你这个资料太有用了，可是我刚刚看了开头就有个疑问，希望你能不吝赐教！对于人脸数据库，它们大小都是一样的，但假如我现在手头的数据库中人脸图像大小不同，该怎么处理呢？训练是需要把它们统一大小吗......</li><li>--纸鸢spring</li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3004585" shape="rect"><span style="color: rgb(0, 102, 204);">3. Re:怎样使用OpenCV进行人脸识别</span></a></li><li>有一个小问题，就是函数norm_0_255(InputArray _src)和函数read_csv（）问什么要声明成static形式的呢？求教</li><li>--山在岭就在</li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#3001115" shape="rect"><span style="color: rgb(0, 102, 204);">4. Re:怎样使用OpenCV进行人脸识别</span></a></li><li>博主威武，好好学习学习</li><li>--山在岭就在</li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html#2924877" shape="rect"><span style="color: rgb(0, 102, 204);">5. Re:怎样使用OpenCV进行人脸识别</span></a></li><li>@Basil_Lee请去网站查看最新的代码（不用输入参数的代码。关于人脸识别的问题，不再解答），...</li><li>--箫鸣</li></ul></div></div><div><h3>阅读排行榜</h3><div><ul><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html" shape="rect"><span style="color: rgb(0, 102, 204);">1. 怎样使用OpenCV进行人脸识别(54304)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/06/13/2548350.html" shape="rect"><span style="color: rgb(0, 102, 204);">2. VS2010安装Python(8707)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/05/27/2520553.html" shape="rect"><span style="color: rgb(0, 102, 204);">3. Kinect SDK 1.5 Face Tracking ---&gt; 使用opencv显示后的超级简化版本(2074)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2013/05/12/3074590.html" shape="rect"><span style="color: rgb(0, 102, 204);">4. 本博客不再维护，欢迎访问http://52coding.com/(280)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/04/25/2470035.html" shape="rect"><span style="color: rgb(0, 102, 204);">5. 关于Kinect的事情(143)</span></a></li></ul></div></div><div><h3>评论排行榜</h3><div><ul><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html" shape="rect"><span style="color: rgb(0, 102, 204);">1. 怎样使用OpenCV进行人脸识别(10)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/04/24/2468901.html" shape="rect"><span style="color: rgb(0, 102, 204);">2. 纪念一下--开始住入博客园(4)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/05/27/2520553.html" shape="rect"><span style="color: rgb(0, 102, 204);">3. Kinect SDK 1.5 Face Tracking ---&gt; 使用opencv显示后的超级简化版本(4)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/06/13/2548350.html" shape="rect"><span style="color: rgb(0, 102, 204);">4. VS2010安装Python(1)</span></a></li></ul></div></div><div><h3>推荐排行榜</h3><div><ul><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/09/27/2706019.html" shape="rect"><span style="color: rgb(0, 102, 204);">1. 怎样使用OpenCV进行人脸识别(5)</span></a></li><li><a href="http://www.cnblogs.com/guoming0000/archive/2012/05/27/2520553.html" shape="rect"><span style="color: rgb(0, 102, 204);">2. Kinect SDK 1.5 Face Tracking ---&gt; 使用opencv显示后的超级简化版本(1)</span></a></li></ul></div></div></div></div></span>
+</div></body></html> 

@@ -1,0 +1,271 @@
+<html>
+<head>
+  <title>Concepts</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="479"/>
+<h1>Concepts</h1>
+
+<div>
+<span>
+	<div>On this page</div>
+	<ol>
+		<li><a href="https://developer.android.com/ndk/guides/concepts.html#bb">Before Beginning</a></li>
+		<li><a href="https://developer.android.com/ndk/guides/concepts.html#intro">Introduction</a></li>
+		<li><a href="https://developer.android.com/ndk/guides/concepts.html#hiw">How It Works</a></li>
+		<li><a href="https://developer.android.com/ndk/guides/concepts.html#naa">Native Activities and Applications</a></li>
+	</ol>
+	<div>Before Beginning</div>
+	<div>
+		<hr/>
+	</div>
+	<div>This guide assumes that you are already familiar with concepts inherent in native programming and in<a href="https://developer.android.com/developer/index.html">Android development</a>.</div>
+	<div>学习本门之前需要对本地化编程的概念熟悉。</div>
+	<div>Introduction</div>
+	<div>
+		<hr/>
+	</div>
+	<div>This section provides a high-level explanation of how the NDK works. The Android NDK is a set of tools allowing you to embed C or C++ (“native code”) into your Android apps. The ability to use native code in Android apps can be particularly useful to developers who wish to do one or more of the following:</div>
+	<div>本部分内容提供NDK如何工作的高级扩展内容。Android NDK是一个工具集，它允许你在Android app中嵌入c/c++语言。Android app使用本地化代码的能力尤其实用，对于想实现一下内容的开发者来说。</div>
+	<ul>
+		<li>Port their apps between platforms.</li>
+	</ul>
+	<ul>
+		<li>Reuse existing libraries, or provide their own libraries for reuse.</li>
+	</ul>
+	<ul>
+		<li>Increase performance in certain cases, particularly computationally intensive ones like games.</li>
+	</ul>
+	<div>     1.跨平台</div>
+	<ol start="2">
+		<li>复用已有的库</li>
+		<li>在某些方面提升性能，尤其是对计算敏感比如游戏。</li>
+	</ol>
+	<div>How it Works</div>
+	<div>
+		<hr/>
+	</div>
+	<div>This section introduces the main components used in building a native application for Android, and goes on to describe the process of building and packaging.</div>
+	<div>本部分介绍用于创建本地Android本地应用的主要组件，然后描述构建和打包的步骤。</div>
+	<div>Main components</div>
+	<div>主要组件</div>
+	<div>在创建App之前你必须理解下面将要介绍的组件：</div>
+	<div>ndk-build:ndk-build命令启动NDK的核心构建脚本。这些脚本自动检测开发系统和app文件，然后决定编译那些文件。</div>
+	<div>You should have an understanding of the following components as you build your app:</div>
+	<ul>
+		<li>ndk-build: The ndk-build script launches the build scripts at the heart of the NDK. These scripts:</li>
+		<li style="list-style: none; display: inline">
+			
+		<ul>
+				<li>Automatically probe your development system and app project file to determine what to build.</li>
+			</ul></li>
+	</ul>
+	<ul>
+		<li>Generate binaries.</li>
+		<li style="list-style: none; display: inline">
+			
+		<ul>
+				<li>Copy the binaries to your app's project path.</li>
+				<li>生成二进制文件，将二进制文件拷贝到工程路径中。</li>
+			</ul></li>
+	</ul>
+	<ul>
+		<li>For more information, see <a href="https://developer.android.com/ndk/guides/ndk-build.html">ndk-build</a>.</li>
+		<li>更多的信息参考：。。</li>
+	</ul>
+	<ul>
+		<li>Java: From your Java source, the Android build process generates .dex (Dalvik EXecutable) files, which are what the Android OS runs in the Dalvik Virtual Machine (“DVM”).</li>
+		<li>对于Java源码,Android构建程序将生成.dex（Dalvik EXecutable ）文件，Android os运行在Dalvik虚拟机（ Dalvik Virtual Machine  ）中。</li>
+		<li>Even if your app contains no Java source code at all, the build process still generates a .dex executable file within which the native component runs.</li>
+		<li>甚至app中不包含任何java代码，构建程序仍然在本地组件的运行过程中生成一个.dex可以文件。</li>
+		<li>When developing Java components, use the native keyword to indicate methods implemented as native code. For example, the following function declaration tells the compiler that the implementation is in a native library:public native int add(int  x, int  y);</li>
+		<li>当开发java组件的时候，用native关键字声明这个方法在本地代码中实现的。比如：接下来的这个方法的生命告诉编译器这个实现是在本地库中：public native int add(int x,int y);</li>
+	</ul>
+	<ul>
+		<li>Native shared libraries: The NDK builds these libraries, or .so files, from your native source code.<b>Note:</b> If two libraries implement respective methods with the same signature, a link error occurs. In C, &quot;signature&quot; means method name only. In C++, &quot;signature&quot; means not only method name, but also its argument names and types.</li>
+		<li>Native 共享库：NDK从本地代码生成的这些库或者.so文件。注意：当两个类用相同的签名继承相同期望的方法，会出现链接错误。在C中，“签名”意味着方法名字相同。而在C++中，签名意味这方法名，参数名，类型共同决定。</li>
+	</ul>
+	<ul>
+		<li>Native static libraries: The NDK can also build static libraries, or .a files, which you can link against other libraries.</li><li>Native静态类:NDK也可以构建静态类，或者一个可以链接其他类的.a文件。</li>
+	</ul>
+	<ul>
+		<li>Java Native Interface (JNI): The JNI is the interface via which the Java and C++ components talk to one another. This guide assumes knowledge of the JNI; for information about it, consult the <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html">Java Native Interface Specification</a>.</li><li>JNI是Java和C++组件之间通信的接口。</li>
+	</ul>
+	<ul>
+		<li>Application Binary Interface (ABI): The ABI defines exactly how your app's machine code is expected to interact with the system at runtime. The NDK builds .so files against these definitions. Different ABIs correspond to different architectures: The NDK includes ABI support for ARMEABI (default), MIPS, and x86. For more information, see <a href="https://developer.android.com/ndk/guides/abis.html">ABI Management</a>.</li>
+	</ul>
+	<ul>
+		<li><br/></li><li>Manifest: If you are writing an app with no Java component to it, you must declare the <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a> class in the <a href="https://developer.android.com/guide/topics/manifest/manifest-intro.html">manifest</a>. <a href="https://developer.android.com/ndk/guides/concepts.html#naa">Native Activities and Applications</a> provides more detail on how to do this, under “Using the native_activity.h interface.”</li>
+	</ul>
+	<div>The following two items are only required for building using the <a href="https://developer.android.com/ndk/guides/ndk-build.html">ndk-build</a> script, and for debugging using the <a href="https://developer.android.com/ndk/guides/ndk-gdb.html">ndk-gdb</a> script.</div>
+	<ul>
+		<li><a href="https://developer.android.com/ndk/guides/android_mk.html">Android.mk</a>: You must create an <a href="https://developer.android.com/ndk/guides/android_mk.html">Android.mk</a> configuration file inside your jni folder. The ndk-build script looks at this file, which defines the module and its name, the source files to be compiled, build flags and libraries to link.</li>
+	</ul>
+	<ul>
+		<li><a href="https://developer.android.com/ndk/guides/application_mk.html">Application.mk</a>: This file enumerates and describes the modules that your app requires. This information includes:</li>
+		<li style="list-style: none; display: inline">
+			
+		<ul>
+				<li>ABIs used to compile for specific platforms.</li>
+			</ul></li>
+	</ul>
+	<ul>
+		<li>Toolchains.</li>
+		<li style="list-style: none; display: inline">
+			
+		<ul>
+				<li>Standard libraries to include (static and dynamic STLport or default system).</li>
+			</ul></li>
+	</ul>
+	<div>Flow</div>
+	<div><br/></div>
+	<div>The general flow for developing a native app for Android is as follows:</div>
+	<ol>
+		<li>Design your app, deciding which parts to implement in Java, and which parts to implement as native code.<b>Note:</b> While it is possible to completely avoid Java, you are likely to find the Android Java framework useful for tasks including controlling the display and UI.</li>
+	</ol>
+	<ol>
+		<li>Create an Android app Project as you would for any other Android project.</li>
+	</ol>
+	<ol>
+		<li>If you are writing a native-only app, declare the <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a> class in AndroidManifest.xml. For more information, see the <a href="https://developer.android.com/ndk/guides/concepts.html#naa">Native Activities and Applications</a>.</li>
+	</ol>
+	<ol>
+		<li>Create an Android.mk file describing the native library, including name, flags, linked libraries, and source files to be compiled in the &quot;JNI&quot; directory.</li>
+	</ol>
+	<ol>
+		<li>Optionally, you can create an Application.mk file configuring the target ABIs, toolchain, release/debug mode, and STL. For any of these that you do not specify, the following default values are used, respectively:
+
+			
+		<ul>
+				<li>ABI: armeabi</li>
+			</ul></li>
+	</ol>
+	<ul>
+		<li>Toolchain: GCC 4.8</li>
+		<li style="list-style: none; display: inline">
+			
+		<ul>
+				<li>Mode: Release</li>
+			</ul></li>
+	</ul>
+	<ul>
+		<li>STL: system</li>
+	</ul>
+	<ol>
+		<li>Place your native source under the project's jni directory.</li>
+	</ol>
+	<ol>
+		<li>Use ndk-build to compile the native (.so, .a) libraries.</li>
+	</ol>
+	<ol>
+		<li>Build the Java component, producing the executable .dex file.</li>
+	</ol>
+	<ol>
+		<li>Package everything into an APK file, containing .so, .dex, and other files needed for your app to run.</li>
+	</ol>
+	<div>Native Activities and Applications</div>
+	<div>
+		<hr/>
+	</div>
+	<div>The Android SDK provides a helper class, <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a>, that allows you to write a completely native activity. <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a> handles the communication between the Android framework and your native code, so you do not have to subclass it or call its methods. All you need to do is declare your application to be native in your AndroidManifest.xml file, and begin creating your native application.</div>
+	<div><br/></div>
+	<div>An Android application using <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a> still runs in its own virtual machine, sandboxed from other applications. You can therefore still access Android framework APIs through the JNI. In certain cases, however–such as for sensors, input events, and assets–the NDK provides native interfaces that you can use instead of having to call across the JNI. For more information about such support, see <a href="https://developer.android.com/ndk/guides/stable_apis.html">Android NDK Native APIs</a>.</div>
+	<div><br/></div>
+	<div>Regardless of whether or not you are developing a native activity, we recommend that you create your projects with the traditional Android build tools. Doing so helps ensure building and packaging of Android applications with the correct structure.</div>
+	<div><br/></div>
+	<div>The Android NDK provides you with two choices to implement your native activity:</div>
+	<ul>
+		<li>The <a href="https://developer.android.com/ndk/reference/native__activity_8h.html">native_activity.h</a> header defines the native version of the <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a> class. It contains the callback interface and data structures that you need to create your native activity. Because the main thread of your application handles the callbacks, your callback implementations must not be blocking. If they block, you might receive ANR (Application Not Responding) errors because your main thread is unresponsive until the callback returns.</li>
+	</ul>
+	<ul>
+		<li>The android_native_app_glue.h file defines a static helper library built on top of the <a href="https://developer.android.com/ndk/reference/native__activity_8h.html">native_activity.h</a> interface. It spawns another thread, which handles things such as callbacks or input events in an event loop. Moving these events to a separate thread prevents any callbacks from blocking your main thread.</li>
+	</ul>
+	<div>The &lt;ndk_root&gt;/sources/android/native_app_glue/android_native_app_glue.c source is also available, allowing you to modify the implementation.</div>
+	<div><br/></div>
+	<div>For more information on how to use this static library, examine the native-activity sample application and its documentation. Further reading is also available in the comments in the &lt;ndk_root&gt;/sources/android/native_app_glue/android_native_app_glue.h file.</div>
+	<div><br/></div>
+	<div>Using the native_activity.h interface</div>
+	<div><br/></div>
+	<div>To implement a native activity with the <a href="https://developer.android.com/ndk/reference/native__activity_8h.html">native_activity.h</a> interface:</div>
+	<ol>
+		<li>Create a jni/ directory in your project's root directory. This directory stores all of your native code.</li>
+	</ol>
+	<ol>
+		<li>Declare your native activity in the AndroidManifest.xml file.Because your application has no Java code, set android:hasCode to false.&lt;application android:label=&quot;@string/app_name&quot; android:hasCode=&quot;false&quot;&gt;You must set the android:name attribute of the activity tag to <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a>.&lt;activity android:name=&quot;android.app.NativeActivity&quot;android:label=&quot;@string/app_name&quot;&gt;<b>Note:</b> You can subclass <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a>. If you do, use the name of the subclass instead of <a href="https://developer.android.com/reference/android/app/NativeActivity.html">NativeActivity</a>.The android:value attribute of the meta-data tag specifies the name of the shared library containing the entry point to the application (such as C/C++ main), omitting the lib prefix and .so suffix from the library name.&lt;meta-data android:name=&quot;android.app.lib_name&quot;android:value=&quot;native-activity&quot; /&gt;&lt;intent-filter&gt;&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;&lt;/intent-filter&gt;&lt;/activity&gt;&lt;/application&gt;&lt;/manifest&gt;</li>
+	</ol>
+	<div><br/></div>
+	<div>           </div>
+	<div><br/></div>
+	<div>         </div>
+	<div><br/></div>
+	<div>           </div>
+	<div><br/></div>
+	<div>           </div>
+	<div><br/></div>
+	<div>             </div>
+	<div><br/></div>
+	<div>             </div>
+	<div><br/></div>
+	<div>           </div>
+	<div><br/></div>
+	<div>         </div>
+	<div><br/></div>
+	<div>       </div>
+	<div><br/></div>
+	<div>     </div>
+	<ol>
+		<li>Create a file for your native activity, and implement the function named in the <a href="https://developer.android.com/ndk/reference/group___native_activity.html#ga02791d0d490839055169f39fdc905c5e">ANativeActivity_onCreate</a> variable. The app calls this function when the native activity starts. This function, analogous to main in C/C++, receives a pointer to an <a href="https://developer.android.com/ndk/reference/struct_a_native_activity.html">ANativeActivity</a> structure, which contains function pointers to the various callback implementations that you need to write. Set the applicable callback function pointers inANativeActivity-&gt;callbacks to the implementations of your callbacks.</li>
+	</ol>
+	<ol>
+		<li>Set the ANativeActivity-&gt;instance field to the address of any instance of specific data that you want to use.</li>
+	</ol>
+	<ol>
+		<li>Implement anything else that you want your activity to do upon starting.</li>
+	</ol>
+	<ol>
+		<li>Implement the rest of the callbacks that you set in ANativeActivity-&gt;callbacks. For more information on when the callbacks are called, see<a href="https://developer.android.com/training/basics/activity-lifecycle/index.html">Managing the Activity Lifecycle</a>.</li>
+	</ol>
+	<ol>
+		<li>Develop the rest of your application.</li>
+	</ol>
+	<ol>
+		<li>Create an Android.mk file in the jni/ directory of your project to describe your native module to the build system. For more information, see<a href="https://developer.android.com/ndk/guides/android_mk.html">Android.mk</a>.</li>
+	</ol>
+	<ol>
+		<li>Once you have an <a href="https://developer.android.com/ndk/guides/android_mk.html">Android.mk</a> file, compile your native code using the ndk-build command.$ cd &lt;path&gt;/&lt;to&gt;/&lt;project&gt;<br/>
+$ &lt;ndk&gt;/ndk-build<br/><br/></li>
+	</ol>
+	<ol>
+		<li>Build and install your Android project as usual. If your native code is in the jni/ directory, the build script automatically packages the .so file(s) built from it into the APK.</li>
+	</ol>
+	<div>Get news &amp; tips<br/></div>
+	<div><br/></div>
+	<div>SIGN UP FOR THE NEWSLETTER</div>
+	<div><br/></div>
+	<div><a href="http://android-developers.blogspot.com/">Blog</a> <a href="https://developer.android.com/support.html">Support</a><br/></div>
+	<div><br/></div>
+	<div><a href="https://www.youtube.com/user/androiddevelopers">ANDROID DEVELOPERS ON YOUTUBE</a></div>
+	<div><br/></div>
+	<div><a href="https://plus.google.com/+AndroidDevelopers">ANDROID DEVELOPERS ON GOOGLE+</a></div>
+	<div><br/></div>
+	<div><a href="https://twitter.com/AndroidDev">ANDROID DEVELOPERS ON TWITTER</a></div>
+	<div><br/></div>
+	<div>
+		<hr/>
+	</div>
+	<div>Except as noted, this content is licensed under <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5</a>. For details and restrictions, see the <a href="https://developer.android.com/license.html">Content License</a>.</div>
+	<div><a href="https://developer.android.com/about/android.html">About Android</a> <a href="https://developer.android.com/auto/index.html">Auto</a> <a href="https://developer.android.com/tv/index.html">TV</a> <a href="https://developer.android.com/wear/index.html">Wear</a> <a href="https://developer.android.com/legal.html">Legal</a></div>
+	<div>This site uses cookies to store your preferences for site-specific language and display options.</div>
+
+
+</span>
+</div></body></html> 

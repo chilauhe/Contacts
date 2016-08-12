@@ -1,0 +1,99 @@
+<html>
+<head>
+  <title>背光模式设置成T65XX_LED_MODE_CUST_BLS_PWM，如何修改PWM的工作频率</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="E17FB126-91C3-4A4F-8FE2-025CE944DA16"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2361"/>
+<h1>背光模式设置成T65XX_LED_MODE_CUST_BLS_PWM，如何修改PWM的工作频率</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="4"><span style="-evernote-last-insertion-point:true;"></span>[DESCRIPTION]</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">前提：cust_leds.c文件里面使用的背光模式是MT65XX_LED_MODE_CUST_BLS_PWM</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2"><strong><u><em>MT6589/MT6572</em></u>版本工作频率计算公式如下：</strong></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">PWM工作频率计算公式：<span style="color: rgb(38, 38, 38);">246.9MHz (clock freq.) / </span><span style="color: rgb(38, 38, 38);">（</span><span style="color: rgb(38, 38, 38);">0x24+1</span><span style="color: rgb(38, 38, 38);">） </span><span style="color: rgb(38, 38, 38);">(div) / 256 (period) ≈26 KHz</span> </font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">所以需要修改PWM的工作频率，就需要修改分频参数，即改变上面公式里面的0x24的值.</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<div style="visibility: visible;"><font size="4">[SOLUTION]</font></div>
+</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">修改方法1：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">           <span style="color: rgb(38, 38, 38);">1.</span><span style="color: rgb(38, 38, 38);"> 如果没有打开</span><span style="color: rgb(38, 38, 38);">MTK_AAL_SUPPORT, </span></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">disp_bls_config</span><span style="color: rgb(38, 38, 38);">()</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">{    </span><span style="color: rgb(38, 38, 38);"> </span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">              </span><span style="color: rgb(38, 38, 38);">gPWMDiv</span><span style="color: rgb(38, 38, 38);">=0x24; //gPWMDiv是设置分频的值</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">DISP_REG_SET(DISP_REG_BLS_PWM_CON, 0x00050000 | </span><span style="color: rgb(38, 38, 38);">gPWMDiv</span><span style="color: rgb(38, 38, 38);">); //</span><span style="color: rgb(38, 38, 38);">低</span><span style="color: rgb(38, 38, 38);">7</span><span style="color: rgb(38, 38, 38);">位是分频的参数</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><span style="color: rgb(38, 38, 38);"><font size="2">}</font></span></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">2. </span><span style="color: rgb(38, 38, 38);">如果打开了</span><span style="color: rgb(38, 38, 38);">MTK_AAL_SUPPORT,</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">disp_bls_init</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">{     </span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">              </span><span style="color: rgb(38, 38, 38);">gPWMDiv</span><span style="color: rgb(38, 38, 38);">=0x24;  //gPWMDiv是设置分频的值</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">DISP_REG_SET(DISP_REG_BLS_PWM_CON, 0x00050000 | </span><span style="color: rgb(38, 38, 38);">gPWMDiv</span><span style="color: rgb(38, 38, 38);">); </span><span style="color: rgb(38, 38, 38);">//</span><span style="color: rgb(38, 38, 38);">低</span><span style="color: rgb(38, 38, 38);">7</span><span style="color: rgb(38, 38, 38);">位是分频的参数</span></font></p>
+<p style="vertical-align: baseline; direction: ltr; text-indent: -0.38in; line-height: 9.600000381469727px; unicode-bidi: embed;"><font size="2"><span style="color: rgb(38, 38, 38);">}</span></font></p>
+</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"> </div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">修改方法<span style="color: rgb(38, 38, 38);">2</span><span style="color: rgb(38, 38, 38);">：修改</span>Cust_leds.c文件：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">   在cust_led_list数组里面设置&quot;lcd-backlight&quot;对应的config data，第二个参数对应的是分频的参数。</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">static struct cust_mt65xx_led cust_led_list[MT65XX_LED_TYPE_TOTAL] = {<br/>
+<br/>
+ {&quot;red&quot;,               MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;green&quot;,             MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;blue&quot;,              MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;jogball-backlight&quot;, MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;keyboard-backlight&quot;,MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;button-backlight&quot;,  MT65XX_LED_MODE_PMIC, MT65XX_LED_PMIC_BUTTON,{0}},<br/>
+<br/>
+ {&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_CUST_BLS_PWM, (int)disp_bls_set_backlight,{0, 0x24, 0, 0}},<br/>
+<br/>
+};</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;">
+<div style="visibility: visible;"><font size="2"><font size="4"><font size="2"><font size="2"><font size="2"><strong><u><em>MT6582</em></u>版本工作频率计算公式如下</strong>：</font></font></font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="4"><font size="2"><font size="2"><font size="2">PWM工作频率计算公式：<span style="color: rgb(38, 38, 38);">26MHz (clock freq.) / </span><span style="color: rgb(38, 38, 38);">（PWM_CLKDIV+1</span><span style="color: rgb(38, 38, 38);">）</span><span style="color: rgb(38, 38, 38);"> / 1024 (period) ≈26 KHz</span></font></font></font></font></font></div>
+</div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="2">所以需要修改PWM的工作频率，可以通过修改<font color="#262626">PWM_CLKDIV，clock freq，或者period的值来达到修改PWM的工作频率的效果。</font></font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="2">以下的三种方法可以任选1～2种来达到想要的PWM工作频率：</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">1.  修改分频参数方法，修改config_data里面的第二个参数：</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_CUST_BLS_PWM, (int)disp_bls_set_backlight,{0, 1, 0, 0, 0}} //设置div=1</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">2. 修改clock freq：</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">在alps\mediatek\platform\mt6582\kernel\drivers\dispsys\ddp_bls.c文件的disp_bls_init和disp_bls_config函数中设置CLK_CFG_1这个寄存器的值，来选择合适的时钟源，加入如下代码：</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;">
+<div style="visibility: visible;"><font size="2">mt65xx_reg_sync_writel(DRV_Reg32(CLK_CFG_1) | (0x00000003), CLK_CFG_1); //设置156 MHz的时钟源</font></div>
+</div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">备注：CLK_CFG_1这个寄存器的bit [1:0]，设置想要的时钟源</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">0x10000050 bit [1:0]: </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">0: 26 MHz</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">1: 104 MHz</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">2: 124.8 MHz</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">3: 156 MHz</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">3. 修改period：</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">这个方法比较复杂，一般在前面两个方法都无法达到要求的时候，再采用这种方法：</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">首先设置</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">0x1400A0A8 bit 0 = 0<br/>
+<br/>
+0x1400A0A8 bit 1 = 1</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">然后根据0x1400A0AC这个寄存器来設定PWM period。</font></div>
+<span style="font-size: small; font-family: verdana, Helvetica, sans-serif;">上面的两个寄存器的含义可以参考MT6582的datasheet</span>
+</span>
+</div></body></html> 

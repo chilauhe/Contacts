@@ -1,0 +1,441 @@
+<html>
+<head>
+  <title>Camera快速入门-添加External ISP</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="212C382B-7D77-41EE-AEAC-4DF97DC07E6A"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2683"/>
+<h1>Camera快速入门-添加External ISP</h1>
+
+<div><span><br/><div style="font-size: 16px"><div style="box-sizing:border-box;font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;font-size:11pt;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);line-height:1.6em;color:rgb(53, 54, 48);"><div style="background-size:cover;box-sizing:border-box;overflow:auto;color:rgb(53, 54, 48);font-size:14px;background-color:rgb(255, 255, 255);font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;background-repeat:no-repeat;line-height:1.42857143;word-break:keep-all;background-image:url(https://onlinesso.mediatek.com/_layouts/15/1033/styles/Themable/corev15.css?rev=ox%2BqLd6WTqhn6d%2FMqf2BMw%3D%3D);height:100%;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;background-color:rgba(255, 255, 255, 0.85098);overflow:visible;height:547px;width:1265px;">
+                <div style="box-sizing:border-box;min-height:91.9%;position:relative;">
+                    
+                    <div style="box-sizing:border-box;padding-bottom:35px;">
+                        
+                        <div style="box-sizing:border-box;padding-top:19px;">
+                            
+                            <div style="box-sizing:border-box;margin-right:auto;margin-left:auto;min-width:0px;">
+                                <div style="box-sizing:border-box;min-width:140px;z-index:400;position:absolute;right:16px;"></div>
+                                <div style="box-sizing:border-box;">
+	
+                                    <div style="box-sizing:border-box;font-family:'Segoe UI', Segoe, Tahoma, Helvetica, Arial, sans-serif;font-size:13px;"></div>
+                                
+</div>
+                                <div style="box-sizing:border-box;">
+	
+                                    <a name="mainContent" style="box-sizing:border-box;color:rgb(51, 122, 183);text-decoration:none;background-color:transparent;"></a>
+                                    <div style="box-sizing:border-box;min-width:1042px;width:960px;margin-right:auto;margin-left:auto;">
+                                        
+        <table border="0" cellpadding="0" cellspacing="0" style="font-size:inherit;font-weight:inherit;font-style:inherit;font-variant:inherit;box-sizing:border-box;border-width:0px;border-spacing:0px;border-collapse:collapse;background-color:transparent;" width="100%">
+            <tbody style="box-sizing:border-box;"><tr style="box-sizing:border-box;">
+                <td style="box-sizing:border-box;padding:0px;" valign="top">
+                    <span style="box-sizing:border-box;">
+				    <span style="box-sizing:border-box;">
+				         <a href="https://onlinesso.mediatek.com/" style="box-sizing:border-box;color:rgb(51, 122, 183);text-decoration:none;background-color:transparent;" target="_self">MediaTek On-Line</a>&gt; 
+				         <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicHome.aspx" style="box-sizing:border-box;color:rgb(51, 122, 183);text-decoration:none;background-color:transparent;" target="_self">Quick Start</a>&gt; 
+                         <span style="box-sizing:border-box;">Camera 快速入门</span>
+                     </span>
+                </span></td>
+            </tr>
+        </tbody></table>
+
+                                        
+                                    </div>
+                                    
+      
+     <span style="box-sizing:border-box;"></span>
+	 <div style="box-sizing:border-box;">
+         <div style="box-sizing:border-box;display:block;padding:1em;margin-left:auto;margin-right:auto;width:88.4%;padding-left:1.1%;padding-right:1.1%;overflow:auto;"><span style="display:table;"> </span>
+             <h3 style="box-sizing:border-box;margin:auto;font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;color:rgb(53, 54, 48);line-height:1.1;margin-top:20px;margin-bottom:10px;font-weight:bold;font-size:24px;text-transform:uppercase;">Quick Start</h3>
+		     <hr style="box-sizing:content-box;border-top-style:solid;border-top-color:rgb(238, 238, 238);height:0.1875em;margin:0px 0.1875em;border:0px none;background-color:rgb(0, 161, 222);"/>
+             <div style="box-sizing:border-box;text-align:center;font-size:18px;color:rgb(0, 153, 204);padding:32px;">
+	             
+	             <span style="box-sizing:border-box;">Camera 快速入门</span>
+	         </div>
+	     
+             <div style="box-sizing:border-box;margin-right:-15px;margin-left:-15px;"><span style="display:table;"> </span>
+				   <div style="box-sizing:border-box;">
+					 <div style="box-sizing:border-box;position:relative;min-height:1px;padding-right:15px;padding-left:15px;float:left;width:25%;"><ul style="box-sizing:border-box;list-style:none;margin:0px;padding:0px;">
+						 
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">MediatekSupport</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=346" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">1</span>Camera Support
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=345" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">2</span>Camera器件选择
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">Camera概述</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=342" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">3</span>Camera HW介绍
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=347" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">4</span>Camera软件架构
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">Camera Driver</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=343" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">5</span>Driver的配置
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=349" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">6</span>Porting Guide
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=352" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">7</span>常见问题及Debug
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">Camera Tuning</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=344" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">8</span>Tuning Tool及设备介绍
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=348" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">9</span>Tuning Guide
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=350" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">10</span>常见问题及Debug
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">Camera 应用</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=351" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">11</span>Camera 应用简介
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=353" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">12</span>Camera 应用常见问题
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">Camera Feature</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=354" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">13</span>Feature介绍/常见问题
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=355" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">14</span>Feature开关/常用配置
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=356" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">15</span>Feature API调用
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">Camera进阶实作</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=357" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">16</span>添加三方feature/算法
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);margin:0px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);border-right-width:0px;background:rgb(255, 255, 255);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=358" style="box-sizing:border-box;background-color:transparent;text-decoration:none;color:rgb(0, 153, 204);font-weight:700;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">17</span>添加External ISP
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;border-color:transparent transparent transparent rgb(0, 153, 204);"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=359" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">18</span>Performance问题分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">学习天地</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=379" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">19</span>学习资料链接
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=380" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">20</span>ApplicationNote
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+					  </ul></div><div style="box-sizing:border-box;position:relative;min-height:1px;padding-right:15px;padding-left:15px;float:left;width:75%;border-right-width:1px;border-right-style:solid;border-right-color:rgb(221, 221, 221);"><div style="box-sizing:border-box;overflow:hidden;padding-right:10px;position:relative;word-wrap:break-word;word-break:break-all;display:block;">
+
+
+
+
+     
+	
+
+    
+
+
+
+
+     <div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;">
+
+
+</div>
+
+
+
+
+         
+	    <span style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;"><font size="2" style="box-sizing:border-box;"><font face="Cambria" size="4" style="box-sizing:border-box;">
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><span style="box-sizing:border-box;font-size:26pt;color:#ffc000;font-family:宋体;">添加<span lang="EN-US" style="box-sizing:border-box;">External ISP</span></span></p>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><font size="3" style="box-sizing:border-box;"><span style="box-sizing:border-box;color:black;font-family:宋体;">在</span><span lang="EN-US" style="box-sizing:border-box;color:black;"><font face="Calibri" style="box-sizing:border-box;">MT6589/MT6582/MT6588/MT6592</font></span><span style="box-sizing:border-box;color:black;font-family:宋体;">平台，若有</span><span lang="EN-US" style="box-sizing:border-box;color:black;"><font face="Calibri" style="box-sizing:border-box;">Camera</font></span><span style="box-sizing:border-box;color:black;font-family:宋体;">外接</span><span lang="EN-US" style="box-sizing:border-box;color:black;"><font face="Calibri" style="box-sizing:border-box;">ISP</font></span><span style="box-sizing:border-box;color:black;font-family:宋体;">需求，可先参考以下内容：</span></font></p>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><font size="3" style="box-sizing:border-box;"><span style="box-sizing:border-box;color:black;font-family:宋体;"></span></font> </p><font size="3" style="box-sizing:border-box;"><span style="box-sizing:border-box;color:black;font-family:宋体;"></span></font>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><span lang="EN-US" style="box-sizing:border-box;color:black;"><img src="Camera快速入门-添加External ISP_files/Image.png" type="image/png" height="452" style="box-sizing:border-box;border:0px;-webkit-tap-highlight-color:transparent;vertical-align:middle;" width="800"/></span></p>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><span lang="EN-US" style="box-sizing:border-box;color:black;"><img src="Camera快速入门-添加External ISP_files/Image [1].png" type="image/png" height="452" style="box-sizing:border-box;border:0px;-webkit-tap-highlight-color:transparent;vertical-align:middle;" width="800"/></span></p>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><span lang="EN-US" style="box-sizing:border-box;color:black;"><img src="Camera快速入门-添加External ISP_files/Image [2].png" type="image/png" height="452" style="box-sizing:border-box;border:0px;-webkit-tap-highlight-color:transparent;vertical-align:middle;" width="603"/></span></p>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><span lang="EN-US" style="box-sizing:border-box;color:black;"><img src="Camera快速入门-添加External ISP_files/Image [3].png" type="image/png" height="452" style="box-sizing:border-box;border:0px;-webkit-tap-highlight-color:transparent;vertical-align:middle;" width="603"/></span></p>
+<p style="box-sizing:border-box;margin:0cm 0cm 0pt;"><span lang="EN-US" style="box-sizing:border-box;color:black;"><img src="Camera快速入门-添加External ISP_files/Image [4].png" type="image/png" height="452" style="box-sizing:border-box;border:0px;-webkit-tap-highlight-color:transparent;vertical-align:middle;" width="603"/></span></p></font></font></div></div></div></div></div></span>
+        <span style="box-sizing:border-box;"></span>
+    
+
+
+</div>
+
+
+</div></div>
+					 
+				  </div>
+             <span style="display:table;clear:both;"> </span></div>
+         <span style="display:table;clear:both;"> </span></div>
+     </div>
+
+                                
+</div>
+                            </div>
+                            <div style="box-sizing:border-box;">
+	
+                                
+                                    
+                                
+                            
+</div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    <div style="box-sizing:border-box;clear:both;"></div>
+                </div>
+                
+                <div style="box-sizing:border-box;clear:both;position:relative;bottom:0px;left:0px;width:100%;">
+                    <div style="box-sizing:border-box;display:block;color:rgb(255, 255, 255);margin-bottom:4px;padding:1.5em 0px;background-color:rgb(53, 54, 48);">
+
+								  <div style="box-sizing:border-box;margin-left:auto;margin-right:auto;width:87%;overflow:auto;padding:0% 1.8%;">
+
+								    <div style="box-sizing:border-box;display:block;padding:1em;">
+
+								      <div style="box-sizing:border-box;display:block;float:left;overflow:auto;width:50%;"><img src="Camera快速入门-添加External ISP_files/Image [5].png" type="image/png" height="20" style="box-sizing:border-box;border:0px;-webkit-tap-highlight-color:transparent;vertical-align:text-top;float:left;margin-right:10px;margin-top:2px;width:auto;" width="80"/>
+
+								        <p style="box-sizing:border-box;margin:0px;float:left;">c 2014 MediaTek Inc. All Rights Reserved</p>
+
+								      </div>
+
+								      <ul style="box-sizing:border-box;margin:0px;padding:0px;float:right;list-style-type:none;overflow:auto;">
+
+								        <li style="box-sizing:border-box;float:left;"><a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/Topic.aspx?id=85#" style="border-right-width:2px;box-sizing:border-box;background-color:transparent;text-decoration:underline;margin:0.2em;padding-right:0.5em;color:rgb(255, 255, 255);border-right-style:solid;border-right-color:rgb(255, 255, 255);text-transform:capitalize;font-weight:bolder;font-size:11pt;">Legal Notice</a> </li>
+
+								        <li style="box-sizing:border-box;float:left;"><a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/Topic.aspx?id=85#" style="border-right-width:2px;box-sizing:border-box;background-color:transparent;text-decoration:underline;margin:0.2em;padding-right:0.5em;color:rgb(255, 255, 255);border-right-color:rgb(255, 255, 255);text-transform:capitalize;font-weight:bolder;font-size:11pt;border-right-style:none;">Privacy Policy</a> </li>
+
+								      </ul>
+
+								    </div>
+
+								  </div>
+
+								</div>
+                </div>
+            </div></div></div></div></div><br/></span>
+</div></body></html> 

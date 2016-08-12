@@ -1,0 +1,243 @@
+<html>
+<head>
+  <title>如何配置LCD背光和LED，调试方法</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="83CB7DED-DB0C-4411-8204-81B8D2A79F4C"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2359"/>
+<h1>如何配置LCD背光和LED，调试方法</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="4">[DESCRIPTION]</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">如何配置LCD背光和LED，调试方法</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;">
+<div style="visibility: visible;"><font size="4">[SOLUTION]</font><font size="2"><br/>
+<br/>
+<font size="4"><br/></font><br/></font></div>
+</div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> ------------------------------------------------------------------------------------------------------------</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4"><b>LCD背光</b></font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4"><b><br/></b></font></font></div>
+<div style="visibility: visible; font-family: verdana, Helvetica, sans-serif !important;">
+<div style="visibility: visible;"><font size="2"><br/></font></div>
+<span style="font-size: large;"><span style="-evernote-last-insertion-point:true;"></span>LCD背光和LED配置文件</span><br/>
+<div style="visibility: visible;"><font size="2"><br/></font></div>
+<div style="visibility: visible;"><font size="2">alps/custom/&lt;proj name&gt;lk/cust_leds.c<br/>
+<br/>
+alps/custom/&lt;proj name&gt;/kernel/leds/mt65xx/cust_leds.c<br/>
+<br/>
+drvgen.exe编辑修改codegen.dws</font></div>
+</div>
+<div style="visibility: visible; font-family: verdana, Helvetica, sans-serif !important;"><font size="2"> </font></div>
+<div style="visibility: visible; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">配置cust_leds.c参数：</font></div>
+<div style="visibility: visible; font-family: verdana, Helvetica, sans-serif !important;"><font size="2">static struct cust_mt65xx_led cust_led_list[MT65XX_LED_TYPE_TOTAL] = {<br/>
+<br/>
+ {&quot;red&quot;,                  MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;green&quot;,               MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;blue&quot;,                 MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;jogball-backlight&quot;, MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;keyboard-backlight&quot;,MT65XX_LED_MODE_NONE, -1,{0}},<br/>
+<br/>
+ {&quot;button-backlight&quot;,   MT65XX_LED_MODE_PMIC, MT65XX_LED_PMIC_BUTTON,{0}},<br/>
+<br/>
+ {&quot;lcd-backlight&quot;,        MT65XX_LED_MODE_CUST_BLS_PWM, (int)disp_bls_set_backlight,{0}},<br/>
+<br/></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><span style="font-size: small;">};</span><font size="2"><font size="4"><b><br/></b><br/></font><font color="#FF0000" size="3">MT6589<br/>
+<br/></font>使用不同的控制源，配置模式：<br/>
+<br/>
+<strong>1.BL_PWM (BLS_PWM)<br/>
+<br/></strong> {&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_CUST_BLS_PWM, (int)disp_bls_set_backlight,{0}},<br/>
+<br/>
+ <br/>
+<br/>
+<strong>2.PWM1~PWM7 <br/>
+<br/></strong>如果是PWM1~4<br/>
+<br/>
+{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_PWM, PWM1,{0,0,0,0,0}},<br/>
+<br/>
+{0,0,0,0,0}表示src_clk=32k时钟，div=0，HDuration=4; LDuration=4,pmic_pad=<font color="#FF0000">0<br/>
+<br/></font>频率计算：32K/(0+1)/64/4=125Hz<br/>
+<br/>
+如果使用PWM5~7<br/>
+<br/>
+{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_PWM, PWM5,{1,1,32,32,1}},<br/>
+<br/>
+{1,1,30,30,1}表示src_clk=52M时钟，div=1，HDuration=32; LDuration=32,pmic_pad=<font color="#FF0000">1</font>(PWM5~7在PMIC6320)<br/>
+<br/>
+频率计算：52M/(1+1)/64/32=12.695KHz</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><strong>3.GPIO脉冲<br/>
+<br/></strong> {&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_GPIO, (int)Cust_SetBacklight,{0}},<br/>
+<br/>
+通过实现Cust_SetBacklight(level,div)函数操作GPIO动作</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><strong>4.类似OLED屏幕，通过写LCM 寄存器实现<br/>
+<br/></strong> {&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_CUST, (int)Cust_SetBacklight,{0}},<br/>
+<br/>
+通过实现<br/>
+<br/>
+unsigned int Cust_SetBacklight(int level, int div)<br/>
+<br/>
+{<br/>
+<br/>
+mtkfb_set_backlight_level(level);<br/>
+<br/>
+}<br/>
+<br/>
+通过mtkfb_set_backlight_level(level);实现的函数指针将level传到LCM driver<br/>
+<br/>
+在LCM的driver中实现.set_backlight=lcm_setbacklight,</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><strong>5.PMIC6320的Isinks<br/>
+<br/></strong>MT6320只有3个Isink，应该不能满足要求</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font color="#FF0000" size="4">MT6572<br/>
+<br/></font>和Mt6589有区别的：<br/>
+<br/>
+<strong>1.PWM1~PWM5<br/>
+<br/></strong>{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_PWM, PWM1,{0,0,0,0,0}},<br/>
+<br/>
+{0,0,0,0,0}表示src_clk=32k时钟，div=0，HDuration=4; LDuration=4,pmic_pad=0<br/>
+<br/>
+频率计算：32K/(0+1)/64/4=125Hz<br/>
+<br/>
+{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_PWM, PWM1,{1,1,32,32,0}},<br/>
+<br/>
+{1,1,30,30,0}表示src_clk=66M时钟，div=1，HDuration=32; LDuration=32,pmic_pad=0<br/>
+<br/>
+频率计算：66M/(1+1)/64/32=16.111KHz</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><strong>2.PMIC6323的Isinks<br/>
+<br/></strong>MT6323有4个Isink，每路24mA电流，可以double为48mA,可以接8个LED<br/>
+<br/>
+{&quot;lcd-backlight&quot;,     MT65XX_LED_MODE_PMIC, MT65XX_LED_PMIC_LCD_ISINK,{0}},</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4">Button LED</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><br/>
+<br/>
+<font color="#FF0000"><font size="3">MT6589</font></font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font color="#008000">PMIC mt6530有KPD LDO<br/>
+<br/></font> {&quot;button-backlight&quot;,  MT65XX_LED_MODE_PMIC, MT65XX_LED_PMIC_BUTTON,{0}},<br/>
+<br/>
+ <br/>
+<br/>
+<font color="#008000"><font size="3"><font color="#FF0000">MT6572</font></font></font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font color="#008000">mt6323没有KPD LDO，一般兼容使用Isink或者PWM<br/>
+<br/></font><font color="#008000"><strong>ISink0和Isink1合并做Button LED<br/>
+<br/></strong></font> {&quot;button-backlight&quot;,  MT65XX_LED_MODE_PMIC, MT65XX_LED_PMIC_NLED_ISINK01,{0}},<br/>
+<br/>
+注意:如果需要修改电流等级和double current，请修改leds.c<br/>
+<br/>
+brightness_set_pmic()和led_blink_pmic()<br/>
+<br/>
+电流等级接口：upmu_set_isinks_chx_step(0x0);//0x0 4mA;0x01 8mA;0x2 12mA;0x03 16mA 0x04 20mA;0x05 24mA<br/>
+<br/>
+double current接口：upmu_set_isinks_chx_double_en(0x1);</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font color="#339966"><strong>PWM1~5<br/>
+<br/></strong></font>{&quot;button-backlight&quot;,     MT65XX_LED_MODE_PWM, PWM1,{0,0,0,0,0}},</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> ----------------------------------------------------------------------------------------------------------------------------------</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4"><b>LED</b><br/>
+<br/></font><font color="#FF0000" size="3">MT6589<br/>
+<br/></font><strong>1.Pre-charger(PCH_DET) LED<br/>
+<br/></strong>主要使用由于关机充电LED，插USB charger点亮，lk阶段关闭<br/>
+<br/>
+如果需要打开PCH_DET：<br/>
+<br/>
+在mt_leds.c(lk)和leds.c 中要打开pre-charger LED 的控制<br/>
+<br/>
+Upmu_chr_chrind_on(1);//开启<br/>
+<br/>
+Upmu_chr_chrind_on(0);//关闭</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><strong>2.使用Isink接LED<br/>
+<br/></strong> {&quot;red&quot;,               MT65XX_LED_MODE_PMIC,MT65XX_LED_PMIC_NLED_ISINK0,{0}},<br/>
+<br/>
+ {&quot;green&quot;,             MT65XX_LED_MODE_PMIC,MT65XX_LED_PMIC_NLED_ISINK1,{0}},<br/>
+<br/>
+ {&quot;blue&quot;,              MT65XX_LED_MODE_PMIC,MT65XX_LED_PMIC_NLED_ISINK2,{0}},</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><strong>3.使用PWM控制LED<br/>
+<br/></strong> {&quot;red&quot;,               MT65XX_LED_MODE_PWM,PWM5,{0,0,0,0,1}},<br/>
+<br/>
+ {&quot;green&quot;,             MT65XX_LED_MODE_PWM,PWM6,{0,0,0,0,1}},<br/>
+<br/>
+ {&quot;blue&quot;,              MT65XX_LED_MODE_PWM,PWM7,{0,0,0,0,1}},<br/>
+<br/>
+注意：Mt6589上的PWM在sleep的时候没有波形输出的，如果sleep需要闪烁设计，请使用PMIC Mt6320上的PWM（PWM5~PWM7）</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font color="#FF0000" size="3">MT6572<br/>
+<br/></font>与Mt6589的区别：<br/>
+<br/>
+1.mt6572没有pre-charger LED的PCH_DET pin</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">2.Mt6572的PWM1~5在sleep的时候，都是没有波形输出的，设计请注意</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">3.使用Isink设计时，如果1个isink接2路LED，请注意打开double current，或者step调大</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> ----------------------------------------------------------------------------------------------------------------------------</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4"><b>Flash light</b><br/>
+<br/></font>文件：alps/mediatek/custom/&lt;proj name&gt;/kernel/flashlight/constant_flashlight/leds_stobe.c<br/>
+<br/>
+实现FL_enable()和FL_disable()</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><br/>
+<br/>
+<font color="#FF0000">MT6589有专门的flash LDO</font><font color="#FF0000"><br/>
+<br/></font><font color="#FF0000">MT6572</font>没有Flash LDO，可以通过控制PWM，GPIO，ISINK等控制Flash light</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4">上层JNI lib文件<br/>
+<br/></font>alps/mediatek/hardware/liblights/lights.c<br/>
+<br/>
+如果需要同时打开2个以上的LED，请修改set_speaker_light_locked()里面的逻辑</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4">adb shell调试LCD背光和LED</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">adb命令查看LED或者backlight的亮度status<br/>
+<br/>
+cd /sys/class/leds/xxx/brightness<br/>
+<br/>
+(xxx表示的是light的名字，例如green，blue，red分别表示绿灯、蓝灯和红灯，lcd-backlight表示的是lcd背光。)</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><br/>
+<br/>
+如果出现LED或Backlight不正常时，可以通过进入到相应的folder执行如下命令去检测是否driver有问题：<br/>
+<br/>
+echo brightness_level &gt; brightness  检查是否按照你设置的亮度显示。</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">对于LED来说brightness_level只要不是0，driver都会让led on。</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">LCD背光不支持blink，测试LED blink可以执行如下命令：<br/>
+<br/>
+cd /sys/class/leds/xxx/<br/>
+<br/>
+echo timer &gt; trigger        这个命令会创建delay_on和delay_off两个文件。<br/>
+<br/>
+echo on_time &gt; delay_on 这个命令用于设置LED on的时间<br/>
+<br/>
+echo off_time &gt; delay_on 这个命令用于设置LED off的时间（On和off的时间都是以毫秒为单位的。)<br/>
+<br/>
+echo timer &gt; trigger        命令清除delay_on和delay_off时间，让led off。<br/>
+<br/>
+echo none &gt; trigger        删除delay_on/delay_off 节点</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2">在kernel_log 可以看到leds.s中函数调用的情况<br/>
+<br/>
+   如 printk(&quot;mt65xx_leds_set_cust: set brightness, name:%s, mode:%d, level:%d\n&quot;, cust-&gt;name, cust-&gt;mode, level);</font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"> </div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<font size="2" style="font-family: verdana, Helvetica, sans-serif !important;"><br/></font>
+</span>
+</div></body></html> 

@@ -1,0 +1,100 @@
+<html>
+<head>
+  <title>[FAQ14132]开启 WITH_DEXPREOPT之后，如何减少第一次开机之后data分区的大小</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2457"/>
+<h1>[FAQ14132]开启 WITH_DEXPREOPT之后，如何减少第一次开机之后data分区的大小</h1>
+
+<div>
+<span><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);">尽管打开了 <em style="box-sizing: border-box;">WITH_DEXPREOPT</em>之后，已经生成了odex文件，但是第一次开机的时候，android会去做patchoat的动作，会将odex文件重新简单修改，并放到/data/dalvik/$isa/目录下面。这样做主要是为了安全考虑，因为ELF文件被load进系统之后，如果每一次都映射同样的位置，很容易被hack利用这一点进行攻击。如果不考虑这种安全性问题，可以把这个属性给关闭。</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);">1.针对L0版本：关闭方法如下：</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 60px; visibility: visible; background-color: rgb(247, 247, 247);">/art/runtime/globals.h<br style="box-sizing: border-box;"/>
+static constexpr bool kDefaultMustRelocate = false; //从而可以取消patch oat。</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 60px; visibility: visible; background-color: rgb(247, 247, 247);"><br style="box-sizing: border-box;"/>
+还要修改如下的地方，否有一些三方工具运行不起来：</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 60px; visibility: visible; background-color: rgb(247, 247, 247);">/frameworks/base/core/jni/AndroidRuntime.cpp<br style="box-sizing: border-box;"/>
+#if 1 //<span style="box-sizing: border-box; background-color: rgb(255, 0, 255);">将if 1改为#if 0,从而避免等待。</span><br style="box-sizing: border-box;"/>
+if (!bootOatDone) {<br style="box-sizing: border-box;"/>
+if (!strcmp(className, &quot;com.android.internal.os.RuntimeInit&quot;)) {<br style="box-sizing: border-box;"/>
+   waitOatDone();<br style="box-sizing: border-box;"/>
+   bootOatDone = true;<br style="box-sizing: border-box;"/>
+   }<br style="box-sizing: border-box;"/>
+ }<br style="box-sizing: border-box;"/>
+#endif<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 60px; visibility: visible; background-color: rgb(247, 247, 247);">修改： /<a href="http://10.16.20.15/l1mp3/xref/art/" style="box-sizing: border-box; color: rgb(102, 51, 153); text-decoration: none; background-color: transparent;">art</a>/<a href="http://10.16.20.15/l1mp3/xref/art/runtime/" style="box-sizing: border-box; color: rgb(102, 51, 153); text-decoration: none; background-color: transparent;">runtime</a>/<a href="http://10.16.20.15/l1mp3/xref/art/runtime/gc/" style="box-sizing: border-box; color: rgb(102, 51, 153); text-decoration: none; background-color: transparent;">gc</a>/<a href="http://10.16.20.15/l1mp3/xref/art/runtime/gc/space/" style="box-sizing: border-box; color: rgb(102, 51, 153); text-decoration: none; background-color: transparent;">space</a>/<a href="http://10.16.20.15/l1mp3/xref/art/runtime/gc/space/image_space.cc" style="box-sizing: border-box; color: rgb(102, 51, 153); text-decoration: none; background-color: transparent;">image_space.cc</a></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 60px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 60px; visibility: visible; background-color: rgb(247, 247, 247);">// add one function<br style="box-sizing: border-box;"/>
+int checkIsOatOutOfDate(const std::string &amp; cache_dir_path, const std::string &amp;system_filename,const InstructionSet image_isa){<br style="box-sizing: border-box;"/>
+DIR *cache_dir = opendir(cache_dir_path.c_str()); //open folder<br style="box-sizing: border-box;"/>
+if(cache_dir == nullptr){<br style="box-sizing: border-box;"/>
+PLOG(WARNING) &lt;&lt; &quot;Unable to open &quot; &lt;&lt; cache_dir_path &lt;&lt; &quot; to delete it's contents&quot;;<br style="box-sizing: border-box;"/>
+return 0;<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+LOG(WARNING) &lt;&lt; &quot;checkIsOatOutOfDate &quot; &lt;&lt; cache_dir_path &lt;&lt; system_filename;//&quot; encountered.&quot;;<br style="box-sizing: border-box;"/>
+for (struct dirent* de = readdir(cache_dir); de != nullptr; de = readdir(cache_dir)) { <br style="box-sizing: border-box;"/>
+const char* name = de-&gt;d_name;<br style="box-sizing: border-box;"/>
+LOG(WARNING) &lt;&lt; &quot;checkIsOatOutOfDate 1: de-&gt;d_name : &quot; &lt;&lt; de-&gt;d_name;<br style="box-sizing: border-box;"/>
+if (strcmp(name, &quot;.&quot;) == 0 || strcmp(name, &quot;..&quot;) == 0) {<br style="box-sizing: border-box;"/>
+continue;<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+LOG(WARNING) &lt;&lt; &quot;checkIsOatOutOfDate 2: de-&gt;d_name : &quot; &lt;&lt; de-&gt;d_name;<br style="box-sizing: border-box;"/>
+// We only want to delete regular files and symbolic links.<br style="box-sizing: border-box;"/>
+if (de-&gt;d_type == DT_REG ) { //<br style="box-sizing: border-box;"/>
+if(strstr(name,&quot;.dex&quot;)){ //find one oat file<br style="box-sizing: border-box;"/>
+std::string cache_file(cache_dir_path);<br style="box-sizing: border-box;"/>
+cache_file += '/';<br style="box-sizing: border-box;"/>
+cache_file += name;<br style="box-sizing: border-box;"/>
+LOG(WARNING) &lt;&lt; &quot;checkIsOatOutOfData: find dex file&quot; &lt;&lt; cache_file;<br style="box-sizing: border-box;"/>
+std::string error_msg;<br style="box-sizing: border-box;"/>
+std::unique_ptr&lt;const OatFile&gt; oat_file(OatFile::Open(cache_file, cache_file, nullptr,<br style="box-sizing: border-box;"/>
+false, &amp;error_msg));<br style="box-sizing: border-box;"/>
+if(oat_file.get()==nullptr)<br style="box-sizing: border-box;"/>
+return 0;<br style="box-sizing: border-box;"/>
+uint32_t image_oat_checksum = 0;<br style="box-sizing: border-box;"/>
+std::unique_ptr&lt;ImageHeader&gt; image_header(gc::space::ImageSpace::ReadImageHeaderOrDie(<br style="box-sizing: border-box;"/>
+system_filename.c_str() , image_isa));<br style="box-sizing: border-box;"/>
+image_oat_checksum = image_header-&gt;GetOatChecksum();<br style="box-sizing: border-box;"/>
+int rslt = !(oat_file-&gt;GetOatHeader().GetImageFileLocationOatChecksum() == image_oat_checksum);<br style="box-sizing: border-box;"/>
+CHECK_EQ(0, TEMP_FAILURE_RETRY(closedir(cache_dir))) &lt;&lt; &quot;Unable to close directory.&quot;;<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+return rslt;<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+CHECK_EQ(0, TEMP_FAILURE_RETRY(closedir(cache_dir))) &lt;&lt; &quot;Unable to close directory.&quot;;<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+return 0;<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+ImageSpace* ImageSpace::Create(const char* image_location,<br style="box-sizing: border-box;"/>
+const InstructionSet image_isa,<br style="box-sizing: border-box;"/>
+std::string* error_msg) {<br style="box-sizing: border-box;"/>
+std::string system_filename;<br style="box-sizing: border-box;"/>
+bool has_system = false;<br style="box-sizing: border-box;"/>
+std::string cache_filename;<br style="box-sizing: border-box;"/>
+bool has_cache = false;<br style="box-sizing: border-box;"/>
+bool dalvik_cache_exists = false;<br style="box-sizing: border-box;"/>
+bool is_global_cache = true;<br style="box-sizing: border-box;"/>
+const bool found_image = FindImageFilename(image_location, image_isa, &amp;system_filename,<br style="box-sizing: border-box;"/>
+&amp;has_system, &amp;cache_filename, &amp;dalvik_cache_exists,<br style="box-sizing: border-box;"/>
+&amp;has_cache, &amp;is_global_cache);<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+#ifdef MTK_ENABLE_INCOMPLETE_BOOT_CHECK<br style="box-sizing: border-box;"/>
+if (Runtime::Current()-&gt;IsZygote()) {<br style="box-sizing: border-box;"/>
+MarkZygoteStart(image_isa);<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+#endif<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+ImageSpace* space;<br style="box-sizing: border-box;"/>
+bool relocate = Runtime::Current()-&gt;ShouldRelocate();<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+if(Runtime::Current()-&gt;IsZygote() &amp;&amp; !relocate &amp;&amp; dalvik_cache_exists &amp;&amp; has_system){ //check is there any dex out of date<br style="box-sizing: border-box;"/>
+int nIndex = cache_filename.find_last_of(&quot;/&quot;);<br style="box-sizing: border-box;"/>
+if(nIndex &gt;=0){<br style="box-sizing: border-box;"/>
+std::string cache_filename_(cache_filename);<br style="box-sizing: border-box;"/>
+std::string dalvik_cache_dir(cache_filename_.erase(nIndex+1)); <br style="box-sizing: border-box;"/>
+if(checkIsOatOutOfDate(dalvik_cache_dir,image_location,image_isa)){<br style="box-sizing: border-box;"/>
+PruneDalvikCache(image_isa); //clear all files<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/><br style="box-sizing: border-box;"/>
+}<br style="box-sizing: border-box;"/>
+// end</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);">2. 针对L1版本：采用google方法添加PIC这个宏，作用同上：</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 30px; visibility: visible; background-color: rgb(247, 247, 247);">WITH_DEXPREOPT := true<br style="box-sizing: border-box;"/>
+WITH_DEXPREOPT_PIC := true</div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 30px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; padding-left: 30px; visibility: visible; background-color: rgb(247, 247, 247);">（如出现adb install 命令不可用，请至PatchManagerService系统申请<span style="box-sizing: border-box; font-size: 12pt; font-family: &apos;Times New Roman&apos;, serif; color: rgb(31, 73, 125);">ALPS02151612(L1.MP3) or ALPS02146262</span><span style="box-sizing: border-box; font-size: 12pt; font-family: &apos;Times New Roman&apos;, serif; color: rgb(31, 73, 125);">(L1.MP2) or </span><span style="box-sizing: border-box; font-size: 12pt; font-family: &apos;Times New Roman&apos;, serif; color: rgb(31, 73, 125);">ALPS02314277(L1.MP6))</span></div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"> </div><div style="box-sizing: border-box; color: rgb(53, 54, 48); font-family: RionaSans, Helvetica, 微軟雅黑, &apos;Microsoft YaHei&apos;, Song, PMingLiU, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; visibility: visible; background-color: rgb(247, 247, 247);"><div>这样修改之后既可以减小data分区的空间，又可以加快开机速度，但风险就是容易被hack利用固定映射地址进行攻击。</div></div></span>
+</div></body></html> 

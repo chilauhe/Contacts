@@ -1,0 +1,136 @@
+<html>
+<head>
+  <title>提升Android编译速度</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="9E0EA3E5-1C5E-433D-BE32-BD3B5104933B"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2386"/>
+<h1>提升Android编译速度</h1>
+
+<div>
+<span style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div style="font-family: verdana, Helvetica, sans-serif; visibility: visible; font-size: 12px; background-color: rgb(247, 247, 247);"><span style="-evernote-last-insertion-point:true;"></span><span style="font-size: large;">[DESCRIPTION]</span><br/></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="3">Android codebase都很大，编译一次都需要花很多时间，如果是preloader/lk/bootimage还好，但是Android的话都是非常久。</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="3">实际上这个编译时间还是可以进一步缩短！</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="4">[KEYWORD]</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="3">ccache</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="3">编译时间</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="3">提升</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"><font size="3">降低</font></font></div>
+<div style="font-family: verdana, Helvetica, sans-serif !important; visibility: visible;"><font size="2"> </font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<div style="visibility: visible;"><font size="4">[SOLUTION]</font></div>
+</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font color="#0000FF" size="3">1. 移除modules_to_check</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">(1). Android默认是所有模块都会编译的（不管需不需要），这个有些冗余，可以通过修改编译系统不编译哪些没有用到的模块</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">(2). 修改方法：alps/build/core/main.mk</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">files: prebuilt \</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">  $(modules_to_install) \</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">  $(modules_to_check) \</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">  $(INSTALLED_ANDROID_INFO_TXT_TARGET)</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">修改为：</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<div style="visibility: visible;"><font size="3">files: prebuilt \</font></div>
+<div style="visibility: visible;"><font size="3">  $(modules_to_install) \</font></div>
+<div style="visibility: visible;"><font size="3">  $(INSTALLED_ANDROID_INFO_TXT_TARGET)</font></div>
+<div style="visibility: visible;"><font size="3">(3). 如果是<strong><font color="#FF0000">ubi nand文件系统</font></strong>的项目（比如72 nand项目），还需要在alps/build/core/Makefile中：</font></div>
+<div style="visibility: visible;"><font size="3">$(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTFS) $(MKBOOTIMG) $(MINIGZIP) \<br/>
+<br/>
+  $(INSTALLED_RAMDISK_TARGET) \<br/>
+<br/>
+  $(INSTALLED_BOOTIMAGE_TARGET) \<br/>
+<br/>
+  $(recovery_binary) \<br/>
+<br/>
+  $(recovery_initrc) $(recovery_kernel) \<br/>
+<br/>
+  $(INSTALLED_2NDBOOTLOADER_TARGET) \<br/>
+<br/>
+  $(recovery_build_prop) $(recovery_resource_deps) \<br/>
+<br/>
+  $(recovery_fstab) \<br/>
+<br/>
+  $(recovery_gzip) $(recovery_sec_ko) \<br/>
+<br/>
+  $(RECOVERY_INSTALL_OTA_KEYS)<br/>
+<br/>
+的前面添加：<br/>
+<br/>
+<font color="#0000FF">ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)<br/>
+<br/>
+$(INSTALLED_RECOVERYIMAGE_TARGET): $(recovery_ubiformat)<br/>
+<br/>
+endif</font></font></div>
+<div style="visibility: visible;"><font color="#000000" size="3">否则会编译失败！</font></div>
+<div style="visibility: visible;"><font size="3">(4). 修改后<strong><font color="#0000FF">Android编译时间降低16%~18%</font> </strong>（数据仅供参考）</font></div>
+<div style="visibility: visible;"><font size="3">(5). 此种方法google已在4.3版本默认应用了。</font></div>
+<div style="visibility: visible;"><font size="3">(6). 仅对new有效果，但是由于没有编译没有用到的模块，不仅节省时间还节省磁盘空间(节省out目录下的中间文件)。</font></div>
+<div style="visibility: visible;"> </div>
+<div style="visibility: visible;"><font color="#0000FF" size="3">2. 开启android ccache</font></div>
+</div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">(1). ccache是google默认就存放在codebase的工具，对于ccache的功能可以到网络搜寻资料。</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="2"><font size="3">(2). 设置cache大小（<font color="#FF0000"><strong>这一步一定要做！！</strong></font>），一个codebase需要大约5G的空间，如果你的编译环境有5个codebase在使用，那么需要25G的空间。<font color="#FF0000">设置小了还会引起编译时间延长！！</font></font></font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font color="#000000" size="3">    [1].GB版本：prebuilt/linux-x86/ccache/ccache -M <font color="#FF0000">25</font>G</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;"><font size="3">    [2].JB版本：prebuilts/misc/linux-x86/ccache/ccache -M <font color="#FF0000">25</font>G</font></div>
+<div style="visibility: visible; font-size: 12px; font-family: verdana, Helvetica, sans-serif !important;">
+<div style="visibility: visible;"><font size="2"><font size="3">(3). 开启的方法：</font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="3">    [1].命令行增加USE_CCACHE=1即可：./mk -o=USE_CCACHE=1 n。如果是user版本开启ccahce的话，可以这样：./mk -o=USE_CCACHE=1,TARGET_BUILD_VARIANT=user n。</font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="3">    [2].建议:添加到环境变量(其他方式亦可)：修改alps/makeMtk，在#!/usr/bin/perl之后新建一行，填写$ENV{&quot;USE_CCACHE&quot;} = 1;</font></font></div>
+<div style="visibility: visible;">
+<div style="visibility: visible;">
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">(4). 第1次编译会花多一点时间建立cache，之后即可享受ccache带来的好处，<strong><font color="#0000FF">降低所有使用gcc的编译时间，大约25%~30%</font></strong>。</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">    [1].可以通过ccache -s查看cache信息，如果满了可以用ccache -C清除所有。在满了状态下编译新codebase，将会旧的那个清除，这会降低效率，所以cache一定要设置正确！</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">(6). 对mm/new/remake android都有效果。</font></font></font></div>
+<div style="visibility: visible;"><font size="2"> </font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font color="#0000FF" size="3">3. 开启kernel ccache</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">(1). <font color="#FF0000">以上ccache只对编译android有效，kernel部分需要额外设置才行</font></font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">(2). alps/kernel/Makefile文件中的</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">S  = $(CROSS_COMPILE)as<br/>
+<br/>
+LD  = $(CROSS_COMPILE)ld.bfd<br/>
+<br/>
+CC  = $(CROSS_COMPILE)gcc<br/>
+<br/>
+CPP  = $(CC) -E</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">之后添加：</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font color="#FF0000" size="3">ifneq ($(USE_CCACHE),)<br/>
+<br/>
+  export CCACHE_COMPILERCHECK := content</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font color="#FF0000" size="3">  export CCACHE_SLOPPINESS := time_macros,include_file_mtime,file_macro</font></font></font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font color="#FF0000" size="3">  export CCACHE_BASEDIR := /<br/>
+<br/>
+  ccache := $(strip $(wildcard $(PWD)/../prebuilts/misc/linux-x86/ccache/ccache))<br/>
+<br/>
+  ifdef ccache<br/>
+<br/>
+    ifneq ($(ccache),$(firstword $(CC)))<br/>
+<br/>
+      CC := $(ccache) $(CC)<br/>
+<br/>
+    endif<br/>
+<br/>
+    ccache =<br/>
+<br/>
+  endif<br/>
+<br/>
+endif</font></font></font></div>
+<div style="visibility: visible;"><font size="2"> </font></div>
+<div style="visibility: visible;"><font size="2"><font size="2"><font size="3">(3). 这样在编译kernel时也可以享受到ccache带来编译时间的缩短。</font></font></font></div>
+<div style="visibility: visible;"><font size="2"> </font></div>
+</div>
+</div>
+</div>
+<div><strong style="color: rgb(0, 0, 255); font-family: verdana, Helvetica, sans-serif;">以上两种方法优化后大约可降低50%的编译时间，也就是说优化前需要1小时编译时间，优化后半小时就完成了。</strong><br/></div>
+</span>
+</div></body></html> 

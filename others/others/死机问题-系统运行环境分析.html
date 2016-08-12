@@ -1,0 +1,294 @@
+<html>
+<head>
+  <title>死机问题-系统运行环境分析</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="application-data:corenote-hostUUID" content="A20A072C-3573-4EC8-B3CF-3C90E272CC71"/>
+  <meta name="application-data:corenote-localUUID" content="CF8B8F0C-F40A-4981-A60A-F592DE575767"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2589"/>
+<h1>死机问题-系统运行环境分析</h1>
+
+<div><span><br/><div style="font-size: 16px"><div style="box-sizing:border-box;font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;font-size:11pt;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);line-height:1.6em;color:rgb(53, 54, 48);"><div style="background-size:cover;box-sizing:border-box;overflow:auto;color:rgb(53, 54, 48);font-size:14px;background-color:rgb(255, 255, 255);font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;background-repeat:no-repeat;line-height:1.42857143;word-break:keep-all;background-image:url(https://onlinesso.mediatek.com/_layouts/15/1033/styles/Themable/corev15.css?rev=ox%2BqLd6WTqhn6d%2FMqf2BMw%3D%3D);height:100%;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;background-color:rgba(255, 255, 255, 0.85098);overflow:visible;height:547px;width:1265px;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;overflow:auto;"><span style="display:table;"> </span>
+             <h3 style="box-sizing:border-box;margin:auto;font-family:RionaSans, Helvetica, 微軟雅黑, 'Microsoft YaHei', Song, PMingLiU, sans-serif;color:rgb(53, 54, 48);line-height:1.1;margin-top:20px;margin-bottom:10px;font-weight:bold;font-size:24px;text-transform:uppercase;">Quick Start</h3>
+		     <hr style="box-sizing:content-box;border-top-style:solid;border-top-color:rgb(238, 238, 238);height:0.1875em;margin:0px 0.1875em;border:0px none;background-color:rgb(0, 161, 222);"/>
+             <div style="box-sizing:border-box;text-align:center;font-size:18px;color:rgb(0, 153, 204);padding:32px;">
+	             
+	             <span style="box-sizing:border-box;">死机问题快速分析</span>
+	         </div>
+	     
+             <div style="box-sizing:border-box;margin-right:-15px;margin-left:-15px;"><span style="display:table;"> </span>
+				   <div style="box-sizing:border-box;">
+					 <div style="box-sizing:border-box;position:relative;min-height:1px;padding-right:15px;padding-left:15px;float:left;width:25%;"><ul style="box-sizing:border-box;list-style:none;margin:0px;padding:0px;">
+						 
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机问题</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=600" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">1</span>死机现象
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=601" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">2</span>可能导致死机的原因
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机分析资讯与工具</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=602" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">3</span>死机分析数据
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=681" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">4</span>Backtrace 分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);margin:0px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);border-right-width:0px;background:rgb(255, 255, 255);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=721" style="box-sizing:border-box;background-color:transparent;text-decoration:none;color:rgb(0, 153, 204);font-weight:700;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">5</span>系统运行环境分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;border-color:transparent transparent transparent rgb(0, 153, 204);"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=722" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">6</span>进程运行环境分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机分析流程</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=603" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">7</span>死机问题场景
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=723" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">8</span>死机现场分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=724" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">9</span>无现场猜测与分析
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=725" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">10</span>死机资讯抓取
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">死机与重启的关系</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=604" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">11</span>死机与重启的关系
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">经典案例</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=605" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">12</span>经典案例
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+									<div style="box-sizing:border-box;">
+										 <div style="box-sizing:border-box;text-align:center;line-height:40px;background:rgb(0, 153, 204);cursor:default;">
+											<span style="box-sizing:border-box;color:rgb(255, 255, 255);font-weight:700;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:180px;">附录</span>
+										</div>
+										
+									</div>
+									
+												<li style="border-right-style:solid;box-sizing:border-box;border-right-color:rgb(187, 187, 187);cursor:pointer;border-bottom-style:solid;border-bottom-color:rgb(222, 222, 222);border-right-width:1px;line-height:30px;border-bottom-width:1px;border-left-width:1px;border-left-style:solid;border-left-color:rgb(187, 187, 187);margin:0px;background:rgb(248, 248, 248);">
+													 <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/TopicRichTextRedirect.aspx?Id=606" style="box-sizing:border-box;background-color:transparent;color:rgb(76, 76, 76);text-decoration:none;">
+														<div style="box-sizing:border-box;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;width:90%;padding-left:9px;padding-right:9px;">
+															<span style="box-sizing:border-box;font-size:20px;padding-right:3px;">13</span>附录
+															<b style="box-sizing:border-box;font-weight:700;position:absolute;right:30px;margin-top:15px;"><i style="box-sizing:border-box;position:absolute;display:block;height:0px;width:0px;border-color:transparent transparent transparent rgb(102, 102, 102);border-style:dashed dashed dashed solid;border-width:4px 0px 4px 4px;"></i></b>
+														</div>
+														
+													</a> 
+												 </li>
+											 
+								
+					  </ul></div><div style="box-sizing:border-box;position:relative;min-height:1px;padding-right:15px;padding-left:15px;float:left;width:75%;border-right-width:1px;border-right-style:solid;border-right-color:rgb(221, 221, 221);"><div style="box-sizing:border-box;overflow:hidden;padding-right:10px;position:relative;word-wrap:break-word;word-break:break-all;display:block;">
+
+
+
+
+     
+	
+
+    
+
+
+
+
+     <div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;">
+
+
+</div>
+
+
+
+
+         
+	    <span style="box-sizing:border-box;"><div style="box-sizing:border-box;"><div style="box-sizing:border-box;">
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;"><font size="4" style="box-sizing:border-box;">1. 系统运行环境</font></strong><br style="box-sizing:border-box;"/>客观的反应系统的执行环境，通常包括如CPU 利用率，Memory 使用情况， Storage 剩余情况等。这些资料也非常重要，比如可以快速的知道，当时是否有Process 在疯狂的执行，当时是不是处于严重的low memory 情况， Storage 是否有耗尽的情况发生等。</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;"><font size="4" style="box-sizing:border-box;">2. CPU Usage</font></strong><br style="box-sizing:border-box;"/>追查CPU 利用率可大体的知道，当时机器是否有Process 在疯狂的运行,  当时系统运行是否繁忙。通常死机分析，只需要抓取基本的使用情况即可。下面说一下一般的抓取方式</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2.1 top</strong><br style="box-sizing:border-box;"/>top 可以简单的查询Cpu 的基本使用情况<br style="box-sizing:border-box;"/>Usage: top [ -m max_procs ] [ -n iterations ] [ -d delay ] [ -s sort_column ] [ -t ] [ -h ]<br style="box-sizing:border-box;"/>    -m num  Maximum number of processes to display.<br style="box-sizing:border-box;"/>    -n num  Updates to show before exiting.<br style="box-sizing:border-box;"/>    -d num  Seconds to wait between updates.<br style="box-sizing:border-box;"/>    -s col  Column to sort by (cpu,vss,rss,thr).<br style="box-sizing:border-box;"/>    -t      Show threads instead of processes.<br style="box-sizing:border-box;"/>    -h      Display this help screen.<br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/>注意的是top 的CPU% 是按全部CPU 来计算的，如果以单线程来计算，比如当时有开启4个核心，那么最多吃到25%. <br style="box-sizing:border-box;"/> <br style="box-sizing:border-box;"/>个人常见的操作方式如:  top -t -m 5 -n 2</div>
+<div style="box-sizing:border-box;">I.E 正常情况</div>
+<div style="box-sizing:border-box;">User 2%, System 12%, IOW 0%, IRQ 0%<br style="box-sizing:border-box;"/>User 14 + Nice 0 + Sys 67 + Idle 471 + IOW 0 + IRQ 0 + SIRQ 2 = 554</div>
+<div style="box-sizing:border-box;">  PID   TID PR CPU% S     VSS     RSS PCY UID      Thread          Proc<br style="box-sizing:border-box;"/> 2423  2423  1   8% R   2316K   1128K     root     top             top<br style="box-sizing:border-box;"/>  270   270  0   1% S   2160K    924K     root     aee_resmon      /system/bin/aee_resmon<br style="box-sizing:border-box;"/>  159   159  0   0% D      0K      0K     root     bat_thread_kthr<br style="box-sizing:border-box;"/>    3     3  0   0% S      0K      0K     root     ksoftirqd/0<br style="box-sizing:border-box;"/>   57    57  0   0% D      0K      0K     root     hps_main</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">User 1%, System 7%, IOW 0%, IRQ 0%<br style="box-sizing:border-box;"/>User 10 + Nice 0 + Sys 41 + Idle 494 + IOW 0 + IRQ 0 + SIRQ 0 = 545</div>
+<div style="box-sizing:border-box;">  PID   TID PR CPU% S     VSS     RSS PCY UID      Thread          Proc<br style="box-sizing:border-box;"/> 2423  2423  1   8% R   2324K   1152K     root     top             top<br style="box-sizing:border-box;"/>   57    57  0   0% D      0K      0K     root     hps_main<br style="box-sizing:border-box;"/>  242   419  0   0% S   8600K   4540K     shell    mobile_log_d    /system/bin/mobile_log_d<br style="box-sizing:border-box;"/>  982   991  0   0% S   4364K   1156K     media_rw sdcard          /system/bin/sdcard<br style="box-sizing:border-box;"/>  272   272  0   0% S  30680K   9048K     root     em_svr          /system/bin/em_svr<br style="box-sizing:border-box;"/>  <br style="box-sizing:border-box;"/>  从上面可以看出, 系统基本运行正常，没有很吃CPU 的进程.</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">I.E 异常情况</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">User 59%, System 4%, IOW 2%, IRQ 0%<br style="box-sizing:border-box;"/>User 1428 + Nice 0 + Sys 110 + Idle 811 + IOW 67 + IRQ 0 + SIRQ 1 = 2417</div>
+<div style="box-sizing:border-box;">  PID   TID PR CPU% S     VSS     RSS PCY UID      Thread          Proc<br style="box-sizing:border-box;"/>16132 32195  3  14% R 997100K  53492K  bg u0_a60   Thread-1401     com.android.mms<br style="box-sizing:border-box;"/>16132 32190  1  14% R 997100K  53492K  bg u0_a60   Thread-1400     com.android.mms<br style="box-sizing:border-box;"/>16132 32188  2  14% R 997100K  53492K  bg u0_a60   Thread-1399     com.android.mms<br style="box-sizing:border-box;"/>16132 32187  0  14% R 997100K  53492K  bg u0_a60   Thread-1398     com.android.mms<br style="box-sizing:border-box;"/>18793 18793  4   1% R   2068K   1020K     shell    top             top</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">User 67%, System 3%, IOW 7%, IRQ 0%<br style="box-sizing:border-box;"/>User 1391 + Nice 0 + Sys 75 + Idle 435 + IOW 146 + IRQ 0 + SIRQ 1 = 2048</div>
+<div style="box-sizing:border-box;">  PID   TID PR CPU% S     VSS     RSS PCY UID      Thread          Proc<br style="box-sizing:border-box;"/>16132 32195  3  16% R 997100K  53492K  bg u0_a60   Thread-1401     com.android.mms<br style="box-sizing:border-box;"/>16132 32188  2  16% R 997100K  53492K  bg u0_a60   Thread-1399     com.android.mms<br style="box-sizing:border-box;"/>16132 32190  0  16% R 997100K  53492K  bg u0_a60   Thread-1400     com.android.mms<br style="box-sizing:border-box;"/>16132 32187  1  16% R 997100K  53492K  bg u0_a60   Thread-1398     com.android.mms<br style="box-sizing:border-box;"/>18793 18793  4   2% R   2196K   1284K     shell    top             top</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">可以明显的看到，贵司的mms 的4个thread 都有进入了deadloop, 分别占用了一个cpu core.  同时可以快速抓取他们的java trace,  进一步可以看到当时MMS 的四个backtrace, 以便快速分析.</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">&quot;Thread-1401&quot; prio=5 tid=32 SUSPENDED JIT<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x4264f860 self=0x7b183558<br style="box-sizing:border-box;"/>  | sysTid=32195 nice=0 sched=0/0 cgrp=apps/bg_non_interactive handle=2078705952<br style="box-sizing:border-box;"/>  | state=S schedstat=( 3284456714198 104216273858 383002 ) utm=324720 stm=3725 core=5<br style="box-sizing:border-box;"/>  at com.yulong.android.mms.c.f.d(MmsChatDataServer.java:~1095)<br style="box-sizing:border-box;"/>  at com.yulong.android.mms.ui.MmsChatActivity$37.run(MmsChatActivity.java:7582)<br style="box-sizing:border-box;"/>  at java.lang.Thread.run(Thread.java:841)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">&quot;Thread-1400&quot; prio=5 tid=31 SUSPENDED JIT<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x41f5d8f0 self=0x7be2a8e8<br style="box-sizing:border-box;"/>  | sysTid=32190 nice=0 sched=0/0 cgrp=apps/bg_non_interactive handle=2078029504<br style="box-sizing:border-box;"/>  | state=S schedstat=( 3284905134412 105526230562 382946 ) utm=324805 stm=3685 core=5<br style="box-sizing:border-box;"/>  at com.yulong.android.mms.ui.MmsChatActivity$37.run(MmsChatActivity.java:~7586)<br style="box-sizing:border-box;"/>  at java.lang.Thread.run(Thread.java:841)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">&quot;Thread-1399&quot; prio=5 tid=30 SUSPENDED JIT<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x42564d28 self=0x7b0e6838<br style="box-sizing:border-box;"/>  | sysTid=32188 nice=0 sched=0/0 cgrp=apps/bg_non_interactive handle=2077662640<br style="box-sizing:border-box;"/>  | state=S schedstat=( 3288042313685 103203810616 375959 ) utm=325143 stm=3661 core=7<br style="box-sizing:border-box;"/>  at com.yulong.android.mms.ui.MmsChatActivity$37.run(MmsChatActivity.java:~7586)<br style="box-sizing:border-box;"/>  at java.lang.Thread.run(Thread.java:841)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">&quot;Thread-1398&quot; prio=5 tid=29 SUSPENDED<br style="box-sizing:border-box;"/>  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x4248e5a8 self=0x7be0d128<br style="box-sizing:border-box;"/>  | sysTid=32187 nice=0 sched=0/0 cgrp=apps/bg_non_interactive handle=2079251904<br style="box-sizing:border-box;"/>  | state=S schedstat=( 3287248372432 105116936413 379634 ) utm=325055 stm=3669 core=6<br style="box-sizing:border-box;"/>  at com.yulong.android.mms.ui.MmsChatActivity$37.run(MmsChatActivity.java:~7586)<br style="box-sizing:border-box;"/>  at java.lang.Thread.run(Thread.java:841)</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;">当时处于suspend, 即意味着当时这四个thread 正在执行java code, 而抓取backtrace 时强制将thread suspend 。看起来客户改动所致，并且客户有Proguard, 麻烦客户自己review 代码。 </div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2.2 cputime</strong><br style="box-sizing:border-box;"/>通常用cputime 来打印一段时间内, CPU 的利用率的统计情况, 资讯比top 更加详细.</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>cputime -h<br style="box-sizing:border-box;"/>Usage: cputime  [-start/-stop]  [-n iterations] [-d delay] [-e time] [ -m max_count ]  [-p] [-s sort_column] [-i id] [-h]<br style="box-sizing:border-box;"/> -start       Start cpu time monitor.<br style="box-sizing:border-box;"/> -stop        Stop cpu time monitor.<br style="box-sizing:border-box;"/> -n  num      Updates to show before exiting.<br style="box-sizing:border-box;"/> -d  num      Seconds to wait between updates.<br style="box-sizing:border-box;"/> -m  num      Maximum number of information to display.<br style="box-sizing:border-box;"/> -e  num      Enable CPU time monitor and stop monitor after num seconds. If no this parameter will<br style="box-sizing:border-box;"/>              show last cputime monitor data.<br style="box-sizing:border-box;"/> -p           Show process instead of thread. If no this parameter default will show thread information.<br style="box-sizing:border-box;"/> -s  col      Column to sort by time/user/kernel/id/isr_c/isr_t(cputime/user time/kernel time/id/isr_count/<br style="box-sizing:border-box;"/>              isr_time). If no this parameter default will sort by cputime.<br style="box-sizing:border-box;"/> -i  id       show isr information of thread id.<br style="box-sizing:border-box;"/> -h           Display this help screen.</div>
+<div style="box-sizing:border-box;">*       Example     *<br style="box-sizing:border-box;"/>cputime -e 100: Enable cputime monitor and stop after 100 seconds. Then show thread cputime, and sort by cputime.<br style="box-sizing:border-box;"/>cputime -e 200  -s user: Enable cputime monitor and stop after 200 seconds. Then show thread cputime, and sort by user time.<br style="box-sizing:border-box;"/>cputime: Show thread cputime, and sort by cputime.<br style="box-sizing:border-box;"/>cputime -p -s id: Show process cputime, and sort by process id. </div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2.3 ftrace</strong><br style="box-sizing:border-box;"/>ftrace 可以纪录CPU 最为详细的执行情况, 即linux scheduler 的执行情况. 通常默认只开启 sched_switch. <br style="box-sizing:border-box;"/>如何抓取ftrace 可以查询相关的FAQ.</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">2.4 Kernel core status</strong><br style="box-sizing:border-box;"/>有的时候我们需要追查一下，当时Kernel 的基本调度情况，以及接收中断的情况，以判断当前CPU 执行的基本情况是否异常。比如有时候如果某个中断上来太过频繁，就容易导致系统运行缓慢，甚至死机。<br style="box-sizing:border-box;"/>* CPU Sched status<br style="box-sizing:border-box;"/>     adb shell cat proc/sched_debug<br style="box-sizing:border-box;"/>     Use sysrq-trigger</div>
+<div style="box-sizing:border-box;">* CPU interrupts<br style="box-sizing:border-box;"/>     adb shell cat proc/interrupts<br style="box-sizing:border-box;"/>     adb shell cat proc/irq/irq_id/spurious</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;"><font size="4" style="box-sizing:border-box;">3. Memory Usage</font></strong><br style="box-sizing:border-box;"/>Memory Usage, 我们通常会审查，系统当时memory 是否足够, 是否处于low memory 状态, 是否可能出现因无法申请到memory 而卡死的情况.</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>常见的一些基本信息如下:<br style="box-sizing:border-box;"/>* meminfo: basic memory status<br style="box-sizing:border-box;"/>adb shell cat proc/meminfo<br style="box-sizing:border-box;"/>adb shell cat proc/pid/maps<br style="box-sizing:border-box;"/>adb shell cat proc/pid/smaps<br style="box-sizing:border-box;"/>* procrank info: all process memory status<br style="box-sizing:border-box;"/>adb shell procrank<br style="box-sizing:border-box;"/>adb shell procmem pid<br style="box-sizing:border-box;"/>adb shell dumpsys meminfo pid<br style="box-sizing:border-box;"/>* zoneinfo:<br style="box-sizing:border-box;"/>adb shell cat proc/zoneinfo<br style="box-sizing:border-box;"/>* buddyinfo:<br style="box-sizing:border-box;"/>adb shell cat /proc/buddyinfo</div>
+<div style="box-sizing:border-box;"> </div>
+<div style="box-sizing:border-box;"><font size="4" style="box-sizing:border-box;"><strong style="box-sizing:border-box;font-weight:700;">4. Storage Usage</strong></font><br style="box-sizing:border-box;"/>查看Storage 的情况，通常主要是查询data 分区是否已经刷满, sdcard 是否已经刷满, 剩余的空间是否足够。以及是否有产生超大文件等。<br style="box-sizing:border-box;"/>通常使用的命令如 df<br style="box-sizing:border-box;"/>df<br style="box-sizing:border-box;"/>Filesystem               Size     Used     Free   Blksize<br style="box-sizing:border-box;"/>/dev                   446.0M   128.0K   445.8M   4096<br style="box-sizing:border-box;"/>/sys/fs/cgroup         446.0M    12.0K   445.9M   4096<br style="box-sizing:border-box;"/>/mnt/secure            446.0M     0.0K   446.0M   4096<br style="box-sizing:border-box;"/>/mnt/asec              446.0M     0.0K   446.0M   4096<br style="box-sizing:border-box;"/>/mnt/obb               446.0M     0.0K   446.0M   4096<br style="box-sizing:border-box;"/>/system                  1.2G   915.3M   355.5M   4096<br style="box-sizing:border-box;"/>/data                    1.1G   136.7M  1010.1M   4096<br style="box-sizing:border-box;"/>/cache                 106.2M    48.0K   106.2M   4096<br style="box-sizing:border-box;"/>/protect_f               4.8M    52.0K     4.8M   4096<br style="box-sizing:border-box;"/>/protect_s               4.8M    48.0K     4.8M   4096<br style="box-sizing:border-box;"/>/mnt/cd-rom              1.2M     1.2M     0.0K   2048<br style="box-sizing:border-box;"/>/mnt/media_rw/sdcard0     4.6G     1.1G     3.4G   32768<br style="box-sizing:border-box;"/>/mnt/secure/asec         4.6G     1.1G     3.4G   32768<br style="box-sizing:border-box;"/>/storage/sdcard0         4.6G     1.1G     3.4G   32768</div>
+<div style="box-sizing:border-box;">以及ls, du 等命令，如du</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>du -help<br style="box-sizing:border-box;"/>usage: du [-H | -L | -P] [-a | -d depth | -s] [-cgkmrx] [file ...]</div>
+<div style="box-sizing:border-box;"><br style="box-sizing:border-box;"/>du -LP -d 1<br style="box-sizing:border-box;"/>8       ./lost+found<br style="box-sizing:border-box;"/>88      ./local<br style="box-sizing:border-box;"/>384     ./misc<br style="box-sizing:border-box;"/>48      ./nativebenchmark<br style="box-sizing:border-box;"/>912     ./nativetest<br style="box-sizing:border-box;"/>8       ./dontpanic<br style="box-sizing:border-box;"/>13376   ./data<br style="box-sizing:border-box;"/>8       ./app-private<br style="box-sizing:border-box;"/>8       ./app-asec<br style="box-sizing:border-box;"/>129424  ./app-lib<br style="box-sizing:border-box;"/>8       ./app<br style="box-sizing:border-box;"/>136     ./property<br style="box-sizing:border-box;"/>16      ./ssh<br style="box-sizing:border-box;"/>116312  ./dalvik-cache<br style="box-sizing:border-box;"/>8       ./resource-cache<br style="box-sizing:border-box;"/>48      ./drm<br style="box-sizing:border-box;"/>8       ./mediadrm<br style="box-sizing:border-box;"/>8       ./security<br style="box-sizing:border-box;"/>3888    ./nvram<br style="box-sizing:border-box;"/>8       ./amit<br style="box-sizing:border-box;"/>8       ./acdapi<br style="box-sizing:border-box;"/>88      <a href="https://onlinesso.mediatek.com/_layouts/15/mol/topic/ext/Topic.aspx?id=111mailto:./@btmtk" style="box-sizing:border-box;color:rgb(51, 122, 183);text-decoration:none;background-color:transparent;">./@btmtk</a><br style="box-sizing:border-box;"/>32      ./sec<br style="box-sizing:border-box;"/>8       ./user<br style="box-sizing:border-box;"/>16      ./media<br style="box-sizing:border-box;"/>16      ./agps_supl<br style="box-sizing:border-box;"/>8       ./anr<br style="box-sizing:border-box;"/>8       ./gps_mnl<br style="box-sizing:border-box;"/>8       ./nfc_socket<br style="box-sizing:border-box;"/>16      ./ccci_cfg<br style="box-sizing:border-box;"/>32      ./mdlog<br style="box-sizing:border-box;"/>1312    ./system<br style="box-sizing:border-box;"/>176     ./recovery<br style="box-sizing:border-box;"/>32      ./backup<br style="box-sizing:border-box;"/>274688  .<br style="box-sizing:border-box;"/></div></div></div></span>
+        <span style="box-sizing:border-box;"></span>
+    
+
+
+</div>
+
+
+</div></div>
+					 
+				  </div>
+             <span style="display:table;clear:both;"> </span></div>
+         <span style="display:table;clear:both;"> </span></div></div></div></div></div></div></div></div></div></div></div></div><br/></span>
+</div></body></html> 

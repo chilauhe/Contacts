@@ -1,0 +1,1 @@
+{"ret":-2,"errmsg":"get qrcode failed"}
