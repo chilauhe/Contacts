@@ -1,0 +1,165 @@
+<html>
+<head>
+  <title>readme.robot</title>
+  <basefont face="Microsoft YaHei" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="Evernote Windows/301769 (zh-CN); Windows/6.3.9600 (Win64);"/>
+  <meta name="reminder-order" content="3/18/2016 3:36 AM"/>
+  <meta name="reminder-time" content="3/18/2016 9:34 AM"/>
+  <style>
+    body, td {
+      font-family: Microsoft YaHei;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1960"/>
+<h1>readme.robot</h1>
+
+<div>
+<span><div>Http<br/><br/>
+获取用户绑定的机器人信息<br/>
+/robot/info<br/><br/>
+req<br/>
+id                    long<br/>
+session               string<br/><br/>
+rsp<br/>
+ret                    int               0 OK, 非0 失败<br/>
+Robots               object          机器人信息<br/>
+[<br/>
+     {<br/>
+          id               string              <br/>
+          addr          string               机器人服务器地址<br/>
+          rid               long               机器人id<br/>
+          rtype          int                    机器人类型<br/>
+          rname          string               机器人姓名<br/>
+          online          boolean               是否在线 true|false 在线时才能申请绑定或控制<br/>
+          controller     long               控制者 0无人控制 非0控制着id<br/>
+     }...<br/>
+]<br/>
+max_bind               int                    最多绑定的数量<br/><br/>
+------------------------------<br/><br/>
+绑定机器人<br/>
+/robot/bind<br/><br/>
+req<br/>
+id                         long<br/>
+session                    string<br/>
+robot_id               long               机器人唯一id<br/>
+robot_serial          string               机器人序列号<br/>
+robot_rtype               int                    机器人类型<br/><br/>
+rsp<br/>
+ret                     int                    0成功<br/>
+Robots                    string               机器人信息<br/>
+[<br/>
+     {<br/>
+          id               string              <br/>
+          addr          string               机器人服务器地址<br/>
+          rid               long               机器人id<br/>
+          rtype          int                    机器人类型<br/>
+          rname          string               机器人姓名<br/>
+          online          boolean               是否在线 true|false 在线时才能申请绑定或控制<br/>
+          controller     long               控制者 0无人控制 非0控制着id<br/>
+     }...<br/>
+]<br/><br/>
+------------------------------<br/><br/>
+解除绑定机器人<br/>
+/robot/unbind<br/><br/>
+req<br/>
+id                         long<br/>
+session                    string<br/>
+robot_id               long               机器人唯一id<br/>
+robot_serial          string               机器人验证码<br/>
+robot_rtype               int                    机器人类型<br/><br/>
+rsp<br/>
+ret                     int                    0成功<br/>
+Robots                    string               机器人信息<br/>
+[<br/>
+     {<br/>
+          id               string              <br/>
+          addr          string               机器人服务器地址<br/>
+          rid               long               机器人id<br/>
+          rtype          int                    机器人类型<br/>
+          rname          string               机器人姓名<br/>
+          online          boolean               是否在线 true|false 在线时才能申请绑定或控制<br/>
+          controller     long               控制者 0无人控制 非0控制着id<br/>
+     }...<br/>
+]<br/><br/>
+==================================<br/><br/>
+Socket<br/><br/>
+机器人登录<br/>
+/robot/login<br/><br/>
+req<br/>
+id                         string               机器人唯一id<br/>
+serial                    string               机器人验证码<br/>
+type                    int                    机器人类型<br/><br/>
+rsp<br/>
+ret                         int                    0成功<br/>
+Robot                    string               机器人信息<br/>
+{<br/>
+          id               string              <br/>
+          addr          string               机器人服务器地址<br/>
+          rid               long               机器人id<br/>
+          rtype          int                    机器人类型<br/>
+          rname          string               机器人姓名<br/>
+          online          boolean               是否在线 true|false 在线时才能申请绑定或控制<br/>
+          controller     long               控制者 0无人控制 非0控制着id<br/>
+     }<br/>
+now                         long               服务器时间戳<br/><br/>
+------------------------------<br/><br/>
+控制机器人<br/>
+/robot/controll<br/><br/>
+req<br/>
+id                         long               用户id<br/>
+session                    string              <br/>
+rid                         long               机器人id<br/><br/>
+rsp<br/>
+ret                     int                    0成功,-1参数错误,1用户已在线2session过期,3session错误,4没有绑定,5机器人没在线,6没有该机器人,7机器人已经被控制,8用户已经在控制机器人<br/>
+Robot                    string               机器人信息<br/>
+{<br/>
+     id               string              <br/>
+     addr          string               机器人服务器地址<br/>
+     rid               long               机器人id<br/>
+     rtype          int                    机器人类型<br/>
+     rname          string               机器人姓名<br/>
+     online          boolean               是否在线 true|false 在线时才能申请绑定或控制<br/>
+     controller     long               控制者 0无人控制 非0控制着id<br/>
+}<br/>
+controller               long               控制者<br/><br/><br/>
+------------------------------<br/><br/>
+释放机器人<br/>
+/robot/uncontroll<br/><br/>
+req<br/><br/>
+rsp<br/>
+ret                         int                    0成功<br/><br/>
+------------------------------<br/><br/>
+手机推送消息给机器人          手机端发送,机器人接收,用于通知机器人打开语音和视频<br/>
+/robot/push<br/><br/>
+req<br/>
+command                    string               json字符串<br/>
+{<br/>
+     cmd                    string               命令类型<br/>
+     ...                    ...                    命令相关参数<br/>
+}<br/><br/>
+rsp<br/>
+command                    string               json字符串<br/>
+{<br/>
+     cmd                    string               命令类型<br/>
+     ...                    ...                    命令相关参数<br/>
+}<br/><br/>
+------------------------------<br/><br/>
+机器人执行命令               机器人发送,手机端接收,用于机器人回包<br/>
+/robot/callback<br/><br/>
+req<br/>
+command                    string               json字符串<br/>
+{<br/>
+     cmd                    string               命令类型<br/>
+     ...                    ...                    命令相关参数<br/>
+}<br/><br/>
+rsp<br/>
+command                    string               json字符串<br/>
+{<br/>
+     cmd                    string               命令类型<br/>
+     ...                    ...                    命令相关参数<br/>
+}<br/><br/></div><div>------------------------------</div></span>
+</div></body></html> 
