@@ -50,3 +50,4 @@ compliant 适用 顺应
 relevant 相关性
 boilerplate 模板文件
 trivial 不重要的 琐碎的
+isolation  隔离
