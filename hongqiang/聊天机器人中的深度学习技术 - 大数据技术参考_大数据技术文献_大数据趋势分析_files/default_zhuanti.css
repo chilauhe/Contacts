@@ -1,0 +1,15 @@
+.header .logo .zthz{border-left: 2px solid #e3e3e3;display: block;font-size: 24px;height: 36px;line-height: 36px; margin: 6px 0 0 20px;padding-left: 20px;}
+
+.bannerwarp{ background:#FFF; height:341px; border-bottom:1px solid #dddddb; padding-top:30px;}
+.bannerwarp .focus{ width:1140px; margin:0px auto; height:341px;}
+.bannerwarp .focus .pagination .toc{background: url(../images/zhuanti/zt_bg.png) no-repeat -342px -50px;height: 11px;margin: 0 5px;width: 11px;}
+.bannerwarp .focus .pagination .selected{ background-position:-354px -50px; background-color: inherit;}
+.list-zt{margin-left: -20px;}
+.list-zt li {background: url(../images/zhuanti/yingyin.png) no-repeat left bottom #fff;float: left;margin: 15px 0 20px 20px;overflow: hidden;padding-bottom: 3px;width: 270px;}
+.list-zt li .liCent {border: 1px solid #ddd;overflow: hidden;padding:0 15px 15px; position:relative;}
+.list-zt li:hover .liCent{border-color: #f60;}
+.list-zt li .liCent h2{ font-size: 20px;font-weight: normal;line-height: 30px; height:60px; overflow:hidden;margin: 10px 0;}
+.list-zt li .liCent h2 a{ color:#000;}
+.list-zt li .liCent .des{ margin-top:15px;}
+.list-zt li .liCent .iBtn a {background:#0049a3;color: #fff;display: block;text-align: center;width: 62px; height:24px; line-height:24px; position:absolute; right:15px; bottom:24px;}
+.list-zt li .liCent .iBtn a:hover{ background:#f60;}
