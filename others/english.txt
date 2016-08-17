@@ -51,3 +51,36 @@ relevant 相关性
 boilerplate 模板文件
 trivial 不重要的 琐碎的
 isolation  隔离
+approach 方法 接近
+odometry 测距
+exhibit 展览
+roll转动
+pitch 高度
+leverage 利用
+maintained 维护的
+axis 轴
+Threshold 门槛 阈值
+thresh 推敲 敲打 反复做
+occupy 已使用 已占用
+trajtory 轨道 线路
+compliant 适应 顺从
+perform完成
+latch 抓住 占有
+potential潜在的
+rough 粗糙的
+terrain 地形 地势
+pitch 倾斜 投掷 定位于 沥青 音高
+conevntion 习惯 惯例
+semantic 语言学的
+REP距离估算程序
+intuition 直觉
+coordinate 坐标 协调 同等的
+discrete离散的
+INS惯性导航系统
+optimize优化 持乐观态度
+Key abilities 关键能力
+present 出现 提出 现在的 当前的
+disaster灾难 灾祸
+an important area of research 一个重要的研究领域
+advance 推动 前进 提前的
+advanced 高级的
