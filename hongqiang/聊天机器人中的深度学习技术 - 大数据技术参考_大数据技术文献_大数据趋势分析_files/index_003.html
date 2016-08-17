@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<title>大数据_大数据时代_大数据概念_网络大数据-中国最大的网络数据中心</title>
+<meta name="keywords" content="大数据,大数据时代,大数据概念,网络大数据,网络数据与科学,cdn,idc,cdn加速,网络测量,网络监测,网络安全测量,网站性能监测,行业分析报告,行业研究报告,免费行业报告">
+<meta name="description" content="随着大数据时代的来临，大数据也吸引了越来越多的关注。网络大数据（http://www.raincent.com）整合了大数据，大数据概念，网络数据与科学，cdn，cdn加速，idc，网络测量,网络监测，网络安全测量，网站性能监测，行业分析报告，行业研究报告，免费行业报告等服务为一体，力争打造中国最大的网络大数据中心。">
+<link href="reset.css" rel="stylesheet" type="text/css">
+<link href="default_blue.css" rel="stylesheet" type="text/css">
+<script language="javascript" type="text/javascript" src="jquery.js"></script>
+<script language="javascript" type="text/javascript" src="jquery_002.js"></script>
+<style>
+body{background:none;}
+</style>
+</head>
+<body onload="iframe_height()">
+<div id="bodyheight">
+<form action="http://www.raincent.com/index.php?m=comment&amp;c=index&amp;a=post&amp;commentid=content_85-6359-1" method="post" onsubmit="return on_submit()">
+<input name="title" value="%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF" type="hidden">
+<input name="url" value="http%3A%2F%2Fwww.raincent.com%2Fcontent-85-6359-1.html" type="hidden">
+      <div class="comment-form">
+      	<h5 class="f16">精彩评论：</h5>
+        <div class="posn">我的态度：<input name="direction" value="1" type="radio"> <img src="index_data_003/zheng.png"> <input name="direction" value="2" type="radio"> <img src="index_data_003/fan.png"> <input name="direction" value="3" type="radio"> <img src="index_data_003/zhong.png"></div>
+        <div class="con">
+			<textarea rows="8" cols="80" name="content"></textarea><br>
+						<!--
+			<a href="http://www.raincent.com/index.php?m=member&c=index&a=login&forward=http%3A%2F%2Fwww.raincent.com%2Fcontent-85-6359-1.html" target="_top" class="blue">登录</a><span> | </span><a href="http://www.raincent.com/index.php?m=member&c=index&a=register" class="blue"  target="_top">注册</a> 			!-->
+			<input value="评论" type="submit">
+		</div>
+	  </div>
+</form>
+ 
+<script type="text/javascript">
+function support(id, commentid) {
+	$.getJSON('http://www.raincent.com/index.php?m=comment&c=index&a=support&format=jsonp&commentid='+commentid+'&id='+id+'&callback=?', function(data){
+		if(data.status == 1) {
+			$('#support_'+id).html(parseInt($('#support_'+id).html())+1);
+		} else {
+			alert(data.msg);
+		}
+	});
+}
+
+function reply(id,commentid) {
+	var str = '<form action="http://www.raincent.com/index.php?m=comment&c=index&a=post&commentid='+commentid+'&id='+id+'" method="post" onsubmit="return on_submit()"><textarea rows="10" name="content"></textarea>  <div class="btn rt"><input type="submit" value="发表评论" /></div><span><a href="http://www.raincent.com/index.php?m=member&c=index&a=login&forward=http%3A%2F%2Fwww.raincent.com%2Fcontent-85-6359-1.html" class="blue" target="_top">登录</a> | <a href="http://www.raincent.com/index.php?m=member&c=index&a=register" class="blue" target="_top">注册</a></span>  </form>';
+	$('#reply_'+id).html(str).toggle();
+	iframe_height();
+}
+
+function hide_code() {
+	if ($('#yzmText').data('hide')==0) {
+		$('#yzm').hide();
+	}
+}
+function on_submit() {
+			var res = 1;
+		if(res != 1) {
+		alert('验证码错误');
+		return false;
+	} else {
+		iframe_height(200);
+		$('#bodyheight').hide();
+		$('#loading').show();
+		return true;
+	}
+}
+function iframe_height(height) {
+	if (!height) {
+		var height = document.getElementById('bodyheight').scrollHeight;
+	} 
+	$('#top_src').attr('src', "http://www.raincent.com/js.html?"+height+'|'+0);
+}
+
+
+
+</script>
+</div>
+<iframe id="top_src" src="index_data_003/js.html" height="0" width="0"></iframe>
+<div class="hidden text-c" id="loading">
+<img src="index_data_003/loading.gif"> 正在提交中...
+</div>
+
+</body></html>

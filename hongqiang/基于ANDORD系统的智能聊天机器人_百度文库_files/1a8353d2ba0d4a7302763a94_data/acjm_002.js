@@ -1,0 +1,5 @@
+BAIDU_SSP_define({"queryid" : "5d5e3b8a0cb54fd4","tuid" : "920314_0","placement" : {"basic" : {"cname":"91010099_20_cpr","conBackEnv":1,"flowType":1,"groupId":61647,"mediumType":1,"rspFormat":1,"sellType":3,"sspId":8,"tuId":920314,"userId":5552871}
+,"container" : {"anchoredType":1,"floated":{},"height":0,"sizeType":1,"slide":{},"width":0}
+,"fillstyle" : {}
+,"userdefine" : "","complement_type" : 7,"update" : "1467636085_0"},"extends" : {"ssph":0,"sspw":0}
+,"pdb_deliv" : {"deliv_id" : "2048542","deliv_des" : {"_html" : {"content":"\x3cscript type=\"text\/javascript\"\x3e\x0a    \/*文章播放器1-2页间通栏*\/\x0a    var cpro_id = \"u2398768\";\x0a\x3c\/script\x3e\x0a\x3cscript src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\" type=\"text\/javascript\"\x3e\x3c\/script\x3e","type":"rich","version":1,"unionFlag":1}},"brandad" : 0},"order_deliv" : {"deliv_id" : "0","demand_id" : "0"},"rtb_deliv" : {"deliv_id" : "0","demand_id" : "0"}});
