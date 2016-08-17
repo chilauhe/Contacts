@@ -78,3 +78,9 @@ coordinate 坐标 协调 同等的
 discrete离散的
 INS惯性导航系统
 optimize优化 持乐观态度
+Key abilities 关键能力
+present 出现 提出 现在的 当前的
+disaster灾难 灾祸
+an important area of research 一个重要的研究领域
+advance 推动 前进 提前的
+advanced 高级的
