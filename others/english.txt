@@ -77,3 +77,4 @@ intuition 直觉
 coordinate 坐标 协调 同等的
 discrete离散的
 INS惯性导航系统
+optimize优化 持乐观态度
