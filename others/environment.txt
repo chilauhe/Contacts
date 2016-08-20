@@ -21,7 +21,7 @@
 21： ebooks:http://bestcbooks.com/
 
 BWG7X-J98B3-W34RT-33B3R-JVYW9   vs2013
-
+J7G2X-WNGK4-VTHJX-G4DTX-YDTY2   visio 2013
 https://wizardforcel.gitbooks.io/w3school-java/content/47.html   servlet教程
 https://developer.android.com/ndk/guides/setup.html#configure    NDK教程
 http://www.mkyong.com/                 mkyong
